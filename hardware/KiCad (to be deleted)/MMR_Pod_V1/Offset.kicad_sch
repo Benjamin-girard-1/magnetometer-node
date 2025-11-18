@@ -1,0 +1,129 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "9c17a874-e213-4873-8b17-38b8e920399f")
+	(paper "A4")
+	(lib_symbols)
+	(hierarchical_label "OFFSET2+"
+		(shape output)
+		(at 116.84 105.41 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "011c9599-f092-4757-8c51-4838fb4cad4e")
+	)
+	(hierarchical_label "-6V5"
+		(shape input)
+		(at 114.3 69.85 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "1f38ceb3-8fcd-4977-8444-1a7604e33ce6")
+	)
+	(hierarchical_label "OFFSET3-"
+		(shape output)
+		(at 111.76 130.81 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2b3e5169-a561-44a4-a19c-8e509eee9b49")
+	)
+	(hierarchical_label "+6V5"
+		(shape input)
+		(at 114.3 66.04 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "4735eb37-a21b-4224-8556-937c3d52afa8")
+	)
+	(hierarchical_label "GND"
+		(shape input)
+		(at 138.43 82.55 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "690fde9f-6a98-466d-b540-d89be39ccc01")
+	)
+	(hierarchical_label "OFFSET1+"
+		(shape output)
+		(at 111.76 91.44 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7dbe3cad-c61e-46e9-aef3-fbfbaf4d1bc5")
+	)
+	(hierarchical_label "OFFSET3+"
+		(shape output)
+		(at 113.03 123.19 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "a677fe39-e5ee-4950-8a9c-aab6235c6a58")
+	)
+	(hierarchical_label "OFFSET2-"
+		(shape output)
+		(at 113.03 113.03 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "b8140167-888d-44b2-b431-64860aa1963c")
+	)
+	(hierarchical_label "+3V3"
+		(shape input)
+		(at 114.3 62.23 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "e898a24c-fd57-4acb-9452-3a13638884e3")
+	)
+	(hierarchical_label "SPI2"
+		(shape output)
+		(at 110.49 85.09 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "f62cf377-0329-4992-b9cd-248e610cda8a")
+	)
+	(hierarchical_label "OFFSET1-"
+		(shape output)
+		(at 113.03 97.79 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "ff6ba41f-e599-48ad-8172-7268eb114a49")
+	)
+)

@@ -1,0 +1,6 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Imported_kicad_lib")(type "KiCad")(uri "${KIPRJMOD}/Imported_kicad_lib.kicad_sym")(options "")(descr ""))
+  (lib (name "Schematic_custom")(type "KiCad")(uri "${KIPRJMOD}/Schematic_custom.kicad_sym")(options "")(descr ""))
+  (lib (name "Imported_kicad_schematic")(type "KiCad")(uri "${KIPRJMOD}/Imported_kicad_schematic.kicad_sym")(options "")(descr ""))
+)
