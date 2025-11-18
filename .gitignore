@@ -13,3 +13,15 @@
 *.lot
 *.nav
 *.snm
+
+# KiCad autosave & backup junk
+*_autosave-*.kicad_sch
+#auto_saved_files#/
+*-backups/
+*.kicad_sch-bak
+*.kicad_pcb-bak
+*.bak
+
+# KiCad cache / lock
+*.lck
+fp-info-cache

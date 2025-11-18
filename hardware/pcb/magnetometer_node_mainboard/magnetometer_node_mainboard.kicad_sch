@@ -1,0 +1,202 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "b5f9ef85-43f0-43d8-a1fd-ed489b1654c1")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 106.68 39.37)
+		(size 43.18 27.94)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 255 167 241 1.0000)
+		)
+		(uuid "209adda1-10e4-4d62-92d8-b16a998ad2d8")
+		(property "Sheetname" "SENSOR_SET_RESET_DRIVER"
+			(at 106.68 38.2012 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/sensor_set_reset_driver.kicad_sch"
+			(at 106.68 67.9708 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 152.4 39.37)
+		(size 41.91 27.94)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 255 150 167 1.0000)
+		)
+		(uuid "3f9cf723-c387-4595-bc4e-8c996d2fd0b8")
+		(property "Sheetname" "SENSOR_OFFSET_DRIVERS"
+			(at 152.4 38.2012 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/sensor_offset_drivers.kicad_sch"
+			(at 152.4 67.9708 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 59.69 39.37)
+		(size 39.37 27.94)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 207 207 255 1.0000)
+		)
+		(uuid "95fd4708-3510-44cf-9b01-8535361ee411")
+		(property "Sheetname" "SENSOR_3AXIS_HMC100X"
+			(at 59.69 38.2012 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/sensor_hmc100x_3axis.kicad_sch"
+			(at 59.69 67.9708 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 201.93 39.37)
+		(size 38.1 27.94)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 255 202 174 1.0000)
+		)
+		(uuid "ded83d55-b2f7-490a-b9dc-0b3a44a3cee5")
+		(property "Sheetname" "PWR_9V_BRIDGE"
+			(at 201.93 38.2012 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/pwr_9v_bridge.kicad_sch"
+			(at 201.93 67.9708 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

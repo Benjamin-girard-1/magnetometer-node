@@ -3,4 +3,5 @@
   (lib (name "Imported_kicad_lib")(type "KiCad")(uri "${KIPRJMOD}/Imported_kicad_lib.kicad_sym")(options "")(descr ""))
   (lib (name "Schematic_custom")(type "KiCad")(uri "${KIPRJMOD}/Schematic_custom.kicad_sym")(options "")(descr ""))
   (lib (name "Imported_kicad_schematic")(type "KiCad")(uri "${KIPRJMOD}/Imported_kicad_schematic.kicad_sym")(options "")(descr ""))
+  (lib (name "magnode_symbols")(type "KiCad")(uri "/Users/benja/Desktop/Master/magnetometer-node/hardware/pcb/lib/magnode_symbols.kicad_sym")(options "")(descr ""))
 )
