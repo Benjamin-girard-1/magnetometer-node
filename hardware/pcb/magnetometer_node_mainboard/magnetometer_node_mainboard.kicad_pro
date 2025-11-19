@@ -629,6 +629,38 @@
     [
       "ded83d55-b2f7-490a-b9dc-0b3a44a3cee5",
       "PWR_9V_BRIDGE"
+    ],
+    [
+      "3098db7b-b921-40c3-86cb-85a991bb6b10",
+      "MCU_ESP32S3"
+    ],
+    [
+      "d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3",
+      "ANALOG_FRONTEND_INA851"
+    ],
+    [
+      "d652fa9a-929c-40ea-b9c9-ec80a94942ad",
+      "GNSS_IMU_TEMPERATURE"
+    ],
+    [
+      "12e32701-7c59-459f-9fd3-2d7a03863ef6",
+      "CONNECTORS_IO"
+    ],
+    [
+      "f4b81638-e87a-4975-ab66-02594c3d4d9a",
+      "ADC_AD777X"
+    ],
+    [
+      "10fa61dd-92fb-4de6-a7d9-eab51d52932b",
+      "PWR_3V3D"
+    ],
+    [
+      "f49aacfc-570c-4693-8ae6-33fb55f53278",
+      "PWR_3V3A"
+    ],
+    [
+      "6321dc72-3a05-4a49-83e5-bf7bf0cd5913",
+      "PWR_OPAMP_4V5_NEG5"
     ]
   ],
   "text_variables": {}

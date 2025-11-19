@@ -5,9 +5,49 @@
 	(uuid "b5f9ef85-43f0-43d8-a1fd-ed489b1654c1")
 	(paper "A4")
 	(lib_symbols)
+	(wire
+		(pts
+			(xy 71.12 40.64) (xy 78.74 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "15837775-4cea-4377-9344-ea6c6b900d50")
+	)
+	(wire
+		(pts
+			(xy 71.12 67.31) (xy 78.74 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2fc556a1-13f9-485b-be20-cd6dcccd5c90")
+	)
+	(wire
+		(pts
+			(xy 71.12 48.26) (xy 78.74 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8a03adb1-3849-4f09-be43-76f74e01d9cf")
+	)
+	(wire
+		(pts
+			(xy 71.12 44.45) (xy 78.74 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f5f94efe-3004-401c-9dc9-06b56bc113d8")
+	)
 	(sheet
-		(at 106.68 39.37)
-		(size 43.18 27.94)
+		(at 29.21 140.97)
+		(size 41.91 35.56)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -19,11 +59,105 @@
 			(color 0 0 0 1)
 		)
 		(fill
-			(color 255 167 241 1.0000)
+			(color 255 135 146 0.4000)
+		)
+		(uuid "10fa61dd-92fb-4de6-a7d9-eab51d52932b")
+		(property "Sheetname" "PWR_3V3D"
+			(at 29.21 139.8012 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/pwr_3v3d.kicad_sch"
+			(at 29.21 177.1908 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "11")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 227.33 90.17)
+		(size 41.91 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 213 134 33 0.4000)
+		)
+		(uuid "12e32701-7c59-459f-9fd3-2d7a03863ef6")
+		(property "Sheetname" "CONNECTORS_IO"
+			(at 227.33 89.0012 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/connectors_io.kicad_sch"
+			(at 227.33 126.3908 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "9")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 29.21 59.69)
+		(size 41.91 15.24)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 255 167 241 0.4900)
 		)
 		(uuid "209adda1-10e4-4d62-92d8-b16a998ad2d8")
 		(property "Sheetname" "SENSOR_SET_RESET_DRIVER"
-			(at 106.68 38.2012 0)
+			(at 29.21 58.5212 0)
 			(effects
 				(font
 					(size 2.032 2.032)
@@ -35,13 +169,43 @@
 			)
 		)
 		(property "Sheetfile" "schematics/sensor_set_reset_driver.kicad_sch"
-			(at 106.68 67.9708 0)
+			(at 29.21 75.5908 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left top)
 				(hide yes)
+			)
+		)
+		(pin "RESET_CTRL" input
+			(at 29.21 64.77 180)
+			(uuid "7dc8d3db-f1c7-4502-9336-25a5a7ad97eb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SETRESET_STRAP" output
+			(at 71.12 67.31 0)
+			(uuid "bfbefd3c-607d-4121-8c12-cdb46f18ad9b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "SET_CTRL" input
+			(at 29.21 69.85 180)
+			(uuid "7dcbf823-61d4-4848-b5c3-613b695f935a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 			)
 		)
 		(instances
@@ -53,8 +217,8 @@
 		)
 	)
 	(sheet
-		(at 152.4 39.37)
-		(size 41.91 27.94)
+		(at 177.8 90.17)
+		(size 41.91 35.56)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -66,11 +230,58 @@
 			(color 0 0 0 1)
 		)
 		(fill
-			(color 255 150 167 1.0000)
+			(color 108 227 222 0.4000)
+		)
+		(uuid "3098db7b-b921-40c3-86cb-85a991bb6b10")
+		(property "Sheetname" "MCU_ESP32S3"
+			(at 177.8 89.0012 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/mcu_esp32s3.kicad_sch"
+			(at 177.8 126.3908 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 29.21 36.83)
+		(size 41.91 15.24)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 225 168 255 0.3300)
 		)
 		(uuid "3f9cf723-c387-4595-bc4e-8c996d2fd0b8")
 		(property "Sheetname" "SENSOR_OFFSET_DRIVERS"
-			(at 152.4 38.2012 0)
+			(at 29.21 35.6612 0)
 			(effects
 				(font
 					(size 2.032 2.032)
@@ -82,13 +293,73 @@
 			)
 		)
 		(property "Sheetfile" "schematics/sensor_offset_drivers.kicad_sch"
-			(at 152.4 67.9708 0)
+			(at 29.21 52.7308 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left top)
 				(hide yes)
+			)
+		)
+		(pin "DAC_LDAC_N" input
+			(at 29.21 48.26 180)
+			(uuid "d92489bf-ca32-447b-9a54-cbf14624bf98")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_DAC_SCL" input
+			(at 29.21 40.64 180)
+			(uuid "c4e539da-d50a-465e-9d65-6fd6df044d50")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "I2C_DAC_SDA" input
+			(at 29.21 44.45 180)
+			(uuid "d0abd26d-2004-4429-8c00-ee09548f995f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "OFFSET_X+" output
+			(at 71.12 40.64 0)
+			(uuid "eae09c72-01c0-4db4-942a-800636e5250b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "OFFSET_Y+" output
+			(at 71.12 44.45 0)
+			(uuid "9d4daa93-8cd0-4cde-b581-cd1d4654c0d0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "OFFSET_Z+" output
+			(at 71.12 48.26 0)
+			(uuid "4c56054d-6c2c-44e6-b49d-cf3184003e68")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 			)
 		)
 		(instances
@@ -100,8 +371,8 @@
 		)
 	)
 	(sheet
-		(at 59.69 39.37)
-		(size 39.37 27.94)
+		(at 78.74 90.17)
+		(size 41.91 35.56)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -113,11 +384,11 @@
 			(color 0 0 0 1)
 		)
 		(fill
-			(color 207 207 255 1.0000)
+			(color 255 135 146 0.4000)
 		)
-		(uuid "95fd4708-3510-44cf-9b01-8535361ee411")
-		(property "Sheetname" "SENSOR_3AXIS_HMC100X"
-			(at 59.69 38.2012 0)
+		(uuid "6321dc72-3a05-4a49-83e5-bf7bf0cd5913")
+		(property "Sheetname" "PWR_OPAMP_4V5_NEG5"
+			(at 78.74 89.0012 0)
 			(effects
 				(font
 					(size 2.032 2.032)
@@ -128,8 +399,8 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "schematics/sensor_hmc100x_3axis.kicad_sch"
-			(at 59.69 67.9708 0)
+		(property "Sheetfile" "schematics/pwr_opamp_4v5_neg5.kicad_sch"
+			(at 78.74 126.3908 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -141,14 +412,14 @@
 		(instances
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
-					(page "2")
+					(page "13")
 				)
 			)
 		)
 	)
 	(sheet
-		(at 201.93 39.37)
-		(size 38.1 27.94)
+		(at 78.74 36.83)
+		(size 41.91 38.1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -160,11 +431,252 @@
 			(color 0 0 0 1)
 		)
 		(fill
-			(color 255 202 174 1.0000)
+			(color 57 65 255 0.1800)
+		)
+		(uuid "95fd4708-3510-44cf-9b01-8535361ee411")
+		(property "Sheetname" "SENSOR_3AXIS_HMC100X"
+			(at 78.74 35.6612 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/sensor_hmc100x_3axis.kicad_sch"
+			(at 78.74 75.5908 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(pin "BR_X+" output
+			(at 120.65 48.26 0)
+			(uuid "d1ab830a-dfef-4c51-bd7b-56a193afd18d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BR_X-" output
+			(at 120.65 50.8 0)
+			(uuid "0a03edc0-d04e-4615-91ba-37759e7734d9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BR_Y+" output
+			(at 120.65 54.61 0)
+			(uuid "d814de03-a7ec-489e-903d-682d0dbdab29")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BR_Y-" output
+			(at 120.65 57.15 0)
+			(uuid "4398f969-6fa8-4191-812f-a8a88c657830")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BR_Z+" output
+			(at 120.65 60.96 0)
+			(uuid "ed4d427d-3e65-421e-b1a4-e1f1ce2b82f5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "BR_Z-" output
+			(at 120.65 63.5 0)
+			(uuid "8cd62aa4-08a5-43ea-b046-e5d8dabf4036")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "OFFSET_X+" input
+			(at 78.74 40.64 180)
+			(uuid "55fb2b65-a81d-4739-a579-722a506d3638")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "OFFSET_Y+" input
+			(at 78.74 44.45 180)
+			(uuid "e4cd8ff9-ea20-43b4-80fb-f64a89afdb98")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "OFFSET_Z+" input
+			(at 78.74 48.26 180)
+			(uuid "bc1d9b83-11ff-4a93-b67f-6182740c3166")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SETRESET_STRAP" input
+			(at 78.74 67.31 180)
+			(uuid "e05f2dba-99ae-486e-8b36-9b4d4d397a87")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 128.27 36.83)
+		(size 41.91 38.1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 255 252 136 0.4000)
+		)
+		(uuid "d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3")
+		(property "Sheetname" "ANALOG_FRONTEND_INA851"
+			(at 128.27 35.6612 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/analog_frontend_ina851.kicad_sch"
+			(at 128.27 75.5908 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 128.27 90.17)
+		(size 41.91 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 140 206 255 0.4000)
+		)
+		(uuid "d652fa9a-929c-40ea-b9c9-ec80a94942ad")
+		(property "Sheetname" "GNSS_IMU_TEMPERATURE"
+			(at 128.27 89.0012 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/gnss_imu.kicad_sch"
+			(at 128.27 126.3908 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "8")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 29.21 90.17)
+		(size 41.91 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 255 135 146 0.4000)
 		)
 		(uuid "ded83d55-b2f7-490a-b9dc-0b3a44a3cee5")
 		(property "Sheetname" "PWR_9V_BRIDGE"
-			(at 201.93 38.2012 0)
+			(at 29.21 89.0012 0)
 			(effects
 				(font
 					(size 2.032 2.032)
@@ -176,7 +688,7 @@
 			)
 		)
 		(property "Sheetfile" "schematics/pwr_9v_bridge.kicad_sch"
-			(at 201.93 67.9708 0)
+			(at 29.21 126.3908 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -189,6 +701,100 @@
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
 					(page "5")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 78.74 140.97)
+		(size 41.91 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 255 135 146 0.4000)
+		)
+		(uuid "f49aacfc-570c-4693-8ae6-33fb55f53278")
+		(property "Sheetname" "PWR_3V3A"
+			(at 78.74 139.8012 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/pwr_3v3a.kicad_sch"
+			(at 78.74 177.1908 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "12")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 177.8 36.83)
+		(size 41.91 38.1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.3048)
+			(type solid)
+			(color 0 0 0 1)
+		)
+		(fill
+			(color 105 207 102 0.4000)
+		)
+		(uuid "f4b81638-e87a-4975-ab66-02594c3d4d9a")
+		(property "Sheetname" "ADC_AD777X"
+			(at 177.8 35.6612 0)
+			(effects
+				(font
+					(size 2.032 2.032)
+					(thickness 0.4064)
+					(bold yes)
+					(color 0 0 0 1)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "schematics/adc_ad777x.kicad_sch"
+			(at 177.8 75.5908 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(instances
+			(project "magnetometer_node_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+					(page "10")
 				)
 			)
 		)
