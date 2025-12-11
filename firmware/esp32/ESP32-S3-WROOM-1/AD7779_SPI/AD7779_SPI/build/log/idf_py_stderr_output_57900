@@ -1,0 +1,1 @@
+Command: cmake -G Ninja -DPYTHON_DEPS_CHECKED=1 -DPYTHON=/Users/benja/.espressif/python_env/idf5.5_py3.13_env/bin/python -DESP_PLATFORM=1 -DIDF_TARGET=esp32s3 -DCCACHE_ENABLE=0 /Users/benja/Desktop/Master/magnetometer-node/firmware/esp32/ESP32-S3-WROOM-1/AD7779_SPI/AD7779_SPI

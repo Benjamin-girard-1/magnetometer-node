@@ -457,7 +457,7 @@
 			)
 		)
 		(pin "BR_X+" output
-			(at 120.65 48.26 0)
+			(at 120.65 46.99 0)
 			(uuid "d1ab830a-dfef-4c51-bd7b-56a193afd18d")
 			(effects
 				(font
@@ -467,7 +467,7 @@
 			)
 		)
 		(pin "BR_X-" output
-			(at 120.65 50.8 0)
+			(at 120.65 49.53 0)
 			(uuid "0a03edc0-d04e-4615-91ba-37759e7734d9")
 			(effects
 				(font
@@ -497,7 +497,7 @@
 			)
 		)
 		(pin "BR_Z+" output
-			(at 120.65 60.96 0)
+			(at 120.65 62.23 0)
 			(uuid "ed4d427d-3e65-421e-b1a4-e1f1ce2b82f5")
 			(effects
 				(font
@@ -507,7 +507,7 @@
 			)
 		)
 		(pin "BR_Z-" output
-			(at 120.65 63.5 0)
+			(at 120.65 64.77 0)
 			(uuid "8cd62aa4-08a5-43ea-b046-e5d8dabf4036")
 			(effects
 				(font
