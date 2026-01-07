@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "custom_DAN-F10N")(type "KiCad")(uri "${KIPRJMOD}/custom_DAN-F10N.pretty")(options "")(descr ""))
+)
