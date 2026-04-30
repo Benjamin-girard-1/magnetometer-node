@@ -64,6 +64,11 @@ static esp_err_t imu_bus_init_once(void)
         .max_transfer_sz = 64,
     };
     esp_err_t err = spi_bus_initialize(IMU_SPI_HOST, &buscfg, SPI_DMA_CH_AUTO);
+    if (err == ESP_ERR_INVALID_STATE) {
+        /* Already initialized by another driver on this shared bus.        */
+        s_bus_initialized = true;
+        return ESP_OK;
+    }
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "spi_bus_initialize failed: %s", esp_err_to_name(err));
         return err;

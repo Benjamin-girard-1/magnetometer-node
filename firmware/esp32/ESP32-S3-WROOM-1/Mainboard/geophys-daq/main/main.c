@@ -26,6 +26,22 @@
 
 static const char *TAG = "app";
 
+/*
+ * Board-frame mapping for the current PCB orientation.
+ *
+ * From side-by-side static/tilt tests:
+ *   LSM6 X ~=  SCL X
+ *   LSM6 Y ~= -SCL Y
+ *   LSM6 Z ~=  SCL Z
+ *
+ * Keep the drivers sensor-native; apply package/PCB orientation here.
+ */
+static void scl3300_map_to_lsm_frame(scl3300_sample_t *s)
+{
+    s->acc_y_g   = -s->acc_y_g;
+    s->ang_y_deg = -s->ang_y_deg;
+}
+
 void app_main(void)
 {
     /* Power-on settle. SCL3300 mode 1 needs >= 25 ms after VDD is up; we   */
@@ -67,6 +83,9 @@ void app_main(void)
 
         bool have_a = (lsm6dsv_read_sample(&imu, &a) == LSM6DSV_OK);
         bool have_b = (scl3300_read_sample(&inc, &b) == SCL3300_OK);
+        if (have_b) {
+            scl3300_map_to_lsm_frame(&b);
+        }
 
         if (have_a && have_b) {
             ESP_LOGI(TAG,

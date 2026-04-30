@@ -2273,6 +2273,16 @@
 		)
 		(uuid "91b48a5d-ee01-4d3b-9fc6-7d7bfa626405")
 	)
+	(text "enlever D9"
+		(exclude_from_sim no)
+		(at 112.522 148.844 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "991bf8c2-35e3-43d8-9f23-f1dd7109471e")
+	)
 	(text "Power all the digital domain"
 		(exclude_from_sim no)
 		(at 220.98 35.56 0)
