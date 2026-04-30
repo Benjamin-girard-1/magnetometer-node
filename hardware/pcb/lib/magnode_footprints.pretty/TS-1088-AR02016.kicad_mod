@@ -1,0 +1,206 @@
+(footprint "TS-1088-AR02016"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -2.525 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "513d5520-51bd-479b-969d-366f46a9c8b1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.1)
+			)
+		)
+	)
+	(property "Value" "TS-1088-AR02016"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "2b8c20fe-fabe-473f-92c9-9953d91351fe")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "be18aadf-1645-4dc6-816d-a2b9ab906445")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Push button"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "33b3b6ad-1f40-461d-a70b-62826c91de7a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -2 -1.5)
+		(end -2 -1.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "3183c476-5ecd-4529-8f7c-0bf08b378e4a")
+	)
+	(fp_line
+		(start -2 -1.5)
+		(end 2 -1.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "db7849d3-982a-4c2f-b569-913b59439514")
+	)
+	(fp_line
+		(start -2 -1.2)
+		(end -2 -1.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "a356e350-e6b5-4218-a8a5-c33e715860cf")
+	)
+	(fp_line
+		(start -2 1.2)
+		(end -2 1.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "9e5b9f07-7976-48a5-8fc2-e46c7fc9f35e")
+	)
+	(fp_line
+		(start -2 1.5)
+		(end -2 1.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "6e50ba69-94ae-4729-8167-b4692f00cedf")
+	)
+	(fp_line
+		(start 2 -1.5)
+		(end 2 -1.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "a9c2b459-3d4a-46ab-8d3b-7271d5a0534d")
+	)
+	(fp_line
+		(start 2 -1.2)
+		(end 2 -1.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "169145bf-ad3e-4beb-ac01-74bfb55659df")
+	)
+	(fp_line
+		(start 2 1.2)
+		(end 2 1.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "aadfee31-e486-450f-ab17-583367fd0ab1")
+	)
+	(fp_line
+		(start 2 1.5)
+		(end -2 1.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "8296ca5b-29e5-4cc5-b789-5bd3c3ee982b")
+	)
+	(fp_line
+		(start 2 1.5)
+		(end 2 1.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "0b251f50-1d47-4079-96ef-1e8877df1b9e")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 0.9 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "355b78ad-a400-47b9-8ee1-7fc84c95e036")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 1.5 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "20b52791-0c8e-46ca-a963-c9fc42ca434e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd roundrect
+		(at -2.225 0 180)
+		(size 1.05 2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "31ea5e82-03c9-499e-be6d-037266c42517")
+	)
+	(pad "2" smd roundrect
+		(at 2.225 0 180)
+		(size 1.05 2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0.15)
+		(uuid "c97c6626-c76b-442a-83ee-562a0c1ba6d6")
+	)
+	(embedded_fonts no)
+	(model "/Users/benja/Desktop/Master/magnetometer-node/hardware/pcb/lib/3dmodels/button.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

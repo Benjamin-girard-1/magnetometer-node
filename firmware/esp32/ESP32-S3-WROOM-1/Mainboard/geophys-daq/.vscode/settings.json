@@ -1,0 +1,18 @@
+{
+  "C_Cpp.intelliSenseEngine": "default",
+  "idf.openOcdConfigs": [
+    "board/esp32s3-builtin.cfg"
+  ],
+  "idf.port": "/dev/tty.usbserial-14320",
+  "idf.currentSetup": "/Users/benja/esp/v5.5/esp-idf",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32s3"
+  },
+  "clangd.path": "/Users/benja/.espressif/tools/esp-clang/esp-19.1.2_20250312/esp-clang/bin/clangd",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=/Users/benja/Desktop/Master/magnetometer-node/firmware/esp32/ESP32-S3-WROOM-1/Mainboard/sample_project/build"
+  ],
+  "idf.flashType": "UART"
+}

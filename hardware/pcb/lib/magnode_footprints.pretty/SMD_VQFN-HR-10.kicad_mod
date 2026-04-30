@@ -1,0 +1,4982 @@
+(footprint "SMD_VQFN-HR-10"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(tags "TPS25210LRPWR ")
+	(property "Reference" "REF**"
+		(at 0.1 -3 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "2d60a76b-5ad2-42d4-b7a0-4967aeaef433")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "VQFN-HR-10"
+		(at 0 3.05 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "35e7495c-77e5-4c06-9a6a-1a88be4ac5dc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d294e52c-082a-4d07-a645-328aa9e52b65")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fc883573-edad-4f6e-8f18-b77c444fc8b1")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_rect
+		(start -1.125 -1.125)
+		(end 1.125 1.125)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "63160e44-094a-4ee6-abda-0f7a3d3ef171")
+	)
+	(fp_circle
+		(center -1.3 -1.3)
+		(end -1.175 -1.3)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.SilkS")
+		(uuid "899d9c1d-b9ca-4785-957e-48e410efcf28")
+	)
+	(fp_line
+		(start -1.5 -1.5)
+		(end 1.5 -1.5)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "34ff6b1a-c5c4-4ba1-aca9-87019af73727")
+	)
+	(fp_line
+		(start -1.5 1.5)
+		(end -1.5 -1.5)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "58bedcee-ba6b-4156-ab7f-36c5274c4b2a")
+	)
+	(fp_line
+		(start 1.5 -1.5)
+		(end 1.5 1.5)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "68c80952-6572-4b0c-a8ac-b3da2aad6a79")
+	)
+	(fp_line
+		(start 1.5 1.5)
+		(end -1.5 1.5)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "e282d835-9407-401f-b96c-e33b70ea8d01")
+	)
+	(fp_line
+		(start -1.05 -1.05)
+		(end -1.05 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "fc922308-0781-4add-9540-0ad3f3c30337")
+	)
+	(fp_line
+		(start -1.05 -1.05)
+		(end -1.05 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "16455a51-a18b-46e3-8a02-b4a5060b44ab")
+	)
+	(fp_line
+		(start -1.05 -0.825)
+		(end -1.05 -0.825)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "b629579b-ad6d-4893-ac16-860b7734b67f")
+	)
+	(fp_line
+		(start -1.05 -0.825)
+		(end -1.05 -0.525)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "ff0cebee-bcd7-4356-81d3-8e06aa17edd5")
+	)
+	(fp_line
+		(start -1.05 -0.525)
+		(end -1.05 -0.825)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "12ce93ef-65a9-4bdc-961d-f8024e0c7cf3")
+	)
+	(fp_line
+		(start -1.05 -0.525)
+		(end -1.05 -0.525)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "8e41021b-1d3a-4a84-9c19-3e2e2e5ca986")
+	)
+	(fp_line
+		(start -1.05 -0.375)
+		(end -1.05 -0.375)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "1c24e901-47bb-43d8-8c35-7b065d9219a8")
+	)
+	(fp_line
+		(start -1.05 -0.375)
+		(end -1.05 -0.075)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "b06cc889-e088-4f81-817c-514058159716")
+	)
+	(fp_line
+		(start -1.05 -0.075)
+		(end -1.05 -0.375)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "b54dd701-f1cb-47ec-a2bd-d2fe16d7b219")
+	)
+	(fp_line
+		(start -1.05 -0.075)
+		(end -1.05 -0.075)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "4994e87d-7db2-475a-ad74-7cc5a41b9725")
+	)
+	(fp_line
+		(start -1.05 0.075)
+		(end -1.05 0.075)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "cc486202-a792-425c-9c0f-a15228ecacf3")
+	)
+	(fp_line
+		(start -1.05 0.075)
+		(end -1.05 0.375)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "6f47e634-2b49-4ef6-8aae-c83af53b1edb")
+	)
+	(fp_line
+		(start -1.05 0.375)
+		(end -1.05 0.075)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "7983e3d9-a131-4de7-a9c0-0f07125fc346")
+	)
+	(fp_line
+		(start -1.05 0.375)
+		(end -1.05 0.375)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "c99c810f-4e48-4fce-9195-5a83110ab031")
+	)
+	(fp_line
+		(start -1.05 0.525)
+		(end -1.05 0.525)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "982323a7-c869-4deb-aca8-49371d92fc03")
+	)
+	(fp_line
+		(start -1.05 0.525)
+		(end -1.05 0.825)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "4d38423e-6b48-4674-90a2-fcedd6b600a4")
+	)
+	(fp_line
+		(start -1.05 0.825)
+		(end -1.05 0.525)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "6540dd71-b1b2-4ca8-98c7-f88cbf9c80b8")
+	)
+	(fp_line
+		(start -1.05 0.825)
+		(end -1.05 0.825)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "8849bd5e-ed00-4cb3-a95f-5e3d2551e6a5")
+	)
+	(fp_line
+		(start -1.05 1.05)
+		(end -1.05 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "639c8cae-b877-41d4-a4f3-70e45f95e3a8")
+	)
+	(fp_line
+		(start -1.05 1.05)
+		(end 1.05 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "305e1f52-ee58-464c-82ec-87758315db23")
+	)
+	(fp_line
+		(start -0.825 -1.05)
+		(end -0.825 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "b2a75032-ff16-4268-933a-22ef19b6f292")
+	)
+	(fp_line
+		(start -0.825 -1.05)
+		(end -0.525 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "c6695f5e-b077-47c4-be95-357d3bb3b9f4")
+	)
+	(fp_line
+		(start -0.825 1.05)
+		(end -0.825 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "f5183b71-f7ec-4723-8d40-1f6906d97374")
+	)
+	(fp_line
+		(start -0.825 1.05)
+		(end -0.525 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "fb36a018-a2a9-4792-947c-1909c1e542c7")
+	)
+	(fp_line
+		(start -0.525 -1.05)
+		(end -0.825 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "53d4b3e9-ee74-41ee-98b9-602b51d22e7d")
+	)
+	(fp_line
+		(start -0.525 -1.05)
+		(end -0.525 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "3723b474-2ed9-4aa7-a443-5678f9729536")
+	)
+	(fp_line
+		(start -0.525 1.05)
+		(end -0.825 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "d6cd07e2-516f-496a-81c6-eb9de8a92313")
+	)
+	(fp_line
+		(start -0.525 1.05)
+		(end -0.525 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "62b046c4-3254-4990-b5f8-db1e90c5ae0f")
+	)
+	(fp_line
+		(start -0.375 -1.05)
+		(end -0.375 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "c55141eb-8880-4e78-b8b2-7cf4f13f010e")
+	)
+	(fp_line
+		(start -0.375 -1.05)
+		(end -0.075 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "2a13341a-b7a3-48f7-89a9-42c974c553aa")
+	)
+	(fp_line
+		(start -0.375 1.05)
+		(end -0.375 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "7e230049-efc8-4e05-b9dd-3f3de0993c45")
+	)
+	(fp_line
+		(start -0.375 1.05)
+		(end -0.075 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "b3dbaad3-0160-439e-8605-123c3cd341be")
+	)
+	(fp_line
+		(start -0.075 -1.05)
+		(end -0.375 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "1680bc56-d70b-4e01-83a5-a7d4ebeecad9")
+	)
+	(fp_line
+		(start -0.075 -1.05)
+		(end -0.075 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "8249ece4-4736-4bd4-af1f-99d8d1a166ab")
+	)
+	(fp_line
+		(start -0.075 1.05)
+		(end -0.375 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "a745bb58-4211-4751-ba88-467088a7b561")
+	)
+	(fp_line
+		(start -0.075 1.05)
+		(end -0.075 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "f08b8a58-98f1-46ec-a320-79fc0b00c094")
+	)
+	(fp_line
+		(start 0.075 -1.05)
+		(end 0.075 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "f5ec433b-40c0-4dac-9f53-29d8e408c9b9")
+	)
+	(fp_line
+		(start 0.075 -1.05)
+		(end 0.375 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "63aaffba-ac81-40a4-85b7-5fa251a9dafb")
+	)
+	(fp_line
+		(start 0.075 1.05)
+		(end 0.075 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "381e7643-74fe-48c2-b7d3-9f3311b85093")
+	)
+	(fp_line
+		(start 0.075 1.05)
+		(end 0.375 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "2efa0292-4957-4bfe-a9a1-5c89c286dc65")
+	)
+	(fp_line
+		(start 0.375 -1.05)
+		(end 0.075 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "ce6cb18f-e115-43ac-a079-df3afd3af200")
+	)
+	(fp_line
+		(start 0.375 -1.05)
+		(end 0.375 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "6daf8ec0-de03-4d6c-9e0f-5497a3115035")
+	)
+	(fp_line
+		(start 0.375 1.05)
+		(end 0.075 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "f107a758-a989-4be4-8b3c-20337866623e")
+	)
+	(fp_line
+		(start 0.375 1.05)
+		(end 0.375 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "5407a001-325d-4a1c-b89b-caca83ddb109")
+	)
+	(fp_line
+		(start 0.525 -1.05)
+		(end 0.525 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "f478550f-20ee-474c-a6e4-f2a70d213ee4")
+	)
+	(fp_line
+		(start 0.525 -1.05)
+		(end 0.825 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "f56414b5-4498-458e-a711-538d46e488c5")
+	)
+	(fp_line
+		(start 0.525 1.05)
+		(end 0.525 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "4a40fa57-01b4-4d0d-b732-e8823c338712")
+	)
+	(fp_line
+		(start 0.525 1.05)
+		(end 0.825 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "4267d247-3f6f-4e98-a638-ca8e9b565b12")
+	)
+	(fp_line
+		(start 0.825 -1.05)
+		(end 0.525 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "3abf3cea-694c-43f7-983f-e1f2a049d789")
+	)
+	(fp_line
+		(start 0.825 -1.05)
+		(end 0.825 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "fee4f603-6dd1-4263-a3cb-a7d5e6cd2b88")
+	)
+	(fp_line
+		(start 0.825 1.05)
+		(end 0.525 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "fa931156-0380-42a7-82c1-c3965fa2f1a3")
+	)
+	(fp_line
+		(start 0.825 1.05)
+		(end 0.825 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "40e691d2-9023-4d9a-8b45-635956ad2dc3")
+	)
+	(fp_line
+		(start 1.05 -1.05)
+		(end -1.05 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "293cd8d7-81ae-41ea-a931-880e60ceecfa")
+	)
+	(fp_line
+		(start 1.05 -1.05)
+		(end 1.05 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "cc6dd8e7-7efd-4169-8854-8accb1349e76")
+	)
+	(fp_line
+		(start 1.05 -0.825)
+		(end 1.05 -0.825)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "5fc9ce94-f179-4d28-9679-7dca4f707da9")
+	)
+	(fp_line
+		(start 1.05 -0.825)
+		(end 1.05 -0.525)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "62a4a95f-e856-496b-b223-ba74ab8dc5f0")
+	)
+	(fp_line
+		(start 1.05 -0.525)
+		(end 1.05 -0.825)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "eccfbe2e-fadf-4075-a6c9-0a3f14f9df13")
+	)
+	(fp_line
+		(start 1.05 -0.525)
+		(end 1.05 -0.525)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "16035e20-68ec-4dc3-aabc-45c18f3206d5")
+	)
+	(fp_line
+		(start 1.05 -0.375)
+		(end 1.05 -0.375)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "d150209c-1ee4-42b0-8b04-c2421bfc9790")
+	)
+	(fp_line
+		(start 1.05 -0.375)
+		(end 1.05 -0.075)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "877b6346-7139-4975-8978-9e7a07e81df0")
+	)
+	(fp_line
+		(start 1.05 -0.075)
+		(end 1.05 -0.375)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "47fdb597-4b30-4764-8c0f-c3bbc37b96c2")
+	)
+	(fp_line
+		(start 1.05 -0.075)
+		(end 1.05 -0.075)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "bcbba357-0861-4f35-9af5-714c555b0b52")
+	)
+	(fp_line
+		(start 1.05 0.075)
+		(end 1.05 0.075)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "86557130-6c65-4161-a6c3-223d1aa75ab1")
+	)
+	(fp_line
+		(start 1.05 0.075)
+		(end 1.05 0.375)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "0a49b9cb-85ba-4743-9af9-0c7b7754f0f7")
+	)
+	(fp_line
+		(start 1.05 0.375)
+		(end 1.05 0.075)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "a271aaf4-9798-4e82-ab14-5b1549280bfc")
+	)
+	(fp_line
+		(start 1.05 0.375)
+		(end 1.05 0.375)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "93d09033-3a9d-487e-ab84-752ad5c11c44")
+	)
+	(fp_line
+		(start 1.05 0.525)
+		(end 1.05 0.525)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "811d11b0-9a1e-4692-af04-b4e3196ff027")
+	)
+	(fp_line
+		(start 1.05 0.525)
+		(end 1.05 0.825)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "8f83b306-1314-4347-a01f-cdd3a142c254")
+	)
+	(fp_line
+		(start 1.05 0.825)
+		(end 1.05 0.525)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "eb172c54-3dd9-4087-9b1e-8a17cfbe3fc8")
+	)
+	(fp_line
+		(start 1.05 0.825)
+		(end 1.05 0.825)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "ee6e0853-65df-4e3f-b840-c5c7b9ed89b3")
+	)
+	(fp_line
+		(start 1.05 1.05)
+		(end 1.05 -1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "cba18d62-7f28-4350-9c39-bf0cdfd122ce")
+	)
+	(fp_line
+		(start 1.05 1.05)
+		(end 1.05 1.05)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "dc32abee-e02f-47b2-9b61-eb26500ea6a4")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 -3 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "af9101d8-7038-4408-88fb-a72c8182d9d1")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd custom
+		(at -0.85 -0.7 180)
+		(size 0.3 0.3)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(options
+			(clearance outline)
+			(anchor rect)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+				)
+				(width 0.000001)
+				(fill yes)
+			)
+		)
+		(uuid "f18af832-035c-46fc-bce4-50d4807ce5fd")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape custom)
+				(size 0.3 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.15 -0.15) (xy 0.15 0.15) (xy 0 0.15) (xy 0 0.3) (xy -0.25 0.3) (xy -0.25 -0.05) (xy -0.15 -0.15)
+						)
+						(width 0.000001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+		)
+	)
+	(pad "2" smd rect
+		(at -0.8 -0.225 90)
+		(size 0.25 0.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "59229d21-d693-474b-b3a9-8b35b93d3815")
+	)
+	(pad "3" smd rect
+		(at -0.8 0.225 90)
+		(size 0.25 0.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "59cebd78-f913-4e08-ad25-e28217166b5e")
+	)
+	(pad "4" smd custom
+		(at -0.8 0.7)
+		(size 0.4 0.3)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(options
+			(clearance outline)
+			(anchor rect)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+				)
+				(width 0.0001)
+				(fill yes)
+			)
+		)
+		(uuid "46e5eade-1aeb-4e99-8892-819aefb29753")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+		)
+	)
+	(pad "5" smd rect
+		(at -0.25 0)
+		(size 0.3 2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "5bcd9610-0d6b-4c14-b5c4-d487bb0cd4fa")
+	)
+	(pad "6" smd rect
+		(at 0.25 0)
+		(size 0.3 2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "df7aa0eb-e35c-4f1b-9aee-ab55123a69bb")
+	)
+	(pad "7" smd custom
+		(at 0.8 0.7 180)
+		(size 0.4 0.3)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(options
+			(clearance outline)
+			(anchor rect)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+				)
+				(width 0.0001)
+				(fill yes)
+			)
+		)
+		(uuid "5e26d889-b653-4d25-bd27-1ddf2440269e")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 0.15) (xy 0.2 -0.3) (xy -0.05 -0.3) (xy -0.05 -0.15) (xy -0.2 -0.15) (xy -0.2 0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+		)
+	)
+	(pad "8" smd rect
+		(at 0.8 0.225001 90)
+		(size 0.25 0.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "98e35414-cf6f-493e-87e5-22e9cf5f631f")
+	)
+	(pad "9" smd rect
+		(at 0.8 -0.225 90)
+		(size 0.25 0.4)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "3ff68f8c-87f6-4da2-aa9e-695a2854207f")
+	)
+	(pad "10" smd custom
+		(at 0.8 -0.7 180)
+		(size 0.4 0.3)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(options
+			(clearance outline)
+			(anchor rect)
+		)
+		(primitives
+			(gr_poly
+				(pts
+					(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+				)
+				(width 0.0001)
+				(fill yes)
+			)
+		)
+		(uuid "bafe29a4-b9ea-45b5-b219-ae43d33b9f6e")
+		(padstack
+			(mode custom)
+			(layer "In1.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In2.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In3.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In4.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In5.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In6.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In7.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In8.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In9.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In10.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In11.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In12.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In13.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In14.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In15.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In16.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In17.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In18.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In19.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In20.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In21.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In22.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In23.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In24.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In25.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In26.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In27.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In28.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In29.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "In30.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+			(layer "B.Cu"
+				(shape custom)
+				(size 0.4 0.3)
+				(options
+					(anchor rect)
+				)
+				(primitives
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+					(gr_poly
+						(pts
+							(xy 0.2 -0.15) (xy 0.2 0.3) (xy -0.05 0.3) (xy -0.05 0.15) (xy -0.2 0.15) (xy -0.2 -0.15)
+						)
+						(width 0.0001)
+						(fill yes)
+					)
+				)
+				(thermal_bridge_angle 45)
+				(zone_connect -1)
+			)
+		)
+	)
+	(embedded_fonts no)
+	(model "/Users/benja/Desktop/Master/magnetometer-node/hardware/pcb/lib/3dmodels/TPS25210LRPWR.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

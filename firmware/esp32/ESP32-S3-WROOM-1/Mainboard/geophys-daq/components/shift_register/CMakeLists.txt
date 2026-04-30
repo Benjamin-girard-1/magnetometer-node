@@ -1,0 +1,9 @@
+idf_component_register(
+    SRCS
+        "shift_register.c"
+        "port/sr_port_esp32.c"
+    INCLUDE_DIRS
+        "include"
+    REQUIRES
+        driver
+)

@@ -1,0 +1,321 @@
+(footprint "C_Radial_D8.0mm_P11.50mm"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "SCMR14C474PRBA0-4")
+	(tags "Capacitor Polarised")
+	(property "Reference" "C**"
+		(at 5.75 0 0)
+		(layer "F.SilkS")
+		(uuid "00ad8670-4747-4bf7-a7a5-4d3f54566bf4")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Value" "C_Radial_D8.0mm_P11.50mm"
+		(at 5.75 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "b98ed1e2-8843-4e5e-acf5-5f09041347ee")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "f1b49fa6-a953-4454-95ab-2d25291502b9")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "9fe0565a-826c-41c5-8faa-5c5401cb9b44")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -2.9 0)
+		(end -2.9 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c6a0c81b-5e0e-4f15-8537-97c6525dd4df")
+	)
+	(fp_line
+		(start -2.8 0)
+		(end -2.8 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "137554ca-7639-4ad2-b32b-770edd54e7ef")
+	)
+	(fp_line
+		(start 1.75 -4)
+		(end 9.75 -4)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "84d0da40-1f45-40f3-9673-1e13805cf49d")
+	)
+	(fp_line
+		(start 1.75 4)
+		(end 1.75 4)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "6c237af1-628c-4720-9b85-5e9aa85c756f")
+	)
+	(fp_line
+		(start 5.75 4)
+		(end 1.75 4)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "837d15d3-949a-4c6f-8250-dcc20c5fac95")
+	)
+	(fp_line
+		(start 9.75 -4)
+		(end 9.75 -4)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "2ab3cb46-7a40-4fe4-b23b-9a48abc7a7e3")
+	)
+	(fp_line
+		(start 9.75 4)
+		(end 5.75 4)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "ddca7a0a-498c-4bb1-9e4f-2bbd8495f5b5")
+	)
+	(fp_arc
+		(start -2.9 0)
+		(mid -2.85 -0.05)
+		(end -2.8 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "23952624-9f34-4ad0-b0fc-72e31e41234d")
+	)
+	(fp_arc
+		(start -2.8 0)
+		(mid -2.85 0.05)
+		(end -2.9 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d9e60353-ced7-4fee-8bcb-99a68ecb7c88")
+	)
+	(fp_arc
+		(start 1.75 4)
+		(mid -2.25 0)
+		(end 1.75 -4)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "697341de-c300-4155-8e0e-c9708e74f21b")
+	)
+	(fp_arc
+		(start 9.75 -4)
+		(mid 13.75 0)
+		(end 9.75 4)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c5b4705f-ba59-4a96-9ed1-207d76166b4b")
+	)
+	(fp_line
+		(start -3.25 -5)
+		(end 14.75 -5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "551e2fc7-bd7d-4761-9778-f55735e40ec7")
+	)
+	(fp_line
+		(start -3.25 5)
+		(end -3.25 -5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "01a9706d-a5bc-4426-9836-0ca29e08d3c4")
+	)
+	(fp_line
+		(start 14.75 -5)
+		(end 14.75 5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "ff33b1ab-2dc9-4e40-8079-2987d841c7ee")
+	)
+	(fp_line
+		(start 14.75 5)
+		(end -3.25 5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "fc781573-133f-4b3d-adfe-07d7cc299abf")
+	)
+	(fp_line
+		(start 1.75 -4)
+		(end 9.75 -4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "ab3d0b2f-876e-41f7-8866-cf205e7fce38")
+	)
+	(fp_line
+		(start 1.75 4)
+		(end 1.75 4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "69dbb0fc-cfcc-4f84-baa8-5934891bc2b5")
+	)
+	(fp_line
+		(start 5.75 4)
+		(end 1.75 4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "10259697-bf11-4d58-ad1b-59ec0c258faf")
+	)
+	(fp_line
+		(start 9.75 -4)
+		(end 9.75 -4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "980d6e22-eaa3-481a-9cf9-e8990861fde6")
+	)
+	(fp_line
+		(start 9.75 4)
+		(end 5.75 4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "e2d15895-e050-4667-bb29-33b4db39fa34")
+	)
+	(fp_arc
+		(start 1.75 4)
+		(mid -2.25 0)
+		(end 1.75 -4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "a8b370be-187a-4a46-af83-cb4937168c09")
+	)
+	(fp_arc
+		(start 9.75 -4)
+		(mid 13.75 0)
+		(end 9.75 4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "0bafa979-fdf7-4830-8644-894a40d86cf5")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 5.75 0 0)
+		(layer "F.Fab")
+		(uuid "39e38405-bd37-49be-acb5-0bf5335d6761")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(pad "1" thru_hole rect
+		(at 0 0)
+		(size 1.3 1.3)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "4ff2f070-e61b-4281-bd35-62d2a66c5156")
+	)
+	(pad "2" thru_hole circle
+		(at 11.5 0)
+		(size 1.3 1.3)
+		(drill 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "fe71260c-a8ea-41b0-a508-88aefbd55cc1")
+	)
+	(embedded_fonts no)
+	(model "/Users/benja/Desktop/Master/magnetometer-node/hardware/pcb/lib/3dmodels/ CP_Radial_D8.0mm_P1150mm.stp"
+		(offset
+			(xyz 5.74 0.19 14)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 90 -0 -90)
+		)
+	)
+)

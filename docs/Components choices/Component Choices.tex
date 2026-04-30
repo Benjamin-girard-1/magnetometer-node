@@ -445,7 +445,7 @@ fast surge transients.
 \node[rail] (usb) {+5V USB};
 
 % Branch 1: +3.3VA
-\node[rail, below left=1.5cm and 4.25cm of usb] (ldo33) {XC620633\\(LDO)};
+\node[rail, below left=1.5cm and 4.25cm of usb] (ldo33) {TPS7A2033\\(LDO)};
 \node[rail, below=1.5cm of ldo33] (v33a) {+3.3VA};
 
 % Branch 1: +3.3VD
@@ -454,19 +454,19 @@ fast surge transients.
 
 % Branch 2: -5VA
 \node[rail, below left=1.5cm and -0.75cm of usb] (m55_I) {TPS63700\\(Inverter)};
-\node[rail, below=1.5cm of m55_I] (m55) {–5.5V};
+\node[rail, below=1.5cm of m55_I] (m55) {–6.2V};
 \node[rail, below=1.5cm of m55] (ldom5) {TPS7A33\\(LDO)};
 \node[rail, below=1.5cm of ldom5] (vm5a) {–5VA};
-
-% Branch 5: +5VA
-\node[rail, below right=1.5cm and -0.75cm of usb] (ldop5_i) {TPS7A2045\\(LDO)};
-\node[rail, below=1.5cm of ldop5_i] (ldop5) {+4.5VA};
 
 % Branch 4: +9VA
 \node[rail, below right=1.5cm and 2cm of usb] (v105_i) {TPS61040\\(Boost)};
 \node[rail, below=1.5cm of v105_i] (v105) {+10V};
 \node[rail, below=1.5cm of v105] (ldo9) {LT3042\\(LDO)};
 \node[rail, below=1.5cm of ldo9] (v9a) {+9VA};
+
+% Branch 5: +5VA
+\node[rail, left=0.5cm  of ldo9] (ldop5_i) {TPS7A4901\\(LDO)};
+\node[rail, below=1.5cm of ldop5_i] (ldop5) {+5VA};
 
 % Branch 3: +18V
 \node[rail, below right=1.5cm and 4.5cm of usb] (v18_b) {TPS61170\\(Boost)};
@@ -477,7 +477,7 @@ fast surge transients.
 \draw[->] (usb) -- (m55_I);
 \draw[->] (usb) -- (v18_b);
 \draw[->] (usb) -- (v105_i);
-\draw[->] (usb) -- (ldop5_i);
+\draw[->] (v105) -- (ldop5_i);
 \draw[->] (usb) -- (33vd_i);
 
 % Sub-branch arrows
@@ -500,55 +500,47 @@ EMI radiation and low BOM}
 
 
 \begin{table}[htbp]
-\small
-\setlength{\tabcolsep}{4pt}
 \centering
-\caption{Estimated current and power budget by rail.}
+\caption{Estimated current budget by rail.}
 \label{tab:power-budget}
-\begin{tabular}{l l c c c}
+\begin{tabular}{l l c c c c}
 \toprule
-\textbf{Rail} & \textbf{Part} & \textbf{Current peak (mA)} & \textbf{Power peak (mW)} & \textbf{Power average (mW)} \\
+\textbf{Rail} & \textbf{Part} & \shortstack{\textbf{Avg. current}\\\textbf{sensing (mA)}} 
+& \shortstack{\textbf{Avg. current}\\\textbf{USB read (mA)}} & \shortstack{\textbf{Peak current}\\\textbf{(mA)}} \\
 \midrule
-+3.3\,V & ESP32-S3-WROOM-1              & 100  & 330  & 70 \\
-        & DAN-F10N                      & 19   & 63  & 63 \\
-        & microSD (writes)              & 45   & 150  & 5 \\
-        & AD7779                        & 15   & 49  & 33  \\
-        & MCP4728                       & 1    & 3   & 2 \\
-        & ISM330DHCX                    & 5    & 16  & 16 \\
-        & TPS62912 ($I_Q$)              & 1    & 3  & 2 \\
-        & Misc. (LEDs, logic)           & 5    & 16 & 3 \\
++3.3\,V & ESP32-S3-WROOM-1              & 60   & 40  & 344 \\
+        & MAX-M10                       & 10   & 10  & 100 \\
+        & microSD (writes)              & 40   & 70  & 250 \\
+        & AD7779                        & 30   &  0  &  50 \\
+        & MCP4728                       &  2   &  0  &   2 \\
+        & IMU                           &  5   &  5  &  25 \\
+        & USB2641.                      &  1   & 65  &  70 \\
+        & Misc. (LEDs, logic)           &  5   &  5   & 25 \\
 \cmidrule(l){2-5}
-        & Subtotal                      & 191  & 617  & \textbf{194} \\
+        & Subtotal                      & \textbf{153}  & \textbf{195}  & \textbf{866} \\
 \midrule
-+5\,V   & INA851 (3 ch, +$V_\mathrm{s}$)& 10.8  & 54   & 54 \\
-        & Offset strap drivers          & 300 & 1500 & 89 (1) \\
++5\,V   & INA851 (3 ch, +$V_\mathrm{s}$)& 21  & 0   &  27 \\
+        & LM324DT                       & 1   & 0   &   3 \\
+        & Offset strap drivers          & 19  & 0   & 156 \\
 \cmidrule(l){2-5}
-        & Subtotal                      & 310.8 & 1554 & \textbf{143} \\
+        & Subtotal                      & \textbf{41} & \textbf{0} & \textbf{186} \\
 \midrule
--5\,V   & INA851 (3 ch, -$V_\mathrm{s}$)& 10.8  & 54   & 54 \\
-        & Offset strap drivers          & 300 & 1500 & 89 (1) \\
+-5\,V   & INA851 (3 ch, +$V_\mathrm{s}$)& 21  & 0   &  27 \\
+        & LM324DT                       & 1   & 0   &   3 \\
+        & Offset strap drivers          & 19  & 0   & 156 \\
 \cmidrule(l){2-5}
-        & Subtotal                      & 310.8 & 1554 & \textbf{143} \\
+        & Subtotal                      & \textbf{41} & \textbf{0} & \textbf{186} \\
 \midrule
-+9\,V   & HMC1001                       & 15  & 135  & 97  \\
-        & HMC1002                       & 30  & 270  & 195 \\
++9\,V   & HMC1001                       & 15  & 0 & 15 \\
+        & HMC1002                       & 30  & 0 & 30 \\
 \cmidrule(l){2-5}
-        & Subtotal                      & 45  & 405 & \textbf{292} \\
+        & Subtotal                      & \textbf{45}  & \textbf{0} & \textbf{45} \\
 \addlinespace
 \midrule
-\textbf{Total}  &  &  &
-\textbf{ } &
-\textbf{772 mW} \\
+\textbf{Total}  &  & \textbf{1 320 mW} & \textbf{644 mW} & - \\
 \bottomrule
 \end{tabular}
-\footnotesize
-\raggedright
-\textbf{Notes:} (1) The average magnetic field is expected to be \SI{50000}{\nano\tesla}, 
-so with an offset constant of \SI{47.5}{\milli\ampere\per\gauss}, if we average all possible field,
-we get \SI{35.6}{\milli\ampere} of total average offset current, then we suppose that in average 
-the B-field would be split positive and negative.
 \vspace{2mm}
-
 \end{table}
 
 \subsubsection{+9V Sensor Bridge Voltage}
@@ -566,7 +558,7 @@ the MCU with the TPS61040. A pull-down resistor is added to keep this off until 
 to the EN pin.
 
 Considering normal operation with three bridge resistances of 850\si{\ohm} giving an equivalent 
-of 283.33\si{\ohm}, this results in 32.1~mA and 292~mW in total. With an efficiency of 87\%, the 
+of 283.33\si{\ohm}, this results in 32.1~mA and 321~mW in total. The 
 TPS61040 will require 73.8~mA at the +5V input.
 
  \begin{table}[!htbp]
@@ -699,41 +691,90 @@ $\text{C}_\text{OUT2}$    & \SI{0.1}{\micro\farad}, \SI{6.3}{\volt}   \\
 \end{table}
 
 
-\subsubsection{-5V Analog}
-To supply the INA851 and the other analog stages with a negative rail, a -5VA is derived from
-the +5V USB main supply. First, the TPS63700 is used as an inverting DC/DC converter to
-generate an intermediate voltage of approximately -5.5V. This voltage is then regulated by the
-low-noise TPS7A33 LDO down to -5V, improving both line rejection and noise performance. The
-following table \ref{tab:-5va-bom} summarizes the passive component values used in this design.
+\subsubsection{-5\,V Analog}
+To supply the INA851 and the other analog stages with a negative rail, a \SI{-5}{\volt} analog supply
+(\(-5\)VA) is generated from the \SI{5}{\volt} USB input. First, the TPS63700 is configured as an inverting
+DC/DC converter to produce an intermediate rail of approximately \SI{-5.5}{\volt} (\(-5.5\)V\(_\text{PRE}\)),
+providing sufficient headroom for post-regulation. This intermediate voltage is then regulated by the low-noise
+TPS7A33 LDO down to \SI{-5}{\volt}, improving both line rejection and output noise.
+
+The TPS63700 output voltage is programmed using the resistor divider \textbf{R2/R3} referenced to the internal
+\(\,V_\text{REF}\approx \SI{1.213}{\volt}\). With \textbf{R2} from \textit{VREF} to \textit{FB} and \textbf{R3} from \textit{FB} to
+\textit{VOUT}, the programmed output is:
+\[
+V_{\text{OUT}} = -V_{\text{REF}}\cdot\frac{R3}{R2}.
+\]
+The following Table~\ref{tab:-5va-bom} summarizes the passive components used in this design.
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=1\textwidth]{TPS63700_circuit.png}
+  \caption{TPS63700 circuit (taken from the TPS63700 datasheet, 
+  Fig.~2, p.~9).}
+  \label{fig:TPS63700}
+\end{figure}
 
 \begin{table}[!htbp]
 \centering
-\caption{-5VA rail: TPS63700 inverting pre-regulator and TPS7A33 LDO components. (5\,V\,in $\rightarrow$ 
--5.5\,V\, $\rightarrow$ -5\,V\,out)}
+\caption{-5VA rail: TPS63700 inverting pre-regulator and TPS7A33 LDO components
+(\SI{5}{\volt} in $\rightarrow$ \SI{-5.5}{\volt} $\rightarrow$ \SI{-5}{\volt} out).} See figure \ref{fig:TPS63700} 
+for a circuit exanple
 \label{tab:-5va-bom}
-\begin{tabular}{l l l l}
+\begin{tabular}{l l l p{7.2cm}}
 \toprule
 \textbf{Stage} & \textbf{Reference} & \textbf{Value} & \textbf{Notes} \\
 \midrule
-TPS63700 & L1                 & \SI{10}{\micro\henry}       & $\ge\SI{0.6}{A}$ I\textsubscript{sat}, low DCR \\
-         & D1                 & Schottky, \SI{20}{V}, \SI{1}{A} & e.g.\ SS14 or equivalent \\
-         & $R_{\text{FB1}}$   & \SI{340}{\kilo\ohm}         & Sets $V_{\text{OUT}} \approx \SI{-5.5}{V}$ \\
-         & $R_{\text{FB2}}$   & \SI{100}{\kilo\ohm}         & $V_{\text{OUT}} = -1.25 \cdot \left(1+\frac{R_{\text{FB1}}}{R_{\text{FB2}}}\right)$ \\
-         & $C_{\text{FF}}$    & \SI{22}{\pico\farad}        & Feed-forward for loop stability \\
-         & $C_{\text{IN}}$    & \SI{10}{\micro\farad} $\ge\SI{10}{V}$ & Input bulk capacitor \\
-         & $C_{\text{IN,HF}}$ & \SI{100}{\nano\farad} $\ge\SI{10}{V}$ & Input high-frequency bypass \\
-         & $C_{\text{OUT}}$   & \SI{10}{\micro\farad} $\ge\SI{10}{V}$ & Output bulk capacitor (inverting node) \\
-         & $C_{\text{OUT,HF}}$& \SI{100}{\nano\farad} $\ge\SI{10}{V}$ & Output high-frequency bypass \\
-         & $R_{\text{EN}}$    & \SI{100}{\kilo\ohm}         & EN pull-down (MCU control on EN pin) \\
+TPS63700
+& L1   & \SI{10}{\micro\henry}
+& Chosen for BOM reuse\\
+& D1   & Schottky, \SI{20}{\volt}, \SI{1}{\ampere}
+& e.g.\ SS14 or equivalent (fast, low \(V_F\)). \\
+& R1   & \SI{10}{\ohm}
+& Input filter with C1\\
+& R2   & \SI{150}{\kilo\ohm}
+& Feedback divider (VREF $\rightarrow$ FB)\\
+& R3   & \SI{681}{\kilo\ohm}
+& Feedback divider (FB $\rightarrow$ VOUT). Sets \(V_\text{OUT}\approx\SI{-5.5}{\volt}\) using
+\(V_{\text{OUT}} = -V_{\text{REF}}\cdot\frac{R3}{R2}\) with \(V_\text{REF}\approx\SI{1.213}{\volt}\). \\
+& R4   & \SI{100}{\kilo\ohm}
+& Feed-forward network series resistor \\
+& C1   & \SI{100}{\nano\farad}
+&  \\
+& C2   & \SI{220}{\nano\farad}
+& \\
+& C3   & \SI{10}{\pico\farad}
+& \\
+& C4   & \SI{10}{\micro\farad}
+& \\
+& C5   & 4x\SI{4.7}{\micro\farad}
+& \\
+& C6   & \SI{4.7}{\nano\farad}
+& \\
+& R\(_\text{EN}\)    & \SI{100}{\kilo\ohm}
+& EN pull-down \\
 \midrule
-TPS7A33  & $C_{\text{IN}}$    & \SI{10}{\micro\farad} $\ge\SI{10}{V}$ & Close to VIN pin, low ESR \\
-         & $C_{\text{IN,HF}}$ & \SI{100}{\nano\farad} $\ge\SI{10}{V}$ & HF bypass near VIN/GND \\
-         & $C_{\text{OUT}}$   & \SI{10}{\micro\farad} $\ge\SI{10}{V}$ & Output capacitor for stability \\
-         & $C_{\text{OUT,HF}}$& \SI{100}{\nano\farad} $\ge\SI{10}{V}$ & HF bypass at VOUT/GND \\
-         & $C_{\text{NR}}$    & \SI{10}{\nano\farad}        & Noise-reduction cap on NR pin (if used) \\
+TPS7A33
+& C\(_\text{IN}\)    & \SI{10}{\micro\farad} \(\ge\)\SI{10}{\volt}
+& \\
+& C\(_\text{IN,HF}\) & \SI{100}{\nano\farad} \(\ge\)\SI{10}{\volt}
+& \\
+& C\(_\text{OUT}\)   & \SI{47}{\micro\farad} \(\ge\)\SI{10}{\volt}
+&  \\
+& C\(_\text{NR}\)    & \SI{100}{\nano\farad}
+& Noise-reduction/soft-start capacitor\\
+& C\(_\text{FF}\)   & \SI{10}{\nano\farad}
+& \\
+& R1   & \SI{491}{\kilo\ohm}
+& \\
+& R2   & \SI{150}{\kilo\ohm}
+& Feedback divider (VREF $\rightarrow$ FB)\\
 \bottomrule
 \end{tabular}
 \end{table}
+
+% Optional design note:
+% Using L1 = 10 uH generally reduces inductor ripple current and can help EMI,
+% but ensure peak current remains below the inductor saturation current at maximum load.
 
 
 \subsubsection{+18V Set/Reset}

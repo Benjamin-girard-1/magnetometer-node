@@ -1,0 +1,332 @@
+(footprint "IND_FXL0530_CMT"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(tags "FXL0530-100-M ")
+	(property "Reference" "REF**"
+		(at 0 -4 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "d92223c0-6192-49d2-9385-f82281006815")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "IND_FXL0530_CMT"
+		(at 0 4.075 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "fabaf97f-3312-424b-b775-b7eb2799b840")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "03eb4276-abdc-4a3a-9f29-0e1b4aca55d4")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "5843dc16-cc37-4c26-8461-e74ea587bcb8")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -2.9972 -2.8321)
+		(end -2.9972 -1.57734)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "6079b4a2-c4a4-4c96-a73f-394e122d0c1f")
+	)
+	(fp_line
+		(start -2.9972 1.57734)
+		(end -2.9972 2.8321)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a831d28a-4903-4e40-8a4d-d3a2ea532d78")
+	)
+	(fp_line
+		(start -2.9972 2.8321)
+		(end 2.9972 2.8321)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "02d218d0-8cbe-4567-ad35-2263f36cce5c")
+	)
+	(fp_line
+		(start 2.9972 -2.8321)
+		(end -2.9972 -2.8321)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a47a749f-c25b-434f-bff3-c7ade7f335ff")
+	)
+	(fp_line
+		(start 2.9972 -1.57734)
+		(end 2.9972 -2.8321)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e84e19ab-5971-4fc2-81e9-8d627cf010a5")
+	)
+	(fp_line
+		(start 2.9972 2.8321)
+		(end 2.9972 1.57734)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d9dca6e6-9063-4bbd-8bc1-577926f0a8c0")
+	)
+	(fp_line
+		(start -3.266199 -1.4986)
+		(end -3.1242 -1.4986)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "5b2158bc-3bfd-4dc1-aff4-b6519ffe7a23")
+	)
+	(fp_line
+		(start -3.266199 1.4986)
+		(end -3.266199 -1.4986)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "6d4dcf16-9949-4b95-af2e-27ba61c59eef")
+	)
+	(fp_line
+		(start -3.1242 -2.9591)
+		(end 3.1242 -2.9591)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "59bd2f52-f182-46d6-b2e5-3c7321364c50")
+	)
+	(fp_line
+		(start -3.1242 -1.4986)
+		(end -3.1242 -2.9591)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "cfaa96a2-11ce-4326-b853-6253673d4a01")
+	)
+	(fp_line
+		(start -3.1242 1.4986)
+		(end -3.266199 1.4986)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "c42464eb-1c5b-474c-8221-77bec434814b")
+	)
+	(fp_line
+		(start -3.1242 1.4986)
+		(end -3.1242 2.9591)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "896dbb2b-2158-41eb-b62c-1456eb58b51a")
+	)
+	(fp_line
+		(start -3.1242 2.9591)
+		(end 3.1242 2.9591)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "496324fd-1a63-40f7-ab9d-2d3aeb7ffb23")
+	)
+	(fp_line
+		(start 3.1242 -2.9591)
+		(end 3.1242 -1.4986)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "a53aefd7-ef88-4699-88c7-c2fa64d11535")
+	)
+	(fp_line
+		(start 3.1242 -1.4986)
+		(end 3.266199 -1.4986)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "ae2743c1-48b8-4d86-95ea-08adcd64e536")
+	)
+	(fp_line
+		(start 3.1242 1.4986)
+		(end 3.266199 1.4986)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "e815cb84-be99-488d-ae18-6cccc8b18d97")
+	)
+	(fp_line
+		(start 3.1242 2.9591)
+		(end 3.1242 1.4986)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "3ea4d3d6-1b95-4a5a-a8ea-0386a26ab9b4")
+	)
+	(fp_line
+		(start 3.266199 -1.4986)
+		(end 3.266199 1.4986)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "cd9ea476-5709-4366-8331-02d95c821b83")
+	)
+	(fp_line
+		(start -2.8702 -2.7051)
+		(end -2.8702 2.7051)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "535ae5f9-3c4e-4911-b112-2dcdb946d24d")
+	)
+	(fp_line
+		(start -2.8702 -1.35255)
+		(end -1.51765 -2.7051)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "864c09b9-6093-4174-ac8e-3027903b3baa")
+	)
+	(fp_line
+		(start -2.8702 1.35255)
+		(end -1.51765 2.7051)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "eb6679b7-78a4-4a75-8bf3-e206d00b407e")
+	)
+	(fp_line
+		(start -2.8702 2.7051)
+		(end 2.8702 2.7051)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "f03fc5af-bdc8-491d-bca2-c50b962f6dde")
+	)
+	(fp_line
+		(start 2.8702 -2.7051)
+		(end -2.8702 -2.7051)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "445f4ce0-6ca7-4802-ad97-7b964d36efdf")
+	)
+	(fp_line
+		(start 2.8702 2.7051)
+		(end 2.8702 -2.7051)
+		(stroke
+			(width 0.0254)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "78b78647-32d0-4774-a01e-2ceaaea834d4")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 -4.025 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "3745861c-dbeb-4115-8104-26f5cf34bbcc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -1.988699 0 90)
+		(size 2.4892 2.046999)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "7db953fb-f51a-4fb5-a69a-d7707011cc0d")
+	)
+	(pad "2" smd rect
+		(at 1.988699 0 90)
+		(size 2.4892 2.046999)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "97b2ad43-e492-4734-87ba-c7fb0248f3ff")
+	)
+	(embedded_fonts no)
+	(model "/Users/benja/Desktop/Master/magnetometer-node/hardware/pcb/lib/3dmodels/FXL0530-100-M.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

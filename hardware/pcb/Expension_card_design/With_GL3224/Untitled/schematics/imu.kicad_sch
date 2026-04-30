@@ -1,0 +1,46 @@
+(kicad_sch
+	(version 20250114)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "12f4a7eb-6775-4080-9b2d-5bd5ac8d1544")
+	(paper "A4")
+	(lib_symbols)
+	(bus_alias "IMU_SPI"
+		(members "SCLK" "MOSI" "MISO" "CS")
+	)
+	(rectangle
+		(start 106.68 49.53)
+		(end 203.2 130.81)
+		(stroke
+			(width 0.381)
+			(type dash)
+		)
+		(fill
+			(type none)
+		)
+		(uuid 4ab44c2f-be76-42b4-bd1f-3c8f3c14372b)
+	)
+	(text "Inertial Measurement Unit (IMU)"
+		(exclude_from_sim no)
+		(at 154.94 57.15 0)
+		(effects
+			(font
+				(size 2.032 2.032)
+				(thickness 0.4064)
+				(bold yes)
+			)
+		)
+		(uuid "3775c699-c423-4f6a-9c82-c93419de0845")
+	)
+	(text "To know the orientation of the device"
+		(exclude_from_sim no)
+		(at 154.94 60.96 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.1588)
+			)
+		)
+		(uuid "9be1308a-43ff-41c6-94f2-0aa219ad584e")
+	)
+)

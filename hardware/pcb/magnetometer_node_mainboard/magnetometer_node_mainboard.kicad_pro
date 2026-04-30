@@ -490,7 +490,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../../../../../../Downloads/magnetometer_node_mainboard_8.step",
       "svg": "",
       "vrml": ""
     },
@@ -541,13 +541,13 @@
           "group_by": true,
           "label": "Exclude from BOM",
           "name": "${EXCLUDE_FROM_BOM}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Exclude from Board",
           "name": "${EXCLUDE_FROM_BOARD}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
@@ -560,14 +560,50 @@
           "label": "Datasheet",
           "name": "Datasheet",
           "show": true
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Pins",
+          "name": "Sim.Pins",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Device",
+          "name": "Sim.Device",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Description",
+          "name": "Description",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "#",
+          "name": "${ITEM_NUMBER}",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC",
+          "name": "LCSC",
+          "show": true
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Enable",
+          "name": "Sim.Enable",
+          "show": false
         }
       ],
       "filter_string": "",
-      "group_symbols": true,
-      "include_excluded_from_bom": true,
-      "name": "Default Editing",
+      "group_symbols": false,
+      "include_excluded_from_bom": false,
+      "name": "",
       "sort_asc": true,
-      "sort_field": "Référence"
+      "sort_field": "Value"
     },
     "connection_grid_size": 50.0,
     "drawing": {
@@ -640,11 +676,11 @@
     ],
     [
       "d652fa9a-929c-40ea-b9c9-ec80a94942ad",
-      "GNSS_IMU_TEMPERATURE"
+      "IMU"
     ],
     [
       "12e32701-7c59-459f-9fd3-2d7a03863ef6",
-      "CONNECTORS_IO"
+      "IO_CONNECTOR"
     ],
     [
       "f4b81638-e87a-4975-ab66-02594c3d4d9a",
@@ -660,7 +696,15 @@
     ],
     [
       "6321dc72-3a05-4a49-83e5-bf7bf0cd5913",
-      "PWR_OPAMP_4V5_NEG5"
+      "PWR_5VA_NEG5"
+    ],
+    [
+      "caaff191-5ec1-4403-855b-5abb3b90cd2c",
+      "DATA_SAVING"
+    ],
+    [
+      "54194ab9-cd19-4735-b43c-e0c13d49039f",
+      "GPS_TILE"
     ]
   ],
   "text_variables": {}
