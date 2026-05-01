@@ -34,7 +34,7 @@
 /* ------------------------------------------------------------------------- */
 /*  Board-specific pinout (edit if you re-route)                             */
 /* ------------------------------------------------------------------------- */
-#define IMU_SPI_HOST       SPI2_HOST
+#define IMU_SPI_HOST       SPI3_HOST
 #define IMU_PIN_MOSI       8
 #define IMU_PIN_MISO       9
 #define IMU_PIN_SCLK       3

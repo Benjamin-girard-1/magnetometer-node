@@ -516,15 +516,6 @@ static void on_xfer_done(void *user_ctx, ad7779_hal_status_t status)
 
     if (status != AD7779_HAL_OK) return;
 
-    /* TEMP DEBUG: print raw frame bytes for first few frames */
-    if (dev->frame_idx < 3) {
-        uint8_t *r = dev->rx_buf[completed];
-        extern int printf(const char *, ...);
-        printf("frame %lu raw: ", (unsigned long)dev->frame_idx);
-        for (int i = 0; i < 32; ++i) printf("%02X ", r[i]);
-        printf("\n");
-    }
-
     if (dev->cb) {
         int32_t samples[AD7779_NUM_CHANNELS];
         uint8_t hdr;
