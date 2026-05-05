@@ -179,6 +179,16 @@ lsm6dsv_status_t lsm6dsv_init(lsm6dsv_t *dev, const lsm6dsv_config_t *cfg)
                   LSM6DSV_CTRL2_OP_MODE_HP | (cfg->g_odr & 0x0F));
     if (st != LSM6DSV_OK) return st;
 
+    for (int i = 0; i < 100; ++i) {
+        uint8_t status = 0;
+        lsm6dsv_port_delay_ms(1);
+        st = read_u8(dev, LSM6DSV_REG_STATUS_REG, &status);
+        if (st != LSM6DSV_OK) return st;
+        if ((status & LSM6DSV_STATUS_TDA) != 0) {
+            break;
+        }
+    }
+
     dev->xl_fs       = cfg->xl_fs;
     dev->g_fs        = cfg->g_fs;
     dev->initialized = true;

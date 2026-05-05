@@ -5697,15 +5697,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 242.57 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "b24ad25e-1b4d-4661-b770-60997104fd28")
 		)
@@ -5802,15 +5793,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 134.62 137.16 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "33061646-f51c-436a-95ac-dbaadb3f5ae2")
 		)
@@ -5899,15 +5881,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 97.79 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 97.79 88.9 0)
 			(effects
 				(font
@@ -6012,15 +5985,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 334.01 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "794e915c-ef04-4ccb-a7ab-e2164cb12b27")
 		)
@@ -6117,15 +6081,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 269.24 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "f89632b9-26e5-4828-9cf2-a7e6b2a208d2")
 		)
@@ -6214,15 +6169,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 55.88 190.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 55.88 190.5 0)
 			(effects
 				(font
@@ -6373,15 +6319,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 139.7 185.42 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "8bc526c4-a9d6-4557-a145-396b39ba24b1")
 		)
@@ -6484,15 +6421,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 196.85 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "92cb57b7-7cd2-4431-8bf8-65c63447bd5a")
 		)
@@ -6574,15 +6502,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 265.43 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 265.43 135.89 0)
 			(effects
 				(font
@@ -6948,15 +6867,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 33.02 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "86c7e4d3-c978-4da2-83de-3b9be8a0b0d5")
 		)
@@ -7093,15 +7003,6 @@
 			)
 		)
 		(property "LCSC" "C633596"
-			(at 99.06 152.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 99.06 152.4 0)
 			(effects
 				(font
@@ -7401,15 +7302,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 137.16 121.92 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "08f2f837-8f2d-453f-87f9-ec3ab0eac378")
 		)
@@ -7563,15 +7455,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 280.67 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 280.67 91.44 0)
 			(effects
 				(font
@@ -7786,15 +7669,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 60.96 130.81 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "ec528f37-75c8-45d2-82c2-04bed9a0b4de")
 		)
@@ -7883,15 +7757,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 68.58 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 68.58 107.95 0)
 			(effects
 				(font
@@ -8321,15 +8186,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 201.93 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "756c9bd5-788a-4a6a-8464-023dd0ade47e")
 		)
@@ -8418,15 +8274,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 186.69 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 186.69 114.3 0)
 			(effects
 				(font
@@ -8531,15 +8378,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 207.01 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "fead33aa-04ab-4b48-9bfb-f7051b584c99")
 		)
@@ -8618,15 +8456,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 128.27 194.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "29ce6f0b-985a-443d-86d2-2772efb02691")
 		)
@@ -8697,15 +8526,6 @@
 			)
 		)
 		(property "LCSC" "C1644"
-			(at 128.27 181.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 128.27 181.61 0)
 			(effects
 				(font
@@ -8940,15 +8760,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 107.95 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "a9a50562-8b35-48f5-a458-a5fa68b6283e")
 		)
@@ -9102,15 +8913,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 191.77 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 191.77 114.3 0)
 			(effects
 				(font
@@ -9280,15 +9082,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 212.09 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "4d2add89-d576-4e7f-878b-c781f0fe4abc")
 		)
@@ -9377,15 +9170,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 55.88 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 55.88 135.89 0)
 			(effects
 				(font
@@ -9490,15 +9274,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 64.77 190.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "916c9ec5-f49e-4475-b84f-8cbf178f2ea1")
 		)
@@ -9588,15 +9363,6 @@
 		)
 		(property "Sim.Pins" ""
 			(at 137.16 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
-			(at 137.16 113.03 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9949,15 +9715,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 149.86 127 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "8a09c5e1-c1e9-4f10-a98e-116fadc75aa7")
 		)
@@ -10111,15 +9868,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 22.86 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 22.86 88.9 0)
 			(effects
 				(font
@@ -10289,15 +10037,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 139.7 132.08 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "3abf52ac-08dd-425e-91b9-03c8e8556c9a")
 		)
@@ -10386,15 +10125,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 43.18 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 43.18 88.9 0)
 			(effects
 				(font
@@ -10549,15 +10279,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 336.55 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 336.55 137.16 0)
 			(effects
 				(font
@@ -10763,15 +10484,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 63.5 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "dca31ab7-6f26-4a2a-a4e7-0dd045c99102")
 		)
@@ -10860,15 +10572,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 233.68 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 233.68 106.68 0)
 			(effects
 				(font
@@ -11095,15 +10798,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 82.55 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 82.55 88.9 0)
 			(effects
 				(font
@@ -11403,15 +11097,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 53.34 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "e5d452fd-0542-4978-b1f2-180f956c3eb1")
 		)
@@ -11500,15 +11185,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 345.44 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 345.44 113.03 0)
 			(effects
 				(font
@@ -11670,15 +11346,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 72.39 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 72.39 88.9 0)
 			(effects
 				(font

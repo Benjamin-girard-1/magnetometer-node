@@ -2810,6 +2810,16 @@
 		)
 		(uuid "36b2e512-2462-4fd4-a416-9714d80dc576")
 	)
+	(text "ERREUR de composant"
+		(exclude_from_sim no)
+		(at 201.422 72.898 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "50f7afe0-8950-4b09-9e18-96689c2a8b69")
+	)
 	(junction
 		(at 247.65 68.58)
 		(diameter 0)
@@ -6179,7 +6189,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "27k"
+		(property "Value" "2k4"
 			(at 219.456 73.66 0)
 			(effects
 				(font

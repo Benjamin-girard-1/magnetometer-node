@@ -39,9 +39,10 @@
 #define IMU_PIN_MISO       9
 #define IMU_PIN_SCLK       3
 #define LSM6DSV_PIN_CS     17
+#define SCL3300_PIN_CS     46
 
 /* Datasheet §2 Table 5: SPI clock max = 10 MHz.                             */
-#define LSM6DSV_SPI_HZ     (8 * 1000 * 1000)
+#define LSM6DSV_SPI_HZ     (1 * 1000 * 1000)
 
 static const char *TAG = "lsm6dsv_port";
 
@@ -55,6 +56,18 @@ static esp_err_t imu_bus_init_once(void)
     if (s_bus_initialized) {
         return ESP_OK;
     }
+
+    gpio_config_t cs_cfg = {
+        .pin_bit_mask = (1ULL << LSM6DSV_PIN_CS) | (1ULL << SCL3300_PIN_CS),
+        .mode         = GPIO_MODE_OUTPUT,
+        .pull_up_en   = 0,
+        .pull_down_en = 0,
+        .intr_type    = GPIO_INTR_DISABLE,
+    };
+    gpio_config(&cs_cfg);
+    gpio_set_level(LSM6DSV_PIN_CS, 1);
+    gpio_set_level(SCL3300_PIN_CS, 1);
+
     spi_bus_config_t buscfg = {
         .mosi_io_num     = IMU_PIN_MOSI,
         .miso_io_num     = IMU_PIN_MISO,
@@ -93,6 +106,16 @@ int lsm6dsv_port_init(void **out_ctx)
 
     if (imu_bus_init_once() != ESP_OK) return -1;
 
+    gpio_config_t cs_cfg = {
+        .pin_bit_mask = (1ULL << LSM6DSV_PIN_CS),
+        .mode         = GPIO_MODE_OUTPUT,
+        .pull_up_en   = 0,
+        .pull_down_en = 0,
+        .intr_type    = GPIO_INTR_DISABLE,
+    };
+    gpio_config(&cs_cfg);
+    gpio_set_level(LSM6DSV_PIN_CS, 1);
+
     lsm6dsv_esp32_ctx_t *ctx = calloc(1, sizeof(*ctx));
     if (!ctx) return -1;
 
@@ -100,7 +123,7 @@ int lsm6dsv_port_init(void **out_ctx)
     spi_device_interface_config_t devcfg = {
         .clock_speed_hz = LSM6DSV_SPI_HZ,
         .mode           = 3,
-        .spics_io_num   = LSM6DSV_PIN_CS,
+        .spics_io_num   = -1,
         .queue_size     = 1,
         /* No flags: full-duplex, MSb-first — matches LSM6DSV protocol.     */
     };
@@ -126,7 +149,9 @@ int lsm6dsv_port_xfer(void *ctx_, const uint8_t *tx, uint8_t *rx, size_t len)
         .tx_buffer = tx,
         .rx_buffer = rx,
     };
+    gpio_set_level(LSM6DSV_PIN_CS, 0);
     esp_err_t err = spi_device_polling_transmit(ctx->dev, &t);
+    gpio_set_level(LSM6DSV_PIN_CS, 1);
     return (err == ESP_OK) ? 0 : -1;
 }
 

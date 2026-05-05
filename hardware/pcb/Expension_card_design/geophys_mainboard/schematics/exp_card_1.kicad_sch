@@ -2083,15 +2083,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 105.41 115.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "0ac1e35e-bf5d-4c46-8a92-78a7dec76a34")
 		)
@@ -2158,15 +2149,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 201.93 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 201.93 110.49 0)
 			(effects
 				(font
@@ -2683,15 +2665,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 115.57 115.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "2555b926-52ed-4451-8463-ba0851a72100")
 		)
@@ -2758,15 +2731,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 201.93 97.79 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 201.93 97.79 0)
 			(effects
 				(font
@@ -2928,15 +2892,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 138.43 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "5b572a8e-847c-4bc4-a714-90b4233eee37")
 		)
@@ -3063,15 +3018,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 201.93 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 201.93 104.14 0)
 			(effects
 				(font
@@ -3209,15 +3155,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 201.93 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 201.93 91.44 0)
 			(effects
 				(font

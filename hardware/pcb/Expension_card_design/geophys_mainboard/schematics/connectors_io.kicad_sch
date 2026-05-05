@@ -3545,15 +3545,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 137.16 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(instances
 			(project "geophys_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/12e32701-7c59-459f-9fd3-2d7a03863ef6"
@@ -3610,15 +3601,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 137.16 147.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 137.16 147.32 0)
 			(effects
 				(font
@@ -3717,15 +3699,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 240.03 153.67 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "863e4eb6-8e91-4b0c-88e5-6f02666c5d05")
 		)
@@ -3797,15 +3770,6 @@
 			)
 		)
 		(property "LCSC" "C23186"
-			(at 143.51 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 143.51 121.92 0)
 			(effects
 				(font
@@ -3903,15 +3867,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 261.62 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 261.62 77.47 0)
 			(effects
 				(font
@@ -4109,15 +4064,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 137.16 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(instances
 			(project "geophys_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/12e32701-7c59-459f-9fd3-2d7a03863ef6"
@@ -4173,15 +4119,6 @@
 			)
 		)
 		(property "Description" ""
-			(at 259.08 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 259.08 148.59 0)
 			(effects
 				(font
@@ -4281,15 +4218,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 259.08 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 259.08 138.43 0)
 			(effects
 				(font
@@ -4628,15 +4556,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 106.68 132.08 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "b3e57960-f97e-47de-84a7-d983d1b61b30")
 		)
@@ -4728,15 +4647,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 132.08 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "b207a4a4-b92c-4e72-9b22-69cfe8aee69a")
 		)
@@ -4799,15 +4709,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 137.16 139.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 137.16 139.7 0)
 			(effects
 				(font
@@ -4904,15 +4805,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 234.95 148.59 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "2654fabe-f74d-461f-bf0b-4e749c89372a")
 		)
@@ -4982,15 +4874,6 @@
 			)
 		)
 		(property "LCSC" "C14709"
-			(at 160.02 74.93 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 160.02 74.93 0)
 			(effects
 				(font

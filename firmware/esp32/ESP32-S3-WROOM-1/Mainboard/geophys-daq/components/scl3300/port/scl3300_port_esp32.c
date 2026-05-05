@@ -43,6 +43,7 @@
 #define IMU_PIN_MOSI       8
 #define IMU_PIN_MISO       9
 #define IMU_PIN_SCLK       3
+#define LSM6DSV_PIN_CS     17
 #define SCL3300_PIN_CS     46
 
 /* Datasheet §2.10.2: 2–4 MHz recommended for best noise. 4 MHz it is.       */
@@ -61,6 +62,17 @@ static bool s_bus_initialized = false;
 static esp_err_t imu_bus_init_once(void)
 {
     if (s_bus_initialized) return ESP_OK;
+
+    gpio_config_t cs_cfg = {
+        .pin_bit_mask = (1ULL << LSM6DSV_PIN_CS) | (1ULL << SCL3300_PIN_CS),
+        .mode         = GPIO_MODE_OUTPUT,
+        .pull_up_en   = 0,
+        .pull_down_en = 0,
+        .intr_type    = GPIO_INTR_DISABLE,
+    };
+    gpio_config(&cs_cfg);
+    gpio_set_level(LSM6DSV_PIN_CS, 1);
+    gpio_set_level(SCL3300_PIN_CS, 1);
 
     spi_bus_config_t buscfg = {
         .mosi_io_num     = IMU_PIN_MOSI,
