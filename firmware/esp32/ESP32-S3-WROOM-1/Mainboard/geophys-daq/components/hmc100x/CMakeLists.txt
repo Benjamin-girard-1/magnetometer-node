@@ -1,0 +1,11 @@
+idf_component_register(
+    SRCS
+        "hmc100x.c"
+    INCLUDE_DIRS
+        "include"
+    REQUIRES
+        shift_register
+        esp_rom
+        freertos
+        log
+)

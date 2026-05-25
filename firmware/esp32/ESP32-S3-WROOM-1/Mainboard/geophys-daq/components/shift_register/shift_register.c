@@ -80,6 +80,18 @@ bool sr_get_pin(sr_pin_t pin)
     return ((s_sr_state >> pin) & 0x1) != 0;
 }
 
+uint16_t sr_get_state(void)
+{
+    return s_sr_state;
+}
+
+int sr_update_pins(uint16_t clear_mask, uint16_t set_mask)
+{
+    s_sr_state = (uint16_t)((s_sr_state & (uint16_t)~clear_mask) | set_mask);
+    sr_shift_out(s_sr_state);
+    return 0;
+}
+
 int sr_write_all(uint16_t value)
 {
     s_sr_state = value;

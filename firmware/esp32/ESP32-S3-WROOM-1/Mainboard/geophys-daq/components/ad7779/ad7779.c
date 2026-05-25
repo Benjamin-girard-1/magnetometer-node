@@ -146,8 +146,9 @@ static ad7779_status_t program_src(ad7779_t *dev)
 
     if (dev->cfg.odr_hz == 0) return AD7779_ERR_PARAM;
 
-    /* Decimation in fixed-point Q16 to extract integer & fractional parts. */
-    uint64_t dec_q16   = ((uint64_t)fmod << 16) / dev->cfg.odr_hz;
+    /* Decimation in rounded fixed-point Q16 to extract integer & fractional parts. */
+    uint64_t dec_q16   = (((uint64_t)fmod << 16) + (dev->cfg.odr_hz / 2U)) /
+                         dev->cfg.odr_hz;
     uint32_t dec_int   = (uint32_t)(dec_q16 >> 16);
     uint32_t dec_frac  = (uint32_t)(dec_q16 & 0xFFFFU);
 
@@ -163,7 +164,8 @@ static ad7779_status_t program_src(ad7779_t *dev)
     CHECK(ad7779_reg_write(dev, AD7779_REG_SRC_IF_LSB,
                            (uint8_t)(dec_frac & 0xFFU)));
 
-    /* Pulse SRC_LOAD_UPDATE: hold high for ≥2 MCLK, then clear. */
+    /* Latch SRC_N/SRC_IF by software. Keep SRC_LOAD_SOURCE clear;
+     * setting it switches ODR updates to the external GPIO path. */
     CHECK(ad7779_reg_write(dev, AD7779_REG_SRC_UPDATE,
                            AD7779_SRC_LOAD_UPDATE));
     ad7779_hal_delay_us(dev->hal, 10);

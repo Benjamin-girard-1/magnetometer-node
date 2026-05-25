@@ -659,12 +659,12 @@
           "show": false
         }
       ],
-      "filter_string": "",
-      "group_symbols": false,
+      "filter_string": "L",
+      "group_symbols": true,
       "include_excluded_from_bom": false,
       "name": "",
-      "sort_asc": true,
-      "sort_field": "Value"
+      "sort_asc": false,
+      "sort_field": "LCSC"
     },
     "connection_grid_size": 50.0,
     "drawing": {
@@ -737,7 +737,7 @@
     ],
     [
       "10fa61dd-92fb-4de6-a7d9-eab51d52932b",
-      "PWR_3V3D"
+      "POWER"
     ],
     [
       "f49aacfc-570c-4693-8ae6-33fb55f53278",

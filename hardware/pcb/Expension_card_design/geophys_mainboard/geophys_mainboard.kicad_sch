@@ -344,6 +344,17 @@
 	)
 	(wire
 		(pts
+			(xy 222.25 64.77) (xy 222.25 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+			(color 255 0 0 1)
+		)
+		(uuid "0a3f4ace-fe37-4253-9e03-f756e318d372")
+	)
+	(wire
+		(pts
 			(xy 87.63 58.42) (xy 96.52 58.42)
 		)
 		(stroke
@@ -837,17 +848,6 @@
 			(type default)
 		)
 		(uuid "9b77a2ab-f14f-4728-a4be-d4a4b4d0a023")
-	)
-	(wire
-		(pts
-			(xy 222.25 64.77) (xy 222.25 77.47)
-		)
-		(stroke
-			(width 0)
-			(type default)
-			(color 255 0 0 1)
-		)
-		(uuid "9fa21b20-3e39-4d4a-9acd-d5304150da95")
 	)
 	(bus
 		(pts
@@ -1470,7 +1470,7 @@
 			(color 255 135 146 0.4000)
 		)
 		(uuid "10fa61dd-92fb-4de6-a7d9-eab51d52932b")
-		(property "Sheetname" "PWR_3V3D"
+		(property "Sheetname" "POWER"
 			(at 228.854 74.422 0)
 			(effects
 				(font
@@ -1490,16 +1490,6 @@
 				)
 				(justify left top)
 				(hide yes)
-			)
-		)
-		(pin "+5V" input
-			(at 224.79 77.47 180)
-			(uuid "cce74fcd-0e3c-46d2-9f25-ff338f442f59")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 			)
 		)
 		(pin "EN_SUPERCAP_CHARGE" input
@@ -1578,9 +1568,9 @@
 				(justify right)
 			)
 		)
-		(pin "+5V" output
+		(pin "+5VBUS" output
 			(at 222.25 64.77 270)
-			(uuid "3ae3d0b5-1c0a-4d54-9ebe-e8aa13838dbc")
+			(uuid "4c29bb20-e869-4a40-9930-5053e5ae796d")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2412,16 +2402,6 @@
 				(justify left)
 			)
 		)
-		(pin "+5V" input
-			(at 224.79 107.95 180)
-			(uuid "21e1fa15-5975-4cd7-822f-94666264ba79")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
 		(pin "+10V" output
 			(at 240.03 114.3 270)
 			(uuid "afb69cb4-5cf9-4424-b53b-278640d9bfeb")
@@ -2638,16 +2618,6 @@
 		(pin "EN_LDO_3V3" input
 			(at 224.79 96.52 180)
 			(uuid "bb72f45b-eeb0-40ab-9512-37f60fedb0c1")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "+5V" input
-			(at 224.79 92.71 180)
-			(uuid "f89beffd-6247-418b-a499-f8531a8d6c35")
 			(effects
 				(font
 					(size 1.27 1.27)

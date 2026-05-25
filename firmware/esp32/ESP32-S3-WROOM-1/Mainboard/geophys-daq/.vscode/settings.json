@@ -3,7 +3,7 @@
   "idf.openOcdConfigs": [
     "board/esp32s3-builtin.cfg"
   ],
-  "idf.port": "/dev/tty.usbserial-114320",
+  "idf.port": "/dev/tty.usbserial-10",
   "idf.currentSetup": "/Users/benja/esp/v5.5/esp-idf",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32s3"

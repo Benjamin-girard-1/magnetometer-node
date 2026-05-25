@@ -1295,6 +1295,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 200.66 101.6 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "21536bdc-aa4e-457f-9b7e-f8236d6ed88a")
 		)
@@ -1429,6 +1438,15 @@
 			)
 		)
 		(property "LCSC" "C14709"
+			(at 118.11 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 118.11 101.6 0)
 			(effects
 				(font
@@ -1598,6 +1616,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 137.16 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "af5e0952-2c32-4fc0-9343-1c3e6eef3c16")
 		)
@@ -1759,6 +1786,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 189.23 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "aea352ed-9723-476b-bc7b-395de9a602ad")
 		)
@@ -1847,6 +1883,15 @@
 			)
 		)
 		(property "Sim.Pins" ""
+			(at 177.8 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 177.8 106.68 0)
 			(effects
 				(font
@@ -2080,6 +2125,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 102.87 101.6 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "75655e24-3d4f-464c-8d03-0dcf74f3378a")
 		)
@@ -2241,6 +2295,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 125.73 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "582bf0e8-975d-49e8-82e5-1362c29f070f")
 		)
@@ -2338,6 +2401,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 191.77 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "3a5d09ef-dbc1-49d6-82a2-2fce96cbf42b")
 		)
@@ -2413,6 +2485,15 @@
 			)
 		)
 		(property "Sim.Pins" ""
+			(at 167.64 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 167.64 104.14 0)
 			(effects
 				(font

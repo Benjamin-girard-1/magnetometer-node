@@ -2275,7 +2275,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp yes)
+		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a9cc6c6c-572e-4ac0-9922-7799b192bb2a")
 		(property "Reference" "U2"
@@ -2464,7 +2464,7 @@
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
-		(dnp yes)
+		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bb3c386e-c881-4cff-a5ab-bfbf5d9ff0b2")
 		(property "Reference" "U1"

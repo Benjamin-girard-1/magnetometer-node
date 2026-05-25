@@ -38,6 +38,8 @@ typedef enum {
 int      sr_init(void);
 int      sr_set_pin(sr_pin_t pin, bool level);
 bool     sr_get_pin(sr_pin_t pin);
+uint16_t sr_get_state(void);
+int      sr_update_pins(uint16_t clear_mask, uint16_t set_mask);
 int      sr_write_all(uint16_t value);
 void     sr_output_enable(bool enable);
 

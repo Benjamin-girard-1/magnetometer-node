@@ -1517,29 +1517,18 @@
 		)
 		(uuid "2b8c061d-400a-4477-afbe-17916ad35216")
 	)
-	(text "Expension card detect\nMagnetic sensor = 20k"
+	(text "Expension card detect\n-------------------\nMagnetic sensor	= 20k\nAccelerometer	= 10k\nResistivity		= 5k\n-------------------"
 		(exclude_from_sim no)
-		(at 94.996 153.924 0)
+		(at 88.138 157.226 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 				(thickness 0.254)
 				(bold yes)
 			)
+			(justify left)
 		)
 		(uuid "3a1c5d12-a2c9-4a44-bcf2-3cc8da4a8f10")
-	)
-	(text "Accelerometer sensor = 10k\nResistivity sensor = 5k"
-		(exclude_from_sim no)
-		(at 94.742 168.656 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-		)
-		(uuid "962306d7-1215-44de-b603-789504b94a02")
 	)
 	(text "X_INA_OUT+\nX_INA_OUT-\nY_INA_OUT+\nY_INA_OUT-\nZ_INA_OUT+\nZ_INA_OUT-"
 		(exclude_from_sim no)
