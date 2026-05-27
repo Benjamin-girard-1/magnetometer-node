@@ -1238,7 +1238,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "TS3A27518ERTW_1"
+		(symbol "magnode_symbols:TS3A27518EPWR"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -1250,7 +1250,7 @@
 					)
 				)
 			)
-			(property "Value" "TS3A27518ERTW"
+			(property "Value" "TS3A27518EPWR"
 				(at 9.652 29.718 0)
 				(effects
 					(font
@@ -1258,7 +1258,7 @@
 					)
 				)
 			)
-			(property "Footprint" "Package_DFN_QFN:WQFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm"
+			(property "Footprint" "Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm"
 				(at -13.462 -50.8 0)
 				(effects
 					(font
@@ -1285,7 +1285,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "TS3A27518ERTW_1_0_1"
+			(symbol "TS3A27518EPWR_0_1"
 				(rectangle
 					(start -16.51 27.94)
 					(end 16.51 -27.94)
@@ -1796,7 +1796,7 @@
 					)
 				)
 			)
-			(symbol "TS3A27518ERTW_1_1_1"
+			(symbol "TS3A27518EPWR_1_1"
 				(pin input line
 					(at -19.05 24.13 0)
 					(length 2.54)
@@ -1807,7 +1807,7 @@
 							)
 						)
 					)
-					(number "17"
+					(number "20"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1825,7 +1825,7 @@
 							)
 						)
 					)
-					(number "21"
+					(number "24"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1843,7 +1843,7 @@
 							)
 						)
 					)
-					(number "11"
+					(number "14"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1854,187 +1854,7 @@
 				(pin bidirectional line
 					(at -19.05 11.43 0)
 					(length 2.54)
-					(name "NO6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "13"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -19.05 8.89 0)
-					(length 2.54)
-					(name "NO5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "15"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -19.05 6.35 0)
-					(length 2.54)
-					(name "NO4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "14"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -19.05 3.81 0)
-					(length 2.54)
-					(name "NO3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "12"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -19.05 1.27 0)
-					(length 2.54)
-					(name "NO2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "10"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -19.05 -1.27 0)
-					(length 2.54)
-					(name "NO1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -19.05 -6.35 0)
-					(length 2.54)
 					(name "NC6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "19"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -19.05 -8.89 0)
-					(length 2.54)
-					(name "NC5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "16"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -19.05 -11.43 0)
-					(length 2.54)
-					(name "NC4"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "18"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -19.05 -13.97 0)
-					(length 2.54)
-					(name "NC3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "20"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin bidirectional line
-					(at -19.05 -16.51 0)
-					(length 2.54)
-					(name "NC2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2050,7 +1870,79 @@
 					)
 				)
 				(pin bidirectional line
-					(at -19.05 -19.05 0)
+					(at -19.05 8.89 0)
+					(length 2.54)
+					(name "NC5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "19"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -19.05 6.35 0)
+					(length 2.54)
+					(name "NC4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "21"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -19.05 3.81 0)
+					(length 2.54)
+					(name "NC3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "23"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -19.05 1.27 0)
+					(length 2.54)
+					(name "NC2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -19.05 -1.27 0)
 					(length 2.54)
 					(name "NC1"
 						(effects
@@ -2059,7 +1951,115 @@
 							)
 						)
 					)
-					(number "23"
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -19.05 -6.35 0)
+					(length 2.54)
+					(name "NO6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "16"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -19.05 -8.89 0)
+					(length 2.54)
+					(name "NO5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "18"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -19.05 -11.43 0)
+					(length 2.54)
+					(name "NO4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "17"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -19.05 -13.97 0)
+					(length 2.54)
+					(name "NO3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "15"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -19.05 -16.51 0)
+					(length 2.54)
+					(name "NO2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin bidirectional line
+					(at -19.05 -19.05 0)
+					(length 2.54)
+					(name "NO1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "11"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2078,7 +2078,7 @@
 							)
 						)
 					)
-					(number "24"
+					(number "3"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2096,7 +2096,7 @@
 							)
 						)
 					)
-					(number "5"
+					(number "8"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2114,7 +2114,7 @@
 							)
 						)
 					)
-					(number "2"
+					(number "5"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2132,7 +2132,7 @@
 							)
 						)
 					)
-					(number "9"
+					(number "12"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2150,7 +2150,7 @@
 							)
 						)
 					)
-					(number "7"
+					(number "10"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2168,7 +2168,7 @@
 							)
 						)
 					)
-					(number "6"
+					(number "9"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2186,7 +2186,7 @@
 							)
 						)
 					)
-					(number "4"
+					(number "7"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2204,7 +2204,7 @@
 							)
 						)
 					)
-					(number "3"
+					(number "6"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2222,7 +2222,7 @@
 							)
 						)
 					)
-					(number "1"
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -5697,15 +5697,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 242.57 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "b24ad25e-1b4d-4661-b770-60997104fd28")
 		)
@@ -5802,15 +5793,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 134.62 137.16 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "33061646-f51c-436a-95ac-dbaadb3f5ae2")
 		)
@@ -5899,15 +5881,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 97.79 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 97.79 88.9 0)
 			(effects
 				(font
@@ -6012,15 +5985,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 334.01 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "794e915c-ef04-4ccb-a7ab-e2164cb12b27")
 		)
@@ -6117,15 +6081,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 269.24 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "f89632b9-26e5-4828-9cf2-a7e6b2a208d2")
 		)
@@ -6214,15 +6169,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 55.88 190.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 55.88 190.5 0)
 			(effects
 				(font
@@ -6373,15 +6319,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 139.7 185.42 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "8bc526c4-a9d6-4557-a145-396b39ba24b1")
 		)
@@ -6484,15 +6421,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 196.85 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "92cb57b7-7cd2-4431-8bf8-65c63447bd5a")
 		)
@@ -6503,170 +6431,6 @@
 			(project "geophys_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/caaff191-5ec1-4403-855b-5abb3b90cd2c"
 					(reference "R101")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_name "TS3A27518ERTW_1")
-		(lib_id "magnode_symbols:TS3A27518ERTW")
-		(at 265.43 135.89 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "279b05a4-c847-4104-bf2b-5532ecf2bfd0")
-		(property "Reference" "U16"
-			(at 267.5733 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "TS3A27518EPWR"
-			(at 267.5733 105.41 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm"
-			(at 251.968 186.69 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 265.43 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 265.43 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2651937"
-			(at 265.43 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" ""
-			(at 265.43 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
-			(at 265.43 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "13"
-			(uuid "7627162b-af50-4e0c-aae7-e2d3d4fd4017")
-		)
-		(pin "17"
-			(uuid "57b5adbc-d388-4630-b28a-2d15118b5013")
-		)
-		(pin "21"
-			(uuid "644ffe5c-c507-4eab-885e-ea7d05e8825f")
-		)
-		(pin "11"
-			(uuid "c6948a07-4b48-43ab-93ed-a59c5848298c")
-		)
-		(pin "15"
-			(uuid "27586894-7d19-4c0b-a71f-7ce50061876f")
-		)
-		(pin "14"
-			(uuid "8ab48afc-c194-4a7c-a0fd-a5cd1211771c")
-		)
-		(pin "12"
-			(uuid "a8f7629d-3ddb-40b8-be1c-b93c93adb9a2")
-		)
-		(pin "10"
-			(uuid "d8bee10c-422c-4627-9d2e-574211bd44c3")
-		)
-		(pin "8"
-			(uuid "683f00ba-6fe0-4f7f-bee7-b7a2f6b00ff0")
-		)
-		(pin "19"
-			(uuid "8dfa435a-8976-46bc-8a97-a253fbabe151")
-		)
-		(pin "16"
-			(uuid "b037cf54-6f5b-4919-98b8-b663f868b4cc")
-		)
-		(pin "18"
-			(uuid "b21a1e97-8031-45fd-9866-070a458809ea")
-		)
-		(pin "20"
-			(uuid "8f562a92-11b7-4b3e-87b3-8afa2f8c3acf")
-		)
-		(pin "22"
-			(uuid "c10c15d9-632a-4480-a907-67beb898120f")
-		)
-		(pin "23"
-			(uuid "a2f58d56-a81a-42e7-8884-c433c2e843fc")
-		)
-		(pin "24"
-			(uuid "16555d3b-6e52-410a-a375-c63dc324a29d")
-		)
-		(pin "5"
-			(uuid "7e5940de-a31d-4d26-bd03-9ecbe58ea889")
-		)
-		(pin "2"
-			(uuid "c65f1e38-9118-4cf7-9e2d-1a1ed39e1ce4")
-		)
-		(pin "9"
-			(uuid "56bf1eca-b5d5-4ab9-8e60-b5bd81d6eaad")
-		)
-		(pin "7"
-			(uuid "ea015e64-3c76-4ea3-8a0b-2ea9754423ac")
-		)
-		(pin "6"
-			(uuid "624abe92-54eb-4be0-826f-541f2b4a4591")
-		)
-		(pin "4"
-			(uuid "930c4112-1ef5-42e1-a35e-a378ac4d41ae")
-		)
-		(pin "3"
-			(uuid "41e9953e-ef68-4301-b3cc-511e2015750c")
-		)
-		(pin "1"
-			(uuid "2ad8170e-a036-40b0-b829-a9b877508a19")
-		)
-		(instances
-			(project "geophys_mainboard"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/caaff191-5ec1-4403-855b-5abb3b90cd2c"
-					(reference "U16")
 					(unit 1)
 				)
 			)
@@ -6948,15 +6712,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 33.02 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "86c7e4d3-c978-4da2-83de-3b9be8a0b0d5")
 		)
@@ -7093,15 +6848,6 @@
 			)
 		)
 		(property "LCSC" "C633596"
-			(at 99.06 152.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 99.06 152.4 0)
 			(effects
 				(font
@@ -7401,15 +7147,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 137.16 121.92 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "08f2f837-8f2d-453f-87f9-ec3ab0eac378")
 		)
@@ -7563,15 +7300,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 280.67 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 280.67 91.44 0)
 			(effects
 				(font
@@ -7786,15 +7514,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 60.96 130.81 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "ec528f37-75c8-45d2-82c2-04bed9a0b4de")
 		)
@@ -7883,15 +7602,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 68.58 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 68.58 107.95 0)
 			(effects
 				(font
@@ -8321,15 +8031,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 201.93 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "756c9bd5-788a-4a6a-8464-023dd0ade47e")
 		)
@@ -8418,15 +8119,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 186.69 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 186.69 114.3 0)
 			(effects
 				(font
@@ -8531,15 +8223,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 207.01 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "fead33aa-04ab-4b48-9bfb-f7051b584c99")
 		)
@@ -8618,15 +8301,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 128.27 194.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "29ce6f0b-985a-443d-86d2-2772efb02691")
 		)
@@ -8697,15 +8371,6 @@
 			)
 		)
 		(property "LCSC" "C1644"
-			(at 128.27 181.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 128.27 181.61 0)
 			(effects
 				(font
@@ -8940,15 +8605,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 107.95 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "a9a50562-8b35-48f5-a458-a5fa68b6283e")
 		)
@@ -9102,15 +8758,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 191.77 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 191.77 114.3 0)
 			(effects
 				(font
@@ -9280,15 +8927,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 212.09 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "4d2add89-d576-4e7f-878b-c781f0fe4abc")
 		)
@@ -9377,15 +9015,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 55.88 135.89 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 55.88 135.89 0)
 			(effects
 				(font
@@ -9490,15 +9119,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 64.77 190.5 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "916c9ec5-f49e-4475-b84f-8cbf178f2ea1")
 		)
@@ -9588,15 +9208,6 @@
 		)
 		(property "Sim.Pins" ""
 			(at 137.16 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
-			(at 137.16 113.03 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9949,15 +9560,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 149.86 127 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "8a09c5e1-c1e9-4f10-a98e-116fadc75aa7")
 		)
@@ -10111,15 +9713,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 22.86 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 22.86 88.9 0)
 			(effects
 				(font
@@ -10289,15 +9882,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 139.7 132.08 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "3abf52ac-08dd-425e-91b9-03c8e8556c9a")
 		)
@@ -10394,15 +9978,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 43.18 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "e8d334fc-06e4-414f-8b29-8b499c1c0d84")
 		)
@@ -10413,6 +9988,142 @@
 			(project "geophys_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/caaff191-5ec1-4403-855b-5abb3b90cd2c"
 					(reference "C86")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "magnode_symbols:TS3A27518EPWR")
+		(at 265.43 135.89 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d6028f24-3270-455f-a664-a04ca2377eae")
+		(property "Reference" "U16"
+			(at 267.5733 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TS3A27518EPWR"
+			(at 267.5733 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Package_SO:TSSOP-24_4.4x7.8mm_P0.65mm"
+			(at 251.968 186.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 265.43 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 265.43 135.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "24"
+			(uuid "79bc4ec3-bed9-4932-9e7b-f7526ebed7c3")
+		)
+		(pin "14"
+			(uuid "cf5a6da9-ce21-4428-af9f-e132ba392e45")
+		)
+		(pin "18"
+			(uuid "f7da3d3c-ed12-4aca-b4b7-25e68f361697")
+		)
+		(pin "16"
+			(uuid "49ef7d92-d842-46a1-8775-444db4bb195e")
+		)
+		(pin "20"
+			(uuid "f35b11b0-7a7d-45e5-80d7-ddef7c191df6")
+		)
+		(pin "17"
+			(uuid "dcccd2c6-3701-48da-925e-31bf81cb6944")
+		)
+		(pin "15"
+			(uuid "b0d09543-770a-451d-ab6e-e645369edbfe")
+		)
+		(pin "13"
+			(uuid "1d7af6b4-8ce2-449e-a093-c1496581374d")
+		)
+		(pin "11"
+			(uuid "dc32ad2a-cc65-4fd4-8122-ad669943b34a")
+		)
+		(pin "22"
+			(uuid "b455fb4d-f6b5-4055-bbeb-d69b39930df7")
+		)
+		(pin "19"
+			(uuid "7607d674-0024-4ac8-939b-947ed911c68d")
+		)
+		(pin "21"
+			(uuid "8c050414-65d3-4e94-a2cd-19bac4cff5dd")
+		)
+		(pin "23"
+			(uuid "105d42b6-811b-45e8-9218-c4a7bcefcb92")
+		)
+		(pin "1"
+			(uuid "4274464c-2762-44a1-9941-93f4e224094d")
+		)
+		(pin "2"
+			(uuid "05d247eb-836c-4e8e-97cc-09a8c2fdcd79")
+		)
+		(pin "3"
+			(uuid "45c9fe2e-5236-4a1c-ae10-a266e9b338ae")
+		)
+		(pin "8"
+			(uuid "a412a5e8-04a2-4217-88c9-a395b199939a")
+		)
+		(pin "5"
+			(uuid "c90b503d-4a31-4572-8212-6ee4d382abbe")
+		)
+		(pin "12"
+			(uuid "7e82c079-c478-49ab-a8db-829683638c33")
+		)
+		(pin "10"
+			(uuid "5b238655-2708-47eb-8c1b-ea4b691842cd")
+		)
+		(pin "9"
+			(uuid "a9b4c01b-e5cd-423b-b923-5138a7b55cc7")
+		)
+		(pin "7"
+			(uuid "bdcd431a-4ad0-43fd-907a-6c7974d702a0")
+		)
+		(pin "6"
+			(uuid "da530594-1b84-4280-be00-4ded55643af4")
+		)
+		(pin "4"
+			(uuid "8c9c2a52-e1e1-4b50-b1f2-25e681df79cb")
+		)
+		(instances
+			(project ""
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/caaff191-5ec1-4403-855b-5abb3b90cd2c"
+					(reference "U16")
 					(unit 1)
 				)
 			)
@@ -10549,15 +10260,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 336.55 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 336.55 137.16 0)
 			(effects
 				(font
@@ -10763,15 +10465,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 63.5 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "dca31ab7-6f26-4a2a-a4e7-0dd045c99102")
 		)
@@ -10860,15 +10553,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 233.68 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 233.68 106.68 0)
 			(effects
 				(font
@@ -11095,15 +10779,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 82.55 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 82.55 88.9 0)
 			(effects
 				(font
@@ -11403,15 +11078,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 53.34 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "e5d452fd-0542-4978-b1f2-180f956c3eb1")
 		)
@@ -11500,15 +11166,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 345.44 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 345.44 113.03 0)
 			(effects
 				(font
@@ -11670,15 +11327,6 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 72.39 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 72.39 88.9 0)
 			(effects
 				(font

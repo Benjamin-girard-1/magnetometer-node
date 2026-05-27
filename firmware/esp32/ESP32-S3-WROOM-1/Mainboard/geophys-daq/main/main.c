@@ -1,21 +1,26 @@
 /**
  * @file main.c
- * @brief Magnetic expansion-card ADC bring-up.
+ * @brief Magnetic ADC stream and SD-card handoff bring-up.
  */
 
 #include "ad7779.h"
 #include "ad7779_hal.h"
 #include "board_detect.h"
 #include "hmc100x.h"
-#include "mcp4728.h"
 #include "shift_register.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/gpio.h"
+#include "driver/sdmmc_host.h"
+#include "driver/sdspi_host.h"
+#include "driver/spi_common.h"
 #include "driver/uart.h"
+#include "esp_check.h"
 #include "esp_err.h"
 #include "esp_log.h"
+#include "esp_vfs_fat.h"
+#include "sdmmc_cmd.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -32,57 +37,52 @@ static const char *TAG = "mag";
 #define MAG_UART_BAUD             921600U
 #define MAG_UART_RX_BUF_BYTES     1024
 #define MAG_UART_TX_BUF_BYTES     16384
-#define MAG_SLOT_1_I2C_SDA        GPIO_NUM_41
-#define MAG_SLOT_1_I2C_SCL        GPIO_NUM_40
-#define MAG_SLOT_2_I2C_SDA        GPIO_NUM_1
-#define MAG_SLOT_2_I2C_SCL        GPIO_NUM_2
-#define MAG_THERMAL_ISOLATION_TEST 1
+#define MAG_UART_CMD_STACK_BYTES  8192
 #define MAG_ENABLE_BRIDGE_9V      0
 #define MAG_ENABLE_NEG5V          0
-#define MAG_ALLOW_BRIDGE_9V_COMMANDS 1
-#define MAG_ALLOW_SET_RESET_COMMANDS 1
-#define MAG_OFFSET_DAC_CENTER_CODE 2048
-#define MAG_OFFSET_X_TRIM_LSB     0
-#define MAG_OFFSET_Y_TRIM_LSB     0
-#define MAG_OFFSET_Z_TRIM_LSB     0
-#define MAG_OFFSET_MANUAL_ENABLE  1
-#define MAG_OFFSET_DAC_LOG_MANUAL 0
-#define MAG_OFFSET_DAC_DEFAULT_ENABLE 0
 #define MAG_SET_RESET_ENABLE      0
-#define MAG_OFFSET_AUTOZERO_ENABLE 0
-#define MAG_OFFSET_AUTOZERO_WINDOW_MS 250
-#define MAG_OFFSET_AUTOZERO_STEP_LSB 8
-#define MAG_OFFSET_AUTOZERO_CLIPPED_STEP_LSB 64
-#define MAG_OFFSET_AUTOZERO_MAX_DELTA_LSB 100
-#define MAG_OFFSET_AUTOZERO_DEADBAND_CODE 50000
-#define MAG_OFFSET_AUTOZERO_CLIP_CODE 7500000
-#define MAG_OFFSET_AUTOZERO_IMPROVE_CODE 25000
-#define MAG_OFFSET_AUTOZERO_MAX_ITER 160
+
+/* Set this to 1 when you want the ADC binary stream as the default boot mode. */
+#define MAG_ENABLE_ADC_STREAM_ON_BOOT 0
 
 #define MAG_PACKET_SYNC0          0xA5U
 #define MAG_PACKET_SYNC1          0x5AU
 #define MAG_PACKET_PAYLOAD_LEN    (4U + (AD7779_NUM_CHANNELS * 4U) + 1U)
 #define MAG_PACKET_TOTAL_LEN      (2U + 1U + MAG_PACKET_PAYLOAD_LEN + 1U)
 
-typedef struct {
-    board_slot_t slot;
-    mcp4728_t dac;
-    uint16_t code[MCP4728_NUM_CHANNELS];
-    int8_t direction[3];
-    int64_t last_abs_error[3];
-    bool have_last_error[3];
-    bool ready;
-    bool dac_enabled;
-} offset_dac_ctx_t;
+#define SD_MOUNT_POINT            "/sdcard"
+#define SD_TEST_FILE              SD_MOUNT_POINT "/esp32_sd_test.txt"
 
-static offset_dac_ctx_t s_offset_dac_ctx[BOARD_SLOT_COUNT];
-static offset_dac_ctx_t *s_autozero_ctx;
-#if MAG_OFFSET_AUTOZERO_ENABLE
-static portMUX_TYPE s_adc_accum_lock = portMUX_INITIALIZER_UNLOCKED;
-static int64_t s_adc_accum[3];
-static uint32_t s_adc_accum_count;
-static volatile bool s_autozero_requested;
-#endif
+#define SD_PIN_CLK                GPIO_NUM_5
+#define SD_PIN_CMD                GPIO_NUM_16
+#define SD_PIN_D0                 GPIO_NUM_6
+#define SD_PIN_D1                 GPIO_NUM_4
+#define SD_PIN_D2                 GPIO_NUM_7
+#define SD_PIN_D3                 GPIO_NUM_15
+#define SD_INIT_BUS_WIDTH         1
+#define SD_INIT_FREQ_KHZ          SDMMC_FREQ_PROBING
+
+/*
+ * U16 TS3A27518EPWR:
+ *   COMx -> microSD card
+ *   NOx  -> ESP32 SDMMC bus
+ *   NCx  -> USB2641 SD bus
+ *   ~EN  <- EN_SD_MUX
+ */
+#define SD_MUX_ENABLE_LEVEL       false
+#define SD_MUX_DISABLE_LEVEL      true
+#define SD_MUX_SEL_ESP32_LEVEL    true
+#define SD_MUX_SEL_USB2641_LEVEL  false
+
+typedef enum {
+    UART_OUTPUT_TEXT = 0,
+    UART_OUTPUT_ADC_BINARY,
+} uart_output_t;
+
+static volatile uart_output_t s_uart_output = UART_OUTPUT_TEXT;
+static ad7779_t s_adc;
+static bool s_adc_ready;
+static bool s_adc_streaming;
 
 static uint8_t checksum8(const uint8_t *data, size_t len)
 {
@@ -101,477 +101,39 @@ static void put_u32_le(uint8_t *dst, uint32_t v)
     dst[3] = (uint8_t)(v >> 24);
 }
 
-static uint16_t dac_code_from_trim(int trim_lsb)
+static esp_err_t serial_init(void)
 {
-    /* MCP4728 internal 2.048 V reference, gain x1: 0.5 mV/LSB. */
-    int code = MAG_OFFSET_DAC_CENTER_CODE + trim_lsb;
-    if (code < 0) {
-        code = 0;
-    } else if (code > 4095) {
-        code = 4095;
+    esp_err_t err = uart_driver_install(UART_NUM_0,
+                                        MAG_UART_RX_BUF_BYTES,
+                                        MAG_UART_TX_BUF_BYTES,
+                                        0,
+                                        NULL,
+                                        0);
+    if (err != ESP_OK && err != ESP_ERR_INVALID_STATE) {
+        return err;
     }
-    return (uint16_t)code;
+    return uart_set_baudrate(UART_NUM_0, MAG_UART_BAUD);
 }
 
-#if MAG_OFFSET_AUTOZERO_ENABLE
-static int64_t abs_i64(int64_t v)
+static void serial_select_output(uart_output_t output)
 {
-    return v < 0 ? -v : v;
-}
-#endif
-
-static uint16_t clamp_dac_code(int code)
-{
-    const int min_code = MAG_OFFSET_DAC_CENTER_CODE - MAG_OFFSET_AUTOZERO_MAX_DELTA_LSB;
-    const int max_code = MAG_OFFSET_DAC_CENTER_CODE + MAG_OFFSET_AUTOZERO_MAX_DELTA_LSB;
-
-    if (code < min_code) {
-        code = min_code;
-    } else if (code > max_code) {
-        code = max_code;
-    }
-    if (code < 0) {
-        code = 0;
-    } else if (code > 4095) {
-        code = 4095;
-    }
-    return (uint16_t)code;
+    s_uart_output = output;
+    ESP_LOGI(TAG, "UART output = %s",
+             output == UART_OUTPUT_ADC_BINARY ? "ADC binary" : "text/control");
 }
 
-#if MAG_OFFSET_AUTOZERO_ENABLE
-static bool adc_accum_snapshot(int64_t avg[3], uint32_t *count)
+static bool serial_adc_output_enabled(void)
 {
-    portENTER_CRITICAL(&s_adc_accum_lock);
-    uint32_t n = s_adc_accum_count;
-    if (n == 0U) {
-        portEXIT_CRITICAL(&s_adc_accum_lock);
-        return false;
-    }
-
-    for (uint8_t ch = 0; ch < 3U; ++ch) {
-        avg[ch] = s_adc_accum[ch] / (int64_t)n;
-        s_adc_accum[ch] = 0;
-    }
-    s_adc_accum_count = 0;
-    portEXIT_CRITICAL(&s_adc_accum_lock);
-
-    *count = n;
-    return true;
+    return s_uart_output == UART_OUTPUT_ADC_BINARY;
 }
 
-static void adc_accum_reset(void)
+static void serial_write_adc_packet(const int32_t *samples,
+                                    uint8_t status,
+                                    uint32_t frame_idx)
 {
-    portENTER_CRITICAL(&s_adc_accum_lock);
-    s_adc_accum[0] = 0;
-    s_adc_accum[1] = 0;
-    s_adc_accum[2] = 0;
-    s_adc_accum_count = 0;
-    portEXIT_CRITICAL(&s_adc_accum_lock);
-}
-
-static void offset_autozero_reset_state(offset_dac_ctx_t *ctx)
-{
-    for (uint8_t ch = 0; ch < 3U; ++ch) {
-        ctx->direction[ch] = 0;
-        ctx->last_abs_error[ch] = 0;
-        ctx->have_last_error[ch] = false;
-    }
-}
-#endif
-
-static void offset_set_manual_codes(uint16_t x, uint16_t y, uint16_t z)
-{
-#if MAG_THERMAL_ISOLATION_TEST
-    (void)x;
-    (void)y;
-    (void)z;
-    ESP_LOGW(TAG, "DAC manual command ignored: thermal isolation test keeps offset DAC off");
-    return;
-#else
-    offset_dac_ctx_t *ctx = s_autozero_ctx;
-    if (ctx == NULL || !ctx->ready) {
-        ESP_LOGW(TAG, "DAC manual command ignored: no DAC ready");
+    if (!serial_adc_output_enabled()) {
         return;
     }
-
-    ctx->code[MCP4728_CH_A] = clamp_dac_code((int)x);
-    ctx->code[MCP4728_CH_B] = clamp_dac_code((int)y);
-    ctx->code[MCP4728_CH_C] = clamp_dac_code((int)z);
-    ctx->code[MCP4728_CH_D] = MAG_OFFSET_DAC_CENTER_CODE;
-
-    if (!ctx->dac_enabled) {
-        ESP_LOGI(TAG, "DAC manual codes stored while DAC outputs are disabled");
-        return;
-    }
-
-    esp_err_t err = mcp4728_write_all_volatile(&ctx->dac, ctx->code);
-    if (err != ESP_OK) {
-        ESP_LOGW(TAG, "DAC manual write failed: %s", esp_err_to_name(err));
-        return;
-    }
-
-#if MAG_OFFSET_DAC_LOG_MANUAL
-    ESP_LOGI(TAG, "DAC manual codes: X=%u Y=%u Z=%u REF=%u",
-             ctx->code[MCP4728_CH_A],
-             ctx->code[MCP4728_CH_B],
-             ctx->code[MCP4728_CH_C],
-             ctx->code[MCP4728_CH_D]);
-#endif
-#endif
-}
-
-static void offset_set_dac_enabled(bool enable)
-{
-    offset_dac_ctx_t *ctx = s_autozero_ctx;
-    if (ctx == NULL || !ctx->ready) {
-        ESP_LOGW(TAG, "DAC enable command ignored: no DAC ready");
-        return;
-    }
-
-#if MAG_THERMAL_ISOLATION_TEST
-    if (enable) {
-        ESP_LOGW(TAG, "DAC enable ignored: thermal isolation test keeps offset DAC off");
-    }
-    enable = false;
-#endif
-
-    esp_err_t err = enable
-        ? mcp4728_write_all_volatile(&ctx->dac, ctx->code)
-        : mcp4728_power_down_all_volatile(&ctx->dac, ctx->code);
-    if (err != ESP_OK) {
-        ESP_LOGW(TAG, "DAC %s command failed: %s",
-                 enable ? "enable" : "disable",
-                 esp_err_to_name(err));
-        return;
-    }
-
-    ctx->dac_enabled = enable;
-    ESP_LOGI(TAG, "DAC outputs %s", enable ? "enabled" : "disabled");
-}
-
-#if MAG_OFFSET_AUTOZERO_ENABLE
-static void offset_autozero_task(void *arg)
-{
-    offset_dac_ctx_t *ctx = (offset_dac_ctx_t *)arg;
-
-    while (1) {
-        while (!s_autozero_requested) {
-            vTaskDelay(pdMS_TO_TICKS(100));
-        }
-
-        s_autozero_requested = false;
-        offset_autozero_reset_state(ctx);
-        adc_accum_reset();
-        ESP_LOGI(TAG, "offset auto-zero started");
-
-        bool converged = false;
-        for (uint32_t iter = 0U; iter < MAG_OFFSET_AUTOZERO_MAX_ITER; ++iter) {
-        vTaskDelay(pdMS_TO_TICKS(MAG_OFFSET_AUTOZERO_WINDOW_MS));
-
-        int64_t avg[3] = {0};
-        uint32_t count = 0;
-        if (!ctx->ready || !adc_accum_snapshot(avg, &count)) {
-            continue;
-        }
-
-        bool changed = false;
-        converged = true;
-        for (uint8_t ch = 0; ch < 3U; ++ch) {
-            int64_t err_abs = abs_i64(avg[ch]);
-            if (err_abs <= MAG_OFFSET_AUTOZERO_DEADBAND_CODE) {
-                continue;
-            }
-            converged = false;
-
-            bool clipped = err_abs >= MAG_OFFSET_AUTOZERO_CLIP_CODE;
-            if (!ctx->have_last_error[ch]) {
-                ctx->direction[ch] = avg[ch] > 0 ? -1 : 1;
-                ctx->have_last_error[ch] = true;
-            } else if (err_abs + MAG_OFFSET_AUTOZERO_IMPROVE_CODE >= ctx->last_abs_error[ch]) {
-                ctx->direction[ch] = (int8_t)-ctx->direction[ch];
-            }
-
-            int step = clipped ? MAG_OFFSET_AUTOZERO_CLIPPED_STEP_LSB :
-                       MAG_OFFSET_AUTOZERO_STEP_LSB;
-            int next = (int)ctx->code[ch] +
-                       ((int)ctx->direction[ch] * step);
-            uint16_t clamped = clamp_dac_code(next);
-            if (clamped == ctx->code[ch] && clipped) {
-                ctx->direction[ch] = (int8_t)-ctx->direction[ch];
-                next = (int)ctx->code[ch] + ((int)ctx->direction[ch] * step);
-                clamped = clamp_dac_code(next);
-            }
-            if (clamped != ctx->code[ch]) {
-                ctx->code[ch] = clamped;
-                changed = true;
-            }
-            ctx->last_abs_error[ch] = err_abs;
-        }
-
-        if (changed && ctx->dac_enabled) {
-            esp_err_t err = mcp4728_write_all_volatile(&ctx->dac, ctx->code);
-            if (err != ESP_OK) {
-                ESP_LOGW(TAG, "offset auto-zero DAC write failed: %s",
-                         esp_err_to_name(err));
-            }
-        }
-
-        if ((iter % 5U) == 0U || converged) {
-            ESP_LOGI(TAG,
-                     "autozero n=%lu avg=[%lld,%lld,%lld] dac=[%u,%u,%u]",
-                     (unsigned long)count,
-                     (long long)avg[0],
-                     (long long)avg[1],
-                     (long long)avg[2],
-                     ctx->code[MCP4728_CH_A],
-                     ctx->code[MCP4728_CH_B],
-                     ctx->code[MCP4728_CH_C]);
-        }
-
-        if (converged) {
-            break;
-        }
-        }
-
-        ESP_LOGI(TAG, "offset auto-zero %s dac=[%u,%u,%u]",
-                 converged ? "complete" : "stopped at iteration limit",
-                 ctx->code[MCP4728_CH_A],
-                 ctx->code[MCP4728_CH_B],
-                 ctx->code[MCP4728_CH_C]);
-    }
-}
-#endif
-
-static void uart_command_task(void *arg)
-{
-    (void)arg;
-    uint8_t rx[32];
-    char line[32];
-    size_t len = 0;
-
-    while (1) {
-        int n = uart_read_bytes(UART_NUM_0, rx, sizeof(rx), pdMS_TO_TICKS(100));
-        for (int i = 0; i < n; ++i) {
-            char c = (char)rx[i];
-            if (c == '\r' || c == '\n') {
-                line[len] = '\0';
-                bool handled = false;
-#if MAG_OFFSET_AUTOZERO_ENABLE
-                if (len > 0U && (strcmp(line, "Z") == 0 || strcmp(line, "ZERO") == 0)) {
-                    s_autozero_requested = true;
-                    ESP_LOGI(TAG, "received ZERO command");
-                    handled = true;
-                }
-#else
-                if (len > 0U && (strcmp(line, "Z") == 0 || strcmp(line, "ZERO") == 0)) {
-                    ESP_LOGI(TAG, "ZERO command ignored: auto-zero firmware task is disabled");
-                    handled = true;
-                }
-#endif
-                if (!handled && strncmp(line, "DAC ", 4) == 0) {
-                    unsigned x = 0, y = 0, z = 0;
-                    if (sscanf(&line[4], "%u %u %u", &x, &y, &z) == 3) {
-                        offset_set_manual_codes((uint16_t)x, (uint16_t)y, (uint16_t)z);
-                    } else {
-                        ESP_LOGW(TAG, "bad DAC command: %s", line);
-                    }
-                    handled = true;
-                }
-                if (!handled && strncmp(line, "9V ", 3) == 0) {
-#if MAG_THERMAL_ISOLATION_TEST && !MAG_ALLOW_BRIDGE_9V_COMMANDS
-                    if (strcmp(&line[3], "1") == 0 ||
-                        strcmp(&line[3], "ON") == 0 ||
-                        strcmp(&line[3], "on") == 0 ||
-                        strcmp(&line[3], "0") == 0 ||
-                        strcmp(&line[3], "OFF") == 0 ||
-                        strcmp(&line[3], "off") == 0) {
-                        handled = true;
-                    }
-                    if (handled) {
-                        sr_set_pin(SR_EN_BST_10V, false);
-                        ESP_LOGW(TAG, "+9VA command ignored: thermal isolation test keeps bridge off");
-                    } else {
-                        ESP_LOGW(TAG, "bad 9V command: %s", line);
-                        handled = true;
-                    }
-#else
-                    bool enable = false;
-                    if (strcmp(&line[3], "1") == 0 ||
-                        strcmp(&line[3], "ON") == 0 ||
-                        strcmp(&line[3], "on") == 0) {
-                        enable = true;
-                        handled = true;
-                    } else if (strcmp(&line[3], "0") == 0 ||
-                               strcmp(&line[3], "OFF") == 0 ||
-                               strcmp(&line[3], "off") == 0) {
-                        enable = false;
-                        handled = true;
-                    }
-                    if (handled) {
-                        sr_set_pin(SR_EN_BST_10V, enable);
-                        ESP_LOGI(TAG, "+9VA boost/LDO input enable %s",
-                                 enable ? "on" : "off");
-                    } else {
-                        ESP_LOGW(TAG, "bad 9V command: %s", line);
-                        handled = true;
-                    }
-#endif
-                }
-                if (!handled && strncmp(line, "DACEN ", 6) == 0) {
-                    bool enable = false;
-                    if (strcmp(&line[6], "1") == 0 ||
-                        strcmp(&line[6], "ON") == 0 ||
-                        strcmp(&line[6], "on") == 0) {
-                        enable = true;
-                        handled = true;
-                    } else if (strcmp(&line[6], "0") == 0 ||
-                               strcmp(&line[6], "OFF") == 0 ||
-                               strcmp(&line[6], "off") == 0) {
-                        enable = false;
-                        handled = true;
-                    }
-                    if (handled) {
-                        offset_set_dac_enabled(enable);
-                    } else {
-                        ESP_LOGW(TAG, "bad DACEN command: %s", line);
-                        handled = true;
-                    }
-                }
-                if (!handled && (strcmp(line, "SR") == 0 ||
-                                 strcmp(line, "SETRESET") == 0)) {
-#if MAG_THERMAL_ISOLATION_TEST && !MAG_ALLOW_SET_RESET_COMMANDS
-                    ESP_LOGW(TAG, "SETRESET ignored: thermal isolation test keeps 18V set/reset off");
-#else
-                    ESP_LOGI(TAG, "received SETRESET command");
-                    if (hmc100x_set_reset_sequence() != 0) {
-                        ESP_LOGW(TAG, "SETRESET command failed");
-                    }
-#endif
-                    handled = true;
-                }
-                if (!handled && strcmp(line, "SET") == 0) {
-#if MAG_THERMAL_ISOLATION_TEST && !MAG_ALLOW_SET_RESET_COMMANDS
-                    ESP_LOGW(TAG, "SET ignored: thermal isolation test keeps 18V set/reset off");
-#else
-                    ESP_LOGI(TAG, "received SET command");
-                    if (hmc100x_set_only_sequence() != 0) {
-                        ESP_LOGW(TAG, "SET command failed");
-                    }
-#endif
-                    handled = true;
-                }
-                if (!handled && strcmp(line, "RESET") == 0) {
-#if MAG_THERMAL_ISOLATION_TEST && !MAG_ALLOW_SET_RESET_COMMANDS
-                    ESP_LOGW(TAG, "RESET ignored: thermal isolation test keeps 18V set/reset off");
-#else
-                    ESP_LOGI(TAG, "received RESET command");
-                    if (hmc100x_reset_only_sequence() != 0) {
-                        ESP_LOGW(TAG, "RESET command failed");
-                    }
-#endif
-                }
-                len = 0;
-            } else if (len < (sizeof(line) - 1U)) {
-                line[len++] = c;
-            } else {
-                len = 0;
-            }
-        }
-    }
-}
-
-static void init_offset_dac_for_slot(board_slot_t slot)
-{
-    mcp4728_config_t dac_cfg = {
-        .address = MCP4728_DEFAULT_ADDRESS,
-        .scl_hz = 100000U,
-    };
-
-    switch (slot) {
-        case BOARD_SLOT_1:
-            dac_cfg.sda_gpio = MAG_SLOT_1_I2C_SDA;
-            dac_cfg.scl_gpio = MAG_SLOT_1_I2C_SCL;
-            break;
-        case BOARD_SLOT_2:
-            dac_cfg.sda_gpio = MAG_SLOT_2_I2C_SDA;
-            dac_cfg.scl_gpio = MAG_SLOT_2_I2C_SCL;
-            break;
-        default:
-            return;
-    }
-
-    offset_dac_ctx_t *ctx = &s_offset_dac_ctx[slot];
-    ctx->slot = slot;
-    esp_err_t err = mcp4728_init(&ctx->dac, &dac_cfg);
-    if (err != ESP_OK) {
-        ESP_LOGW(TAG, "slot %u offset DAC init failed: %s",
-                 (unsigned)slot + 1U, esp_err_to_name(err));
-        return;
-    }
-    err = mcp4728_configure_internal_ref_gain1(&ctx->dac);
-    if (err != ESP_OK) {
-        ESP_LOGW(TAG, "slot %u offset DAC config failed: %s",
-                 (unsigned)slot + 1U, esp_err_to_name(err));
-        (void)mcp4728_deinit(&ctx->dac);
-        return;
-    }
-
-    ctx->code[MCP4728_CH_A] = dac_code_from_trim(MAG_OFFSET_X_TRIM_LSB);
-    ctx->code[MCP4728_CH_B] = dac_code_from_trim(MAG_OFFSET_Y_TRIM_LSB);
-    ctx->code[MCP4728_CH_C] = dac_code_from_trim(MAG_OFFSET_Z_TRIM_LSB);
-    ctx->code[MCP4728_CH_D] = MAG_OFFSET_DAC_CENTER_CODE;
-    ctx->direction[0] = 1;
-    ctx->direction[1] = 1;
-    ctx->direction[2] = 1;
-    ctx->ready = false;
-    ctx->dac_enabled = MAG_OFFSET_DAC_DEFAULT_ENABLE != 0;
-
-    const uint16_t code[MCP4728_NUM_CHANNELS] = {
-        dac_code_from_trim(MAG_OFFSET_X_TRIM_LSB),
-        dac_code_from_trim(MAG_OFFSET_Y_TRIM_LSB),
-        dac_code_from_trim(MAG_OFFSET_Z_TRIM_LSB),
-        MAG_OFFSET_DAC_CENTER_CODE,
-    };
-
-    err = ctx->dac_enabled
-        ? mcp4728_write_all_volatile(&ctx->dac, ctx->code)
-        : mcp4728_power_down_all_volatile(&ctx->dac, ctx->code);
-    if (err != ESP_OK) {
-        ESP_LOGW(TAG, "slot %u offset DAC init output command failed: %s",
-                 (unsigned)slot + 1U, esp_err_to_name(err));
-    } else {
-        ESP_LOGI(TAG, "slot %u offset DAC codes: X=%u Y=%u Z=%u REF=%u outputs=%s",
-                 (unsigned)slot + 1U,
-                 code[MCP4728_CH_A],
-                 code[MCP4728_CH_B],
-                 code[MCP4728_CH_C],
-                 code[MCP4728_CH_D],
-                 ctx->dac_enabled ? "enabled" : "powered down");
-    }
-    ctx->ready = true;
-
-    if (s_autozero_ctx == NULL) {
-        s_autozero_ctx = ctx;
-    }
-}
-
-static void adc_sample_cb(void *ctx, const int32_t *samples,
-                          uint8_t status, uint32_t frame_idx)
-{
-    (void)ctx;
-#if MAG_OFFSET_AUTOZERO_ENABLE
-    portENTER_CRITICAL(&s_adc_accum_lock);
-    s_adc_accum[0] += samples[0];
-    s_adc_accum[1] += samples[1];
-    s_adc_accum[2] += samples[2];
-    s_adc_accum_count++;
-    portEXIT_CRITICAL(&s_adc_accum_lock);
-#endif
-
-    if ((frame_idx % SERIAL_STUDIO_DECIMATION) != 0U) {
-        return;
-    } 
-    
 
     uint8_t pkt[MAG_PACKET_TOTAL_LEN] = {
         MAG_PACKET_SYNC0,
@@ -591,24 +153,815 @@ static void adc_sample_cb(void *ctx, const int32_t *samples,
     uart_write_bytes(UART_NUM_0, pkt, sizeof(pkt));
 }
 
+static void sd_log_shift_register_state(const char *context)
+{
+    ESP_LOGI(TAG, "%s: shift-register state=0x%04x EN_SD_MUX=%u SD_MUX_SEL=%u USB2641_NRESET=%u",
+             context,
+             (unsigned)sr_get_state(),
+             sr_get_pin(SR_EN_SD_MUX) ? 1U : 0U,
+             sr_get_pin(SR_SD_MUX_SEL) ? 1U : 0U,
+             sr_get_pin(SR_USB2641_NRESET) ? 1U : 0U);
+}
+
+static void sd_log_line_levels(const char *label);
+
+static void usb2641_set_reset(bool released)
+{
+    sr_set_pin(SR_USB2641_NRESET, released);
+    vTaskDelay(pdMS_TO_TICKS(20));
+    ESP_LOGI(TAG, "USB2641 reset %s", released ? "released" : "asserted");
+    sd_log_shift_register_state("USB2641 reset");
+}
+
+static void usb2641_reset_pulse(void)
+{
+    usb2641_set_reset(false);
+    vTaskDelay(pdMS_TO_TICKS(100));
+    usb2641_set_reset(true);
+}
+
+static void sd_mux_select_esp32_level(bool sel_level)
+{
+    sr_set_pin(SR_USB2641_NRESET, false);
+    sr_set_pin(SR_EN_SD_MUX, SD_MUX_DISABLE_LEVEL);
+    vTaskDelay(pdMS_TO_TICKS(5));
+    sr_set_pin(SR_SD_MUX_SEL, sel_level);
+    sr_set_pin(SR_EN_SD_MUX, SD_MUX_ENABLE_LEVEL);
+    vTaskDelay(pdMS_TO_TICKS(50));
+    ESP_LOGI(TAG, "SD mux selected: ESP32 candidate SEL=%u", sel_level ? 1U : 0U);
+    sd_log_shift_register_state("SD mux ESP32");
+}
+
+static void sd_mux_select_esp32_combo(bool en_level, bool sel_level)
+{
+    sr_set_pin(SR_USB2641_NRESET, false);
+    sr_set_pin(SR_EN_SD_MUX, SD_MUX_DISABLE_LEVEL);
+    vTaskDelay(pdMS_TO_TICKS(5));
+    sr_set_pin(SR_SD_MUX_SEL, sel_level);
+    sr_set_pin(SR_EN_SD_MUX, en_level);
+    vTaskDelay(pdMS_TO_TICKS(50));
+    ESP_LOGI(TAG, "SD mux probe candidate: EN=%u SEL=%u",
+             en_level ? 1U : 0U,
+             sel_level ? 1U : 0U);
+    sd_log_shift_register_state("SD mux probe");
+}
+
+static void sd_mux_select_esp32(void)
+{
+    sd_mux_select_esp32_level(SD_MUX_SEL_ESP32_LEVEL);
+}
+
+static void sd_mux_idle(void)
+{
+    sr_set_pin(SR_USB2641_NRESET, false);
+    sr_set_pin(SR_EN_SD_MUX, SD_MUX_DISABLE_LEVEL);
+    vTaskDelay(pdMS_TO_TICKS(10));
+    ESP_LOGI(TAG, "SD mux idle: USB2641 reset asserted, mux disabled");
+    sd_log_shift_register_state("SD mux idle");
+}
+
+static void sd_lines_high_z(void)
+{
+    gpio_config_t io_cfg = {
+        .pin_bit_mask = (1ULL << SD_PIN_CLK) |
+                        (1ULL << SD_PIN_CMD) |
+                        (1ULL << SD_PIN_D0) |
+                        (1ULL << SD_PIN_D1) |
+                        (1ULL << SD_PIN_D2) |
+                        (1ULL << SD_PIN_D3),
+        .mode = GPIO_MODE_INPUT,
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_DISABLE,
+    };
+    gpio_config(&io_cfg);
+    vTaskDelay(pdMS_TO_TICKS(5));
+    ESP_LOGI(TAG, "SD ESP32 pins set to high-Z input/no-pull");
+    sd_log_line_levels("SD high-Z levels");
+}
+
+static void sd_safe_idle(void)
+{
+    sd_lines_high_z();
+    sd_mux_idle();
+}
+
+static void sd_mux_select_usb2641(void)
+{
+    sr_set_pin(SR_EN_SD_MUX, SD_MUX_DISABLE_LEVEL);
+    vTaskDelay(pdMS_TO_TICKS(5));
+    sr_set_pin(SR_SD_MUX_SEL, SD_MUX_SEL_USB2641_LEVEL);
+    sr_set_pin(SR_EN_SD_MUX, SD_MUX_ENABLE_LEVEL);
+    vTaskDelay(pdMS_TO_TICKS(50));
+    sr_set_pin(SR_USB2641_NRESET, true);
+    ESP_LOGI(TAG, "SD mux selected: USB2641");
+    sd_log_shift_register_state("SD mux USB2641");
+}
+
+static esp_err_t sd_write_test_file(void)
+{
+    FILE *f = fopen(SD_TEST_FILE, "w");
+    if (f == NULL) {
+        ESP_LOGE(TAG, "failed to open %s for write", SD_TEST_FILE);
+        return ESP_FAIL;
+    }
+
+    fprintf(f, "ESP32 SD-card test\r\n");
+    fprintf(f, "If you can read this over USB-C, the USB2641 handoff works.\r\n");
+    fprintf(f, "Build timestamp: %s %s\r\n", __DATE__, __TIME__);
+
+    if (fclose(f) != 0) {
+        ESP_LOGE(TAG, "failed to close %s", SD_TEST_FILE);
+        return ESP_FAIL;
+    }
+
+    ESP_LOGI(TAG, "wrote %s", SD_TEST_FILE);
+    return ESP_OK;
+}
+
+static esp_err_t sd_read_test_file_back(void)
+{
+    FILE *f = fopen(SD_TEST_FILE, "r");
+    if (f == NULL) {
+        ESP_LOGE(TAG, "failed to open %s for readback", SD_TEST_FILE);
+        return ESP_FAIL;
+    }
+
+    char line[96];
+    while (fgets(line, sizeof(line), f) != NULL) {
+        line[strcspn(line, "\r\n")] = '\0';
+        ESP_LOGI(TAG, "readback: %s", line);
+    }
+
+    fclose(f);
+    return ESP_OK;
+}
+
+static esp_err_t sd_mount(sdmmc_card_t **out_card)
+{
+    sdmmc_host_t host = SDMMC_HOST_DEFAULT();
+    host.max_freq_khz = SD_INIT_FREQ_KHZ;
+
+    sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
+    slot_config.width = SD_INIT_BUS_WIDTH;
+    slot_config.clk = SD_PIN_CLK;
+    slot_config.cmd = SD_PIN_CMD;
+    slot_config.d0 = SD_PIN_D0;
+#if SD_INIT_BUS_WIDTH > 1
+    slot_config.d1 = SD_PIN_D1;
+    slot_config.d2 = SD_PIN_D2;
+    slot_config.d3 = SD_PIN_D3;
+#else
+    slot_config.d1 = GPIO_NUM_NC;
+    slot_config.d2 = GPIO_NUM_NC;
+    slot_config.d3 = GPIO_NUM_NC;
+#endif
+    slot_config.flags |= SDMMC_SLOT_FLAG_INTERNAL_PULLUP;
+
+    esp_vfs_fat_sdmmc_mount_config_t mount_config = {
+        .format_if_mount_failed = false,
+        .max_files = 4,
+        .allocation_unit_size = 16 * 1024,
+    };
+
+    ESP_LOGI(TAG, "SD mount attempt: width=%d freq=%d kHz pins CLK=%d CMD=%d D0=%d D1=%d D2=%d D3=%d",
+             SD_INIT_BUS_WIDTH,
+             SD_INIT_FREQ_KHZ,
+             SD_PIN_CLK,
+             SD_PIN_CMD,
+             SD_PIN_D0,
+             SD_PIN_D1,
+             SD_PIN_D2,
+             SD_PIN_D3);
+
+    esp_err_t err = esp_vfs_fat_sdmmc_mount(SD_MOUNT_POINT,
+                                            &host,
+                                            &slot_config,
+                                            &mount_config,
+                                            out_card);
+    if (err != ESP_OK) {
+        sd_log_shift_register_state("SD mount failed");
+    }
+    return err;
+}
+
+static esp_err_t run_sd_card_ops(bool write_test, bool read_test)
+{
+    serial_select_output(UART_OUTPUT_TEXT);
+
+    sd_mux_select_esp32();
+
+    sdmmc_card_t *card = NULL;
+    esp_err_t err = sd_mount(&card);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "SD mount failed: %s", esp_err_to_name(err));
+        sd_mux_idle();
+        return err;
+    }
+
+    sdmmc_card_print_info(stdout, card);
+
+    if (write_test) {
+        err = sd_write_test_file();
+    }
+    if (err == ESP_OK && read_test) {
+        err = sd_read_test_file_back();
+    }
+
+    esp_vfs_fat_sdcard_unmount(SD_MOUNT_POINT, card);
+    ESP_LOGI(TAG, "SD card unmounted");
+
+    sd_mux_idle();
+    return err;
+}
+
+static esp_err_t run_sd_card_test(void)
+{
+    return run_sd_card_ops(true, true);
+}
+
+static esp_err_t run_sd_card_probe(bool sel_level)
+{
+    serial_select_output(UART_OUTPUT_TEXT);
+    sd_mux_select_esp32_level(sel_level);
+
+    sdmmc_card_t *card = NULL;
+    esp_err_t err = sd_mount(&card);
+    if (err == ESP_OK) {
+        sdmmc_card_print_info(stdout, card);
+        esp_vfs_fat_sdcard_unmount(SD_MOUNT_POINT, card);
+        ESP_LOGI(TAG, "SD probe SEL=%u succeeded", sel_level ? 1U : 0U);
+    } else {
+        ESP_LOGE(TAG, "SD probe SEL=%u failed: %s", sel_level ? 1U : 0U, esp_err_to_name(err));
+    }
+
+    sd_mux_idle();
+    return err;
+}
+
+static esp_err_t run_sd_card_probe_all(void)
+{
+    serial_select_output(UART_OUTPUT_TEXT);
+
+    esp_err_t first_err = ESP_FAIL;
+    for (int en = 0; en <= 1; ++en) {
+        for (int sel = 0; sel <= 1; ++sel) {
+            ESP_LOGI(TAG, "SD probe all: trying EN=%d SEL=%d", en, sel);
+            sd_mux_select_esp32_combo(en != 0, sel != 0);
+
+            sdmmc_card_t *card = NULL;
+            esp_err_t err = sd_mount(&card);
+            if (err == ESP_OK) {
+                sdmmc_card_print_info(stdout, card);
+                esp_vfs_fat_sdcard_unmount(SD_MOUNT_POINT, card);
+                ESP_LOGI(TAG, "SD probe all succeeded with EN=%d SEL=%d", en, sel);
+                sd_mux_idle();
+                return ESP_OK;
+            }
+
+            if (first_err == ESP_FAIL) {
+                first_err = err;
+            }
+            ESP_LOGE(TAG, "SD probe all failed with EN=%d SEL=%d: %s",
+                     en, sel, esp_err_to_name(err));
+        }
+    }
+
+    sd_mux_idle();
+    return first_err;
+}
+
+static esp_err_t run_sd_card_spi_probe_all(void)
+{
+    serial_select_output(UART_OUTPUT_TEXT);
+
+    esp_err_t first_err = ESP_FAIL;
+    for (int en = 0; en <= 1; ++en) {
+        for (int sel = 0; sel <= 1; ++sel) {
+            ESP_LOGI(TAG, "SD SPI probe: trying EN=%d SEL=%d", en, sel);
+            sd_mux_select_esp32_combo(en != 0, sel != 0);
+
+            spi_bus_config_t bus_cfg = {
+                .mosi_io_num = SD_PIN_CMD,
+                .miso_io_num = SD_PIN_D0,
+                .sclk_io_num = SD_PIN_CLK,
+                .quadwp_io_num = GPIO_NUM_NC,
+                .quadhd_io_num = GPIO_NUM_NC,
+                .max_transfer_sz = 4096,
+            };
+
+            esp_err_t err = spi_bus_initialize(SPI3_HOST, &bus_cfg, SPI_DMA_CH_AUTO);
+            if (err != ESP_OK) {
+                ESP_LOGE(TAG, "SD SPI probe bus init failed: %s", esp_err_to_name(err));
+                if (first_err == ESP_FAIL) {
+                    first_err = err;
+                }
+                continue;
+            }
+
+            sdmmc_host_t host = SDSPI_HOST_DEFAULT();
+            host.slot = SPI3_HOST;
+            host.max_freq_khz = SD_INIT_FREQ_KHZ;
+
+            sdspi_device_config_t dev_cfg = SDSPI_DEVICE_CONFIG_DEFAULT();
+            dev_cfg.host_id = SPI3_HOST;
+            dev_cfg.gpio_cs = SD_PIN_D3;
+
+            esp_vfs_fat_sdmmc_mount_config_t mount_config = {
+                .format_if_mount_failed = false,
+                .max_files = 4,
+                .allocation_unit_size = 16 * 1024,
+            };
+
+            sdmmc_card_t *card = NULL;
+            ESP_LOGI(TAG, "SD SPI mount attempt: freq=%d kHz CLK=%d MOSI/CMD=%d MISO/D0=%d CS/D3=%d",
+                     SD_INIT_FREQ_KHZ,
+                     SD_PIN_CLK,
+                     SD_PIN_CMD,
+                     SD_PIN_D0,
+                     SD_PIN_D3);
+            err = esp_vfs_fat_sdspi_mount(SD_MOUNT_POINT,
+                                           &host,
+                                           &dev_cfg,
+                                           &mount_config,
+                                           &card);
+            if (err == ESP_OK) {
+                sdmmc_card_print_info(stdout, card);
+                esp_vfs_fat_sdcard_unmount(SD_MOUNT_POINT, card);
+                spi_bus_free(SPI3_HOST);
+                ESP_LOGI(TAG, "SD SPI probe succeeded with EN=%d SEL=%d", en, sel);
+                sd_mux_idle();
+                return ESP_OK;
+            }
+
+            ESP_LOGE(TAG, "SD SPI probe failed with EN=%d SEL=%d: %s",
+                     en, sel, esp_err_to_name(err));
+            sd_log_shift_register_state("SD SPI probe failed");
+            if (first_err == ESP_FAIL) {
+                first_err = err;
+            }
+            spi_bus_free(SPI3_HOST);
+        }
+    }
+
+    sd_mux_idle();
+    return first_err;
+}
+
+static void sd_config_line_probe_inputs(gpio_pullup_t pullup)
+{
+    gpio_config_t io_cfg = {
+        .pin_bit_mask = (1ULL << SD_PIN_CLK) |
+                        (1ULL << SD_PIN_CMD) |
+                        (1ULL << SD_PIN_D0) |
+                        (1ULL << SD_PIN_D1) |
+                        (1ULL << SD_PIN_D2) |
+                        (1ULL << SD_PIN_D3),
+        .mode = GPIO_MODE_INPUT,
+        .pull_up_en = pullup,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_DISABLE,
+    };
+    gpio_config(&io_cfg);
+    vTaskDelay(pdMS_TO_TICKS(5));
+}
+
+static void sd_log_line_levels(const char *label)
+{
+    ESP_LOGI(TAG, "%s: CLK=%d CMD=%d D0=%d D1=%d D2=%d D3=%d",
+             label,
+             gpio_get_level(SD_PIN_CLK),
+             gpio_get_level(SD_PIN_CMD),
+             gpio_get_level(SD_PIN_D0),
+             gpio_get_level(SD_PIN_D1),
+             gpio_get_level(SD_PIN_D2),
+             gpio_get_level(SD_PIN_D3));
+}
+
+static void run_sd_line_probe_all(void)
+{
+    serial_select_output(UART_OUTPUT_TEXT);
+
+    for (int en = 0; en <= 1; ++en) {
+        for (int sel = 0; sel <= 1; ++sel) {
+            ESP_LOGI(TAG, "SD line probe: EN=%d SEL=%d", en, sel);
+            sd_mux_select_esp32_combo(en != 0, sel != 0);
+
+            sd_config_line_probe_inputs(GPIO_PULLUP_DISABLE);
+            sd_log_line_levels("SD lines no internal pullup");
+
+            sd_config_line_probe_inputs(GPIO_PULLUP_ENABLE);
+            sd_log_line_levels("SD lines with internal pullup");
+        }
+    }
+
+    sd_mux_idle();
+}
+
+static void adc_sample_cb(void *ctx, const int32_t *samples,
+                          uint8_t status, uint32_t frame_idx)
+{
+    (void)ctx;
+
+    if ((frame_idx % SERIAL_STUDIO_DECIMATION) != 0U) {
+        return;
+    }
+
+    serial_write_adc_packet(samples, status, frame_idx);
+}
+
+static esp_err_t adc_power_on(void)
+{
+    sr_set_pin(SR_ADC_MCLK_EN, true);
+    sr_set_pin(SR_ADC_RESET, true);
+    sr_set_pin(SR_ADC_START, true);
+    sr_set_pin(SR_ADC_CONVST_SAR, true);
+    vTaskDelay(pdMS_TO_TICKS(100));
+    return ESP_OK;
+}
+
+static void adc_power_off(void)
+{
+    sr_set_pin(SR_ADC_START, false);
+    sr_set_pin(SR_ADC_CONVST_SAR, false);
+    sr_set_pin(SR_ADC_RESET, false);
+    sr_set_pin(SR_ADC_MCLK_EN, false);
+}
+
+static esp_err_t adc_stream_start(void)
+{
+    if (s_adc_streaming) {
+        ESP_RETURN_ON_ERROR(adc_power_on(), TAG, "ADC power re-assert failed");
+        serial_select_output(UART_OUTPUT_ADC_BINARY);
+        return ESP_OK;
+    }
+
+    ESP_RETURN_ON_ERROR(adc_power_on(), TAG, "ADC power-on failed");
+
+    if (!s_adc_ready) {
+        ad7779_config_t cfg = AD7779_DEFAULT_CONFIG;
+        cfg.odr_hz = MAG_ODR_HZ;
+        cfg.reference = AD7779_REF_INTERNAL;
+        cfg.channels_enabled = 0xFFU;
+        cfg.verify_writes = true;
+        cfg.use_crc = true;
+
+        ad7779_status_t st = ad7779_init(&s_adc, ad7779_hal_default_instance(), &cfg);
+        if (st != AD7779_OK) {
+            ESP_LOGE(TAG, "ad7779_init failed: %d", st);
+            adc_power_off();
+            return ESP_FAIL;
+        }
+
+        ad7779_set_sample_callback(&s_adc, adc_sample_cb, NULL);
+        s_adc_ready = true;
+    }
+
+    ad7779_status_t st = ad7779_start_streaming(&s_adc);
+    if (st != AD7779_OK) {
+        ESP_LOGE(TAG, "ad7779_start_streaming failed: %d", st);
+        return ESP_FAIL;
+    }
+
+    s_adc_streaming = true;
+    serial_select_output(UART_OUTPUT_ADC_BINARY);
+
+    ESP_LOGI(TAG,
+             "AD7779 OK. Magnetic expansion bring-up: +9V=%s, -5V=%s, "
+             "ref = internal %.1f V, ODR = %lu Hz, gain = x%.0f. "
+             "Binary serial output = %lu Hz at %lu baud.",
+             (MAG_ENABLE_BRIDGE_9V != 0) ? "on" : "off",
+             (MAG_ENABLE_NEG5V != 0) ? "on" : "off",
+             ADC_REF_V, (unsigned long)MAG_ODR_HZ, MAG_ADC_GAIN,
+             (unsigned long)SERIAL_STUDIO_RATE_HZ, (unsigned long)MAG_UART_BAUD);
+    return ESP_OK;
+}
+
+static void uart_handle_command(const char *line)
+{
+    if (strcmp(line, "OUT ADC") == 0 ||
+        strcmp(line, "MODE ADC") == 0 ||
+        strcmp(line, "ADC") == 0) {
+        if (adc_stream_start() != ESP_OK) {
+            serial_select_output(UART_OUTPUT_TEXT);
+        }
+        return;
+    }
+
+    if (strcmp(line, "OUT TEXT") == 0 ||
+        strcmp(line, "MODE TEXT") == 0 ||
+        strcmp(line, "MODE CTRL") == 0 ||
+        strcmp(line, "CTRL") == 0 ||
+        strcmp(line, "TEXT") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        return;
+    }
+
+    if (strcmp(line, "SD") == 0 || strcmp(line, "SDTEST") == 0) {
+        esp_err_t err = run_sd_card_test();
+        ESP_LOGI(TAG, "SD test %s", err == ESP_OK ? "complete" : "failed");
+        return;
+    }
+
+    if (strcmp(line, "SD WRITE_TEST") == 0 || strcmp(line, "SD WRITE") == 0) {
+        esp_err_t err = run_sd_card_ops(true, false);
+        ESP_LOGI(TAG, "SD write test %s", err == ESP_OK ? "complete" : "failed");
+        return;
+    }
+
+    if (strcmp(line, "SD READ_TEST") == 0 || strcmp(line, "SD READ") == 0) {
+        esp_err_t err = run_sd_card_ops(false, true);
+        ESP_LOGI(TAG, "SD read test %s", err == ESP_OK ? "complete" : "failed");
+        return;
+    }
+
+    if (strcmp(line, "SD ESP") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sd_mux_select_esp32();
+        ESP_LOGI(TAG, "SD mux set to ESP32");
+        return;
+    }
+
+    if (strcmp(line, "SD ESP0") == 0 || strcmp(line, "SD SEL 0") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sd_mux_select_esp32_level(false);
+        ESP_LOGI(TAG, "SD mux set to ESP32 candidate SEL=0");
+        return;
+    }
+
+    if (strcmp(line, "SD ESP1") == 0 || strcmp(line, "SD SEL 1") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sd_mux_select_esp32_level(true);
+        ESP_LOGI(TAG, "SD mux set to ESP32 candidate SEL=1");
+        return;
+    }
+
+    if (strcmp(line, "MUX EN 0") == 0 || strcmp(line, "SD EN 0") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sr_set_pin(SR_EN_SD_MUX, false);
+        sd_log_shift_register_state("MUX EN 0");
+        return;
+    }
+
+    if (strcmp(line, "MUX EN 1") == 0 || strcmp(line, "SD EN 1") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sr_set_pin(SR_EN_SD_MUX, true);
+        sd_log_shift_register_state("MUX EN 1");
+        return;
+    }
+
+    if (strcmp(line, "MUX SEL 0") == 0 || strcmp(line, "SD SEL RAW 0") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sr_set_pin(SR_SD_MUX_SEL, false);
+        sd_log_shift_register_state("MUX SEL 0");
+        return;
+    }
+
+    if (strcmp(line, "MUX SEL 1") == 0 || strcmp(line, "SD SEL RAW 1") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sr_set_pin(SR_SD_MUX_SEL, true);
+        sd_log_shift_register_state("MUX SEL 1");
+        return;
+    }
+
+    if (strcmp(line, "MUX STATE") == 0 || strcmp(line, "SD MUX STATE") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sd_log_shift_register_state("MUX STATE");
+        return;
+    }
+
+    if (strcmp(line, "SR STATE") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        ESP_LOGI(TAG, "shift-register state=0x%04x", (unsigned)sr_get_state());
+        return;
+    }
+
+    int sr_pin = -1;
+    int sr_level = -1;
+    if (sscanf(line, "SR PIN %d %d", &sr_pin, &sr_level) == 2) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        if (sr_pin < 0 || sr_pin > 15 || (sr_level != 0 && sr_level != 1)) {
+            ESP_LOGW(TAG, "bad SR PIN command: %s", line);
+            return;
+        }
+        sr_set_pin((sr_pin_t)sr_pin, sr_level != 0);
+        ESP_LOGI(TAG, "SR pin %d set to %d, state=0x%04x",
+                 sr_pin,
+                 sr_level,
+                 (unsigned)sr_get_state());
+        return;
+    }
+
+    if (strcmp(line, "SD PROBE0") == 0 || strcmp(line, "SD PROBE 0") == 0) {
+        esp_err_t err = run_sd_card_probe(false);
+        ESP_LOGI(TAG, "SD probe0 %s", err == ESP_OK ? "complete" : "failed");
+        return;
+    }
+
+    if (strcmp(line, "SD PROBE1") == 0 || strcmp(line, "SD PROBE 1") == 0) {
+        esp_err_t err = run_sd_card_probe(true);
+        ESP_LOGI(TAG, "SD probe1 %s", err == ESP_OK ? "complete" : "failed");
+        return;
+    }
+
+    if (strcmp(line, "SD PROBEALL") == 0 || strcmp(line, "SD PROBE ALL") == 0) {
+        esp_err_t err = run_sd_card_probe_all();
+        ESP_LOGI(TAG, "SD probe-all %s", err == ESP_OK ? "complete" : "failed");
+        return;
+    }
+
+    if (strcmp(line, "SD SPIPROBE") == 0 || strcmp(line, "SD SPI PROBE") == 0) {
+        esp_err_t err = run_sd_card_spi_probe_all();
+        ESP_LOGI(TAG, "SD SPI probe %s", err == ESP_OK ? "complete" : "failed");
+        return;
+    }
+
+    if (strcmp(line, "SD LINEPROBE") == 0 || strcmp(line, "SD LINE PROBE") == 0) {
+        run_sd_line_probe_all();
+        ESP_LOGI(TAG, "SD line probe complete");
+        return;
+    }
+
+    if (strcmp(line, "SD IDLE") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sd_mux_idle();
+        return;
+    }
+
+    if (strcmp(line, "SD HIZ") == 0 || strcmp(line, "SD HIGHZ") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sd_safe_idle();
+        return;
+    }
+
+    if (strcmp(line, "SD USB") == 0 || strcmp(line, "SD USB2641") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        sd_mux_select_usb2641();
+        ESP_LOGI(TAG, "SD mux set to USB2641");
+        return;
+    }
+
+    if (strcmp(line, "USB2641 RESET0") == 0 || strcmp(line, "USB RESET0") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        usb2641_set_reset(false);
+        return;
+    }
+
+    if (strcmp(line, "USB2641 RESET1") == 0 || strcmp(line, "USB RESET1") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        usb2641_set_reset(true);
+        return;
+    }
+
+    if (strcmp(line, "USB2641 PULSE") == 0 || strcmp(line, "USB PULSE") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        usb2641_reset_pulse();
+        return;
+    }
+
+    if (strncmp(line, "KEEPALIVE ", 10) == 0) {
+        bool enable = false;
+        if (strcmp(&line[10], "1") == 0 ||
+            strcmp(&line[10], "ON") == 0 ||
+            strcmp(&line[10], "on") == 0) {
+            enable = true;
+        } else if (strcmp(&line[10], "0") != 0 &&
+                   strcmp(&line[10], "OFF") != 0 &&
+                   strcmp(&line[10], "off") != 0) {
+            ESP_LOGW(TAG, "bad KEEPALIVE command: %s", line);
+            return;
+        }
+
+        serial_select_output(UART_OUTPUT_TEXT);
+        sr_set_pin(SR_EN_KEEPALIVE, enable);
+        ESP_LOGI(TAG, "EN_KEEPALIVE %s", enable ? "on" : "off");
+        sd_log_shift_register_state("KEEPALIVE");
+        return;
+    }
+
+    if (strncmp(line, "9V ", 3) == 0) {
+        bool enable = false;
+        if (strcmp(&line[3], "1") == 0 ||
+            strcmp(&line[3], "ON") == 0 ||
+            strcmp(&line[3], "on") == 0) {
+            enable = true;
+        } else if (strcmp(&line[3], "0") != 0 &&
+                   strcmp(&line[3], "OFF") != 0 &&
+                   strcmp(&line[3], "off") != 0) {
+            ESP_LOGW(TAG, "bad 9V command: %s", line);
+            return;
+        }
+
+        sr_set_pin(SR_EN_BST_10V, enable);
+        ESP_LOGI(TAG, "+9VA boost/LDO input enable %s", enable ? "on" : "off");
+        return;
+    }
+
+    if (strncmp(line, "NEG5V ", 6) == 0 || strncmp(line, "-5V ", 4) == 0) {
+        const char *arg = (line[0] == '-') ? &line[4] : &line[6];
+        bool enable = false;
+        if (strcmp(arg, "1") == 0 ||
+            strcmp(arg, "ON") == 0 ||
+            strcmp(arg, "on") == 0) {
+            enable = true;
+        } else if (strcmp(arg, "0") != 0 &&
+                   strcmp(arg, "OFF") != 0 &&
+                   strcmp(arg, "off") != 0) {
+            ESP_LOGW(TAG, "bad NEG5V command: %s", line);
+            return;
+        }
+
+        sr_set_pin(SR_EN_INV_NEG5V, enable);
+        ESP_LOGI(TAG, "-5V inverter enable %s", enable ? "on" : "off");
+        return;
+    }
+
+    if (strcmp(line, "SR") == 0 || strcmp(line, "SETRESET") == 0) {
+        if (hmc100x_set_reset_sequence() != 0) {
+            ESP_LOGW(TAG, "SETRESET command failed");
+        }
+        return;
+    }
+
+    if (strcmp(line, "SET") == 0) {
+        if (hmc100x_set_only_sequence() != 0) {
+            ESP_LOGW(TAG, "SET command failed");
+        }
+        return;
+    }
+
+    if (strcmp(line, "RESET") == 0) {
+        if (hmc100x_reset_only_sequence() != 0) {
+            ESP_LOGW(TAG, "RESET command failed");
+        }
+        return;
+    }
+
+    ESP_LOGW(TAG, "unknown command: %s", line);
+}
+
+static void uart_command_task(void *arg)
+{
+    (void)arg;
+    uint8_t rx[32];
+    char line[32];
+    size_t len = 0;
+
+    while (1) {
+        int n = uart_read_bytes(UART_NUM_0, rx, sizeof(rx), pdMS_TO_TICKS(100));
+        for (int i = 0; i < n; ++i) {
+            char c = (char)rx[i];
+            if (c == '\r' || c == '\n') {
+                line[len] = '\0';
+                if (len > 0U) {
+                    uart_handle_command(line);
+                }
+                len = 0;
+            } else if (len < (sizeof(line) - 1U)) {
+                line[len++] = c;
+            } else {
+                len = 0;
+            }
+        }
+    }
+}
+
+static esp_err_t board_outputs_init(uint32_t magnetic_slots)
+{
+    sr_set_pin(SR_EN_LDO_3V3, true);
+    vTaskDelay(pdMS_TO_TICKS(20));
+    sr_set_pin(SR_EN_BST_10V, MAG_ENABLE_BRIDGE_9V != 0);
+    vTaskDelay(pdMS_TO_TICKS(20));
+    sr_set_pin(SR_EN_INV_NEG5V, MAG_ENABLE_NEG5V != 0);
+    sr_set_pin(SR_EN_BST_18V, false);
+    sr_set_pin(SR_SET_1, false);
+    sr_set_pin(SR_RESET_1, false);
+    sr_set_pin(SR_SET_2, false);
+    sr_set_pin(SR_RESET_2, false);
+    adc_power_off();
+    sd_mux_select_usb2641();
+    vTaskDelay(pdMS_TO_TICKS(100));
+
+    hmc100x_config_t hmc_cfg = HMC100X_DEFAULT_CONFIG;
+    hmc_cfg.active_slot_mask = magnetic_slots;
+    if (hmc100x_init(&hmc_cfg) != 0) {
+        ESP_LOGE(TAG, "hmc100x init failed");
+        return ESP_FAIL;
+    }
+
+    return ESP_OK;
+}
+
 void app_main(void)
 {
     vTaskDelay(pdMS_TO_TICKS(150));
 
-    esp_err_t uart_err = uart_driver_install(UART_NUM_0,
-                                             MAG_UART_RX_BUF_BYTES,
-                                             MAG_UART_TX_BUF_BYTES,
-                                             0,
-                                             NULL,
-                                             0);
-    if (uart_err != ESP_OK && uart_err != ESP_ERR_INVALID_STATE) {
-        ESP_LOGE(TAG, "uart_driver_install failed: %s", esp_err_to_name(uart_err));
-        return;
-    }
-    ESP_ERROR_CHECK(uart_set_baudrate(UART_NUM_0, MAG_UART_BAUD));
+    ESP_ERROR_CHECK(serial_init());
+    serial_select_output(UART_OUTPUT_TEXT);
+
     if (xTaskCreate(uart_command_task,
                     "uart_cmd",
-                    2048,
+                    MAG_UART_CMD_STACK_BYTES,
                     NULL,
                     4,
                     NULL) != pdPASS) {
@@ -636,122 +989,43 @@ void app_main(void)
              slot2.id_level,
              (unsigned long)magnetic_slots);
 
-    sr_set_pin(SR_EN_LDO_3V3, true);
-    vTaskDelay(pdMS_TO_TICKS(20));
-    sr_set_pin(SR_EN_BST_10V, MAG_ENABLE_BRIDGE_9V != 0);
-    vTaskDelay(pdMS_TO_TICKS(20));
-    sr_set_pin(SR_EN_INV_NEG5V, MAG_ENABLE_NEG5V != 0);
-    sr_set_pin(SR_EN_BST_18V, false);
-    sr_set_pin(SR_SET_1, false);
-    sr_set_pin(SR_RESET_1, false);
-    sr_set_pin(SR_SET_2, false);
-    sr_set_pin(SR_RESET_2, false);
-    vTaskDelay(pdMS_TO_TICKS(100));
-
-#if MAG_THERMAL_ISOLATION_TEST
-    ESP_LOGW(TAG,
-             "THERMAL ISOLATION TEST: +9VA bridge off, -5VA off, "
-             "18V set/reset off, offset DAC forced powered down");
-#endif
-
-    hmc100x_config_t hmc_cfg = HMC100X_DEFAULT_CONFIG;
-    hmc_cfg.active_slot_mask = magnetic_slots;
-    if (hmc100x_init(&hmc_cfg) != 0) {
-        ESP_LOGE(TAG, "hmc100x init failed");
+    if (board_outputs_init(magnetic_slots) != ESP_OK) {
         return;
     }
+
 #if MAG_SET_RESET_ENABLE
     if (magnetic_slots != 0U && hmc100x_set_reset_sequence() != 0) {
         ESP_LOGE(TAG, "initial HMC100x set/reset failed");
         return;
     }
-#else
-    ESP_LOGI(TAG, "HMC100x set/reset pulses disabled for offset auto-zero test");
-#endif
-    if ((magnetic_slots & (1UL << BOARD_SLOT_1)) != 0U) {
-        init_offset_dac_for_slot(BOARD_SLOT_1);
-    }
-    if ((magnetic_slots & (1UL << BOARD_SLOT_2)) != 0U) {
-        init_offset_dac_for_slot(BOARD_SLOT_2);
-    }
-
-    sr_set_pin(SR_ADC_MCLK_EN, true);
-    sr_set_pin(SR_ADC_RESET, true);
-    sr_set_pin(SR_ADC_START, true);
-    sr_set_pin(SR_ADC_CONVST_SAR, true);
-    vTaskDelay(pdMS_TO_TICKS(100));
-
-    ad7779_t adc = {0};
-    ad7779_config_t cfg = AD7779_DEFAULT_CONFIG;
-    cfg.odr_hz = MAG_ODR_HZ;
-    cfg.reference = AD7779_REF_INTERNAL;
-    cfg.channels_enabled = 0xFFU;
-    cfg.verify_writes = true;
-    cfg.use_crc = true;
-
-    ad7779_status_t st = ad7779_init(&adc, ad7779_hal_default_instance(), &cfg);
-    if (st != AD7779_OK) {
-        ESP_LOGE(TAG, "ad7779_init failed: %d", st);
-        return;
-    }
-
-    ESP_LOGI(TAG,
-             "AD7779 OK. Magnetic expansion bring-up: +3V3A enabled, "
-             "+9VA=%s, -5VA=%s, "
-             "HMC100x set/reset disabled, ref = internal %.1f V, "
-             "ODR = %lu Hz, gain = x%.0f. Binary serial output = %lu Hz at %lu baud.",
-             (MAG_ENABLE_BRIDGE_9V != 0) ? "on" : "off",
-             (MAG_ENABLE_NEG5V != 0) ? "on" : "off",
-             ADC_REF_V, (unsigned long)MAG_ODR_HZ, MAG_ADC_GAIN,
-             (unsigned long)SERIAL_STUDIO_RATE_HZ, (unsigned long)MAG_UART_BAUD);
-
-    ad7779_set_sample_callback(&adc, adc_sample_cb, NULL);
-    st = ad7779_start_streaming(&adc);
-    if (st != AD7779_OK) {
-        ESP_LOGE(TAG, "ad7779_start_streaming failed: %d", st);
-        return;
-    }
-
-#if MAG_OFFSET_AUTOZERO_ENABLE
-    if (s_autozero_ctx != NULL) {
-        BaseType_t ok = xTaskCreate(offset_autozero_task,
-                                    "offset_zero",
-                                    3072,
-                                    s_autozero_ctx,
-                                    4,
-                                    NULL);
-        if (ok != pdPASS) {
-            ESP_LOGE(TAG, "failed to start offset auto-zero task");
-            return;
-        }
-        ESP_LOGI(TAG,
-                 "offset auto-zero enabled: window=%u ms step=%u/%u LSB deadband=%u counts",
-                 MAG_OFFSET_AUTOZERO_WINDOW_MS,
-                 MAG_OFFSET_AUTOZERO_STEP_LSB,
-                 MAG_OFFSET_AUTOZERO_CLIPPED_STEP_LSB,
-                 MAG_OFFSET_AUTOZERO_DEADBAND_CODE);
-    } else {
-        ESP_LOGW(TAG, "offset auto-zero not started: no offset DAC ready");
-    }
-#endif
-
-#if MAG_SET_RESET_ENABLE
     if (hmc100x_start_periodic_task() != 0) {
         ESP_LOGE(TAG, "failed to start HMC100x set/reset task");
         return;
     }
+#else
+    ESP_LOGI(TAG, "HMC100x set/reset pulses disabled");
+#endif
+
+#if MAG_ENABLE_ADC_STREAM_ON_BOOT
+    if (adc_stream_start() != ESP_OK) {
+        return;
+    }
+#else
+    ESP_LOGI(TAG, "ADC stream is off. Send 'ADC' for binary stream or 'SD' for SD test.");
 #endif
 
     uint32_t last_dropped = 0;
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(30000));
-        uint32_t dropped = ad7779_frames_dropped(&adc);
-        if (dropped != last_dropped) {
-            ESP_LOGW(TAG, "frames=%lu dropped=%lu (+%lu)",
-                     (unsigned long)ad7779_frame_count(&adc),
-                     (unsigned long)dropped,
-                     (unsigned long)(dropped - last_dropped));
-            last_dropped = dropped;
+        if (s_adc_streaming) {
+            uint32_t dropped = ad7779_frames_dropped(&s_adc);
+            if (dropped != last_dropped) {
+                ESP_LOGW(TAG, "frames=%lu dropped=%lu (+%lu)",
+                         (unsigned long)ad7779_frame_count(&s_adc),
+                         (unsigned long)dropped,
+                         (unsigned long)(dropped - last_dropped));
+                last_dropped = dropped;
+            }
         }
     }
 }

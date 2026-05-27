@@ -2639,15 +2639,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 252.73 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(instances
 			(project "geophys_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/12e32701-7c59-459f-9fd3-2d7a03863ef6"
@@ -2704,15 +2695,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 252.73 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 252.73 127 0)
 			(effects
 				(font
@@ -2794,15 +2776,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 134.62 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "7a8337b2-8f88-4897-82a3-ad1137570a73")
 		)
@@ -2872,15 +2845,6 @@
 			)
 		)
 		(property "LCSC" "C3020560"
-			(at 71.12 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 71.12 80.01 0)
 			(effects
 				(font
@@ -2996,15 +2960,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 252.73 134.62 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 252.73 134.62 0)
 			(effects
 				(font
@@ -3198,15 +3153,6 @@
 		)
 		(property "Description" "C7 coupler, 2,5 A max"
 			(at 40.132 157.226 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
-			(at 55.88 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3414,15 +3360,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 97.79 121.92 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "b3e57960-f97e-47de-84a7-d983d1b61b30")
 		)
@@ -3579,15 +3516,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 123.19 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "b207a4a4-b92c-4e72-9b22-69cfe8aee69a")
 		)
@@ -3650,15 +3578,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 252.73 119.38 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 252.73 119.38 0)
 			(effects
 				(font

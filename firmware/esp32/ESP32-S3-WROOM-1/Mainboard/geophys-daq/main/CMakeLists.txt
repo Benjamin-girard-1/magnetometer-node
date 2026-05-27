@@ -4,9 +4,13 @@ idf_component_register(
     REQUIRES
         shift_register
         board_detect
-        mcp4728
         hmc100x
-        lsm6dsv
         ad7779
-        scl3300
+        fatfs
+        sdmmc
+        esp_driver_gpio
+        esp_driver_sdmmc
+        esp_driver_sdspi
+        esp_driver_spi
+        esp_driver_uart
 )

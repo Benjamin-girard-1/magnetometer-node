@@ -102,6 +102,7 @@ class SerialReader(threading.Thread):
         self.start_time: float | None = None
         self.serial_lock = threading.Lock()
         self.ser: serial.Serial | None = None
+        self.text_lines: collections.deque[str] = collections.deque(maxlen=200)
 
     @staticmethod
     def preview(chunk: bytes) -> str:
@@ -173,6 +174,15 @@ class SerialReader(threading.Thread):
 
                         match = FRAME_RE.search(buf)
                         if not match:
+                            if BINARY_SYNC not in buf and b"/*<" not in buf:
+                                newline = buf.find(b"\n")
+                                if newline >= 0:
+                                    line = bytes(buf[: newline + 1])
+                                    del buf[: newline + 1]
+                                    text = line.decode("utf-8", errors="replace").strip()
+                                    if text:
+                                        self.text_lines.append(text)
+                                    continue
                             if len(buf) > 4096:
                                 del buf[:-512]
                             break
@@ -234,6 +244,12 @@ class SerialReader(threading.Thread):
                 return False
             self.ser.write(command)
             return True
+
+    def drain_text_lines(self) -> list[str]:
+        lines: list[str] = []
+        while self.text_lines:
+            lines.append(self.text_lines.popleft())
+        return lines
 
     def average_sample_rate(self) -> float:
         if self.start_time is None or self.samples_seen < 1000:
@@ -341,6 +357,13 @@ class SerialScope(QtWidgets.QMainWindow):
         self.enable_9v.setEnabled(False)
         controls.addWidget(self.enable_9v)
 
+        self.enable_neg5v = QtWidgets.QCheckBox("-5V enable")
+        self.enable_neg5v.setToolTip("Toggle the shift-register enable for the negative inverter.")
+        self.enable_neg5v.setChecked(False)
+        self.enable_neg5v.stateChanged.connect(self.send_neg5v_enable_command)
+        self.enable_neg5v.setEnabled(False)
+        controls.addWidget(self.enable_neg5v)
+
         self.dac_enable = QtWidgets.QPushButton("DAC Off")
         self.dac_enable.setToolTip("Enable or power down the MCP4728 DAC outputs. Leave off unless actively testing offset.")
         self.dac_enable.setCheckable(True)
@@ -386,8 +409,19 @@ class SerialScope(QtWidgets.QMainWindow):
 
         controls.addStretch(1)
 
+        self.tabs = QtWidgets.QTabWidget()
+        layout.addWidget(self.tabs, stretch=1)
+
+        self.scope_tab = QtWidgets.QWidget()
+        scope_layout = QtWidgets.QVBoxLayout(self.scope_tab)
+        self.tabs.addTab(self.scope_tab, "Scope")
+
+        self.control_tab = QtWidgets.QWidget()
+        control_layout = QtWidgets.QVBoxLayout(self.control_tab)
+        self.tabs.addTab(self.control_tab, "Control / SD")
+
         dac_controls = QtWidgets.QHBoxLayout()
-        layout.addLayout(dac_controls)
+        scope_layout.addLayout(dac_controls)
         dac_controls.addWidget(QtWidgets.QLabel("DAC:"))
         self.last_dac_sent = [DAC_CENTER_CODE, DAC_CENTER_CODE, DAC_CENTER_CODE]
         self.dac_send_timer = QtCore.QTimer(self)
@@ -430,7 +464,7 @@ class SerialScope(QtWidgets.QMainWindow):
         dac_controls.addStretch(1)
 
         channel_controls = QtWidgets.QHBoxLayout()
-        layout.addLayout(channel_controls)
+        scope_layout.addLayout(channel_controls)
         channel_controls.addWidget(QtWidgets.QLabel("Channels:"))
         self.channel_checks: list[QtWidgets.QCheckBox] = []
         for ch in range(CHANNEL_COUNT):
@@ -463,13 +497,13 @@ class SerialScope(QtWidgets.QMainWindow):
         font = self.stats_label.font()
         font.setFamily("Menlo")
         self.stats_label.setFont(font)
-        layout.addWidget(self.stats_label)
+        scope_layout.addWidget(self.stats_label)
 
         self.time_plot = pg.PlotWidget(title="Time Domain")
         self.time_plot.setLabel("left", "field proxy", units="mV")
         self.time_plot.setLabel("bottom", "time", units="s")
         self.time_plot.showGrid(x=True, y=True, alpha=0.25)
-        layout.addWidget(self.time_plot, stretch=3)
+        scope_layout.addWidget(self.time_plot, stretch=3)
 
         self.time_curves = []
         for ch in range(CHANNEL_COUNT):
@@ -485,7 +519,7 @@ class SerialScope(QtWidgets.QMainWindow):
         self.fft_plot.setLabel("bottom", "frequency", units="Hz")
         self.fft_plot.showGrid(x=True, y=True, alpha=0.25)
         self.update_fft_xrange()
-        layout.addWidget(self.fft_plot, stretch=2)
+        scope_layout.addWidget(self.fft_plot, stretch=2)
 
         self.fft_curves = []
         for ch in range(CHANNEL_COUNT):
@@ -496,6 +530,90 @@ class SerialScope(QtWidgets.QMainWindow):
             self.fft_curves.append(curve)
         self.fft_plot.addLegend()
         self.update_channel_visibility()
+
+        mode_controls = QtWidgets.QHBoxLayout()
+        control_layout.addLayout(mode_controls)
+
+        self.control_mode_btn = QtWidgets.QPushButton("Control Mode")
+        self.control_mode_btn.setToolTip("Stop ADC bytes on UART and use text commands/responses.")
+        self.control_mode_btn.clicked.connect(self.send_control_mode_command)
+        self.control_mode_btn.setEnabled(False)
+        mode_controls.addWidget(self.control_mode_btn)
+
+        self.adc_mode_btn = QtWidgets.QPushButton("ADC Stream")
+        self.adc_mode_btn.setToolTip("Return UART output to the binary ADC stream.")
+        self.adc_mode_btn.clicked.connect(self.send_adc_mode_command)
+        self.adc_mode_btn.setEnabled(False)
+        mode_controls.addWidget(self.adc_mode_btn)
+
+        self.sd_test_btn = QtWidgets.QPushButton("Run SD Test")
+        self.sd_test_btn.setToolTip("Mount the SD card from the ESP32, write the test file, read it back, then idle the mux.")
+        self.sd_test_btn.clicked.connect(lambda: self.send_control_command(b"SD\n", "run SD write/read test"))
+        self.sd_test_btn.setEnabled(False)
+        mode_controls.addWidget(self.sd_test_btn)
+
+        self.sd_probe_all_btn = QtWidgets.QPushButton("Probe Mux")
+        self.sd_probe_all_btn.setToolTip("Try all EN_SD_MUX and SD_MUX_SEL combinations at 1-bit 400 kHz.")
+        self.sd_probe_all_btn.clicked.connect(lambda: self.send_control_command(b"SD PROBEALL\n", "probe SD mux combinations"))
+        self.sd_probe_all_btn.setEnabled(False)
+        mode_controls.addWidget(self.sd_probe_all_btn)
+
+        self.sd_spi_probe_btn = QtWidgets.QPushButton("SPI Probe")
+        self.sd_spi_probe_btn.setToolTip("Try the SD-card path in SPI mode using CLK/CMD/D0/D3.")
+        self.sd_spi_probe_btn.clicked.connect(lambda: self.send_control_command(b"SD SPIPROBE\n", "probe SD card in SPI mode"))
+        self.sd_spi_probe_btn.setEnabled(False)
+        mode_controls.addWidget(self.sd_spi_probe_btn)
+
+        self.sd_line_probe_btn = QtWidgets.QPushButton("Line Probe")
+        self.sd_line_probe_btn.setToolTip("Read SD line idle levels through all mux states.")
+        self.sd_line_probe_btn.clicked.connect(lambda: self.send_control_command(b"SD LINEPROBE\n", "probe SD line levels"))
+        self.sd_line_probe_btn.setEnabled(False)
+        mode_controls.addWidget(self.sd_line_probe_btn)
+
+        self.sd_write_btn = QtWidgets.QPushButton("Write Test File")
+        self.sd_write_btn.clicked.connect(lambda: self.send_control_command(b"SD WRITE_TEST\n", "write SD test file"))
+        self.sd_write_btn.setEnabled(False)
+        mode_controls.addWidget(self.sd_write_btn)
+
+        self.sd_read_btn = QtWidgets.QPushButton("Read Test File")
+        self.sd_read_btn.clicked.connect(lambda: self.send_control_command(b"SD READ_TEST\n", "read SD test file"))
+        self.sd_read_btn.setEnabled(False)
+        mode_controls.addWidget(self.sd_read_btn)
+
+        self.sd_usb_btn = QtWidgets.QPushButton("Mux Idle")
+        self.sd_usb_btn.setToolTip("Assert USB2641 reset and disable the SD mux.")
+        self.sd_usb_btn.clicked.connect(lambda: self.send_control_command(b"SD IDLE\n", "idle SD mux"))
+        self.sd_usb_btn.setEnabled(False)
+        mode_controls.addWidget(self.sd_usb_btn)
+
+        self.sd_hiz_btn = QtWidgets.QPushButton("SD Hi-Z")
+        self.sd_hiz_btn.setToolTip("Put ESP32 SD pins in input/no-pull and disable the mux.")
+        self.sd_hiz_btn.clicked.connect(lambda: self.send_control_command(b"SD HIZ\n", "set SD pins high-Z"))
+        self.sd_hiz_btn.setEnabled(False)
+        mode_controls.addWidget(self.sd_hiz_btn)
+        mode_controls.addStretch(1)
+
+        command_controls = QtWidgets.QHBoxLayout()
+        control_layout.addLayout(command_controls)
+        self.custom_command = QtWidgets.QLineEdit()
+        self.custom_command.setPlaceholderText("Command, for example: SD READ_TEST")
+        self.custom_command.returnPressed.connect(self.send_custom_control_command)
+        command_controls.addWidget(self.custom_command, stretch=1)
+
+        self.custom_send_btn = QtWidgets.QPushButton("Send")
+        self.custom_send_btn.clicked.connect(self.send_custom_control_command)
+        self.custom_send_btn.setEnabled(False)
+        command_controls.addWidget(self.custom_send_btn)
+
+        self.clear_control_log_btn = QtWidgets.QPushButton("Clear Output")
+        self.clear_control_log_btn.clicked.connect(self.clear_control_log)
+        command_controls.addWidget(self.clear_control_log_btn)
+
+        self.control_log = QtWidgets.QPlainTextEdit()
+        self.control_log.setReadOnly(True)
+        self.control_log.setMaximumBlockCount(500)
+        self.control_log.setPlaceholderText("Control and SD command log")
+        control_layout.addWidget(self.control_log, stretch=1)
 
         self.refresh_ports()
         if args.port:
@@ -690,15 +808,33 @@ class SerialScope(QtWidgets.QMainWindow):
         self.set_btn.setEnabled(True)
         self.reset_btn.setEnabled(True)
         self.enable_9v.setEnabled(True)
+        self.enable_neg5v.setEnabled(True)
         self.dac_enable.setEnabled(True)
         self.save_stats_btn.setEnabled(True)
         self.dac_test_btn.setEnabled(True)
-        self.reader.write_command(b"DACEN 0\n")
+        self.control_mode_btn.setEnabled(True)
+        self.adc_mode_btn.setEnabled(True)
+        self.sd_test_btn.setEnabled(True)
+        self.sd_probe_all_btn.setEnabled(True)
+        self.sd_spi_probe_btn.setEnabled(True)
+        self.sd_line_probe_btn.setEnabled(True)
+        self.sd_write_btn.setEnabled(True)
+        self.sd_read_btn.setEnabled(True)
+        self.sd_usb_btn.setEnabled(True)
+        self.sd_hiz_btn.setEnabled(True)
+        self.custom_command.setEnabled(True)
+        self.custom_send_btn.setEnabled(True)
+        self.clear_control_log_btn.setEnabled(True)
         self.reader.write_command(b"9V 0\n")
+        self.append_control_log(f"Connected to {port} at {baud}.")
+        if self.reader.write_command(b"MODE ADC\n"):
+            self.append_control_log("> MODE ADC")
+            self.info.setText(f"Connected to {port} at {baud}. Requested ADC stream...")
+        else:
+            self.info.setText(f"Connected to {port} at {baud}. Waiting for frames...")
         if THERMAL_ISOLATION_UI:
             self.dac_enable.setEnabled(False)
             self.dac_test_btn.setEnabled(False)
-        self.info.setText(f"Connected to {port} at {baud}. Waiting for frames...")
 
     def disconnect(self) -> None:
         if self.reader:
@@ -714,10 +850,62 @@ class SerialScope(QtWidgets.QMainWindow):
         self.set_btn.setEnabled(False)
         self.reset_btn.setEnabled(False)
         self.enable_9v.setEnabled(False)
+        self.enable_neg5v.setEnabled(False)
         self.dac_enable.setEnabled(False)
         self.save_stats_btn.setEnabled(False)
         self.dac_test_btn.setEnabled(False)
+        self.control_mode_btn.setEnabled(False)
+        self.adc_mode_btn.setEnabled(False)
+        self.sd_test_btn.setEnabled(False)
+        self.sd_probe_all_btn.setEnabled(False)
+        self.sd_spi_probe_btn.setEnabled(False)
+        self.sd_line_probe_btn.setEnabled(False)
+        self.sd_write_btn.setEnabled(False)
+        self.sd_read_btn.setEnabled(False)
+        self.sd_usb_btn.setEnabled(False)
+        self.sd_hiz_btn.setEnabled(False)
+        self.custom_command.setEnabled(False)
+        self.custom_send_btn.setEnabled(False)
+        self.clear_control_log_btn.setEnabled(False)
         self.stats_label.setText("")
+
+    def append_control_log(self, text: str) -> None:
+        stamp = time.strftime("%H:%M:%S")
+        self.control_log.appendPlainText(f"{stamp}  {text}")
+
+    def clear_control_log(self) -> None:
+        self.control_log.clear()
+
+    def send_control_command(self, command: bytes, description: str) -> bool:
+        if not self.reader:
+            self.info.setText("Connect before sending a control command.")
+            self.append_control_log(f"Not connected: {description}.")
+            return False
+        if self.reader.write_command(command):
+            rendered = command.decode("ascii", errors="replace").strip()
+            self.info.setText(f"Sent {description}.")
+            self.append_control_log(f"> {rendered}")
+            return True
+        self.info.setText(f"{description} failed: serial port is not ready.")
+        self.append_control_log(f"Failed: {description}.")
+        return False
+
+    def send_control_mode_command(self) -> None:
+        if self.send_control_command(b"MODE CTRL\n", "control mode"):
+            self.tabs.setCurrentWidget(self.control_tab)
+
+    def send_adc_mode_command(self) -> None:
+        if self.send_control_command(b"MODE ADC\n", "ADC stream mode"):
+            self.clear_buffers()
+            self.tabs.setCurrentWidget(self.scope_tab)
+
+    def send_custom_control_command(self) -> None:
+        text = self.custom_command.text().strip()
+        if not text:
+            return
+        command = f"{text}\n".encode("ascii", errors="replace")
+        if self.send_control_command(command, f"command {text!r}"):
+            self.custom_command.clear()
 
     def send_zero_command(self) -> None:
         if not self.reader:
@@ -765,6 +953,18 @@ class SerialScope(QtWidgets.QMainWindow):
             self.info.setText(f"Sent +9V {state} command.")
         else:
             self.info.setText("+9V enable command failed: serial port is not ready.")
+
+    def send_neg5v_enable_command(self) -> None:
+        if not self.reader:
+            return
+        enabled = self.enable_neg5v.isChecked()
+        cmd = b"NEG5V 1\n" if enabled else b"NEG5V 0\n"
+        if self.reader.write_command(cmd):
+            state = "enabled" if enabled else "disabled"
+            self.info.setText(f"Sent -5V {state} command.")
+            self.append_control_log(f"> {cmd.decode('ascii').strip()}")
+        else:
+            self.info.setText("-5V enable command failed: serial port is not ready.")
 
     def update_dac_labels(self) -> None:
         for slider, label in zip(self.dac_sliders, self.dac_values):
@@ -1077,6 +1277,9 @@ class SerialScope(QtWidgets.QMainWindow):
             self.info.setText(f"Serial error: {self.reader.error}")
             self.disconnect()
             return
+
+        for line in self.reader.drain_text_lines():
+            self.append_control_log(line)
 
         if time.monotonic() < self.plot_hold_until:
             return
