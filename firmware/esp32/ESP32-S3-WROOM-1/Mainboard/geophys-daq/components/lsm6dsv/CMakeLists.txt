@@ -14,6 +14,7 @@ idf_component_register(
         "."
         "port"
     REQUIRES
+        imu_spi_bus
         driver        # spi_master, gpio
         esp_common
         freertos

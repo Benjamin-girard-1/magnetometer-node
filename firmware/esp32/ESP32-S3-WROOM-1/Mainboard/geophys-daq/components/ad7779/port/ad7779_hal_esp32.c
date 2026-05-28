@@ -78,10 +78,46 @@ ad7779_hal_t *ad7779_hal_default_instance(void)
     return &s_hal_inst;
 }
 
+static void hal_release_resources(ad7779_hal_t *hal, bool clear)
+{
+    if (!hal) return;
+
+    hal->stream_enabled = false;
+    gpio_intr_disable(AD7779_PIN_DRDY);
+
+    if (hal->stream_task) {
+        vTaskDelete(hal->stream_task);
+        hal->stream_task = NULL;
+    }
+    if (hal->drdy_sem) {
+        vSemaphoreDelete(hal->drdy_sem);
+        hal->drdy_sem = NULL;
+    }
+    if (hal->drdy_isr_installed) {
+        gpio_isr_handler_remove(AD7779_PIN_DRDY);
+        hal->drdy_isr_installed = false;
+    }
+    if (hal->reg_dev) {
+        spi_bus_remove_device(hal->reg_dev);
+        hal->reg_dev = NULL;
+    }
+    if (hal->stream_dev) {
+        spi_bus_remove_device(hal->stream_dev);
+        hal->stream_dev = NULL;
+    }
+    if (hal->bus_owned) {
+        spi_bus_free(AD7779_SPI_HOST);
+        hal->bus_owned = false;
+    }
+    if (clear) {
+        memset(hal, 0, sizeof(*hal));
+    }
+}
+
 static void IRAM_ATTR drdy_isr_handler(void *arg)
 {
     ad7779_hal_t *hal = (ad7779_hal_t *)arg;
-    if (!hal->stream_enabled) return;
+    if (!hal || !hal->stream_enabled || !hal->drdy_sem) return;
 
     BaseType_t hpw = pdFALSE;
     /* If the semaphore is already given (previous frame not consumed),
@@ -126,6 +162,7 @@ static void stream_task_fn(void *arg)
 ad7779_hal_status_t ad7779_hal_init(ad7779_hal_t *hal)
 {
     if (!hal) return AD7779_HAL_ERR_PARAM;
+    hal_release_resources(hal, true);
     memset(hal, 0, sizeof(*hal));
 
     for (size_t i = 0; i < NOP_BUF_LEN; i += 2) {
@@ -169,6 +206,7 @@ ad7779_hal_status_t ad7779_hal_init(ad7779_hal_t *hal)
         .flags          = 0,
     };
     if (spi_bus_add_device(AD7779_SPI_HOST, &reg_devcfg, &hal->reg_dev) != ESP_OK) {
+        hal_release_resources(hal, true);
         return AD7779_HAL_ERR_BUS;
     }
 
@@ -181,6 +219,7 @@ ad7779_hal_status_t ad7779_hal_init(ad7779_hal_t *hal)
     };
     if (spi_bus_add_device(AD7779_SPI_HOST, &stream_devcfg,
                            &hal->stream_dev) != ESP_OK) {
+        hal_release_resources(hal, true);
         return AD7779_HAL_ERR_BUS;
     }
 
@@ -197,12 +236,18 @@ ad7779_hal_status_t ad7779_hal_init(ad7779_hal_t *hal)
     }
 
     hal->drdy_sem = xSemaphoreCreateBinary();
-    if (!hal->drdy_sem) return AD7779_HAL_ERR_INTERNAL;
+    if (!hal->drdy_sem) {
+        hal_release_resources(hal, true);
+        return AD7779_HAL_ERR_INTERNAL;
+    }
 
     BaseType_t r = xTaskCreate(stream_task_fn, "ad7779_stream",
                                STREAM_TASK_STACK, hal,
                                STREAM_TASK_PRIO, &hal->stream_task);
-    if (r != pdPASS) return AD7779_HAL_ERR_INTERNAL;
+    if (r != pdPASS) {
+        hal_release_resources(hal, true);
+        return AD7779_HAL_ERR_INTERNAL;
+    }
 
     return AD7779_HAL_OK;
 }
@@ -211,23 +256,7 @@ ad7779_hal_status_t ad7779_hal_deinit(ad7779_hal_t *hal)
 {
     if (!hal) return AD7779_HAL_ERR_PARAM;
 
-    hal->stream_enabled = false;
-    if (hal->stream_task) {
-        vTaskDelete(hal->stream_task);
-        hal->stream_task = NULL;
-    }
-    if (hal->drdy_sem) {
-        vSemaphoreDelete(hal->drdy_sem);
-        hal->drdy_sem = NULL;
-    }
-    if (hal->drdy_isr_installed) {
-        gpio_isr_handler_remove(AD7779_PIN_DRDY);
-        hal->drdy_isr_installed = false;
-    }
-    if (hal->reg_dev)    spi_bus_remove_device(hal->reg_dev);
-    if (hal->stream_dev) spi_bus_remove_device(hal->stream_dev);
-    if (hal->bus_owned)  spi_bus_free(AD7779_SPI_HOST);
-    memset(hal, 0, sizeof(*hal));
+    hal_release_resources(hal, true);
     return AD7779_HAL_OK;
 }
 
@@ -236,7 +265,7 @@ ad7779_hal_status_t ad7779_hal_spi_xfer(ad7779_hal_t *hal,
                                         uint8_t *rx,
                                         size_t len)
 {
-    if (!hal || !tx || len == 0) return AD7779_HAL_ERR_PARAM;
+    if (!hal || !tx || len == 0 || !hal->reg_dev) return AD7779_HAL_ERR_PARAM;
 
     spi_transaction_t t = {
         .length    = len * 8,
@@ -262,6 +291,9 @@ ad7779_hal_status_t ad7779_hal_spi_read_frame_async(ad7779_hal_t *hal,
     if (!hal || !rx_buf || len == 0 || len > NOP_BUF_LEN) {
         return AD7779_HAL_ERR_PARAM;
     }
+    if (!hal->stream_dev || !hal->stream_task || !hal->drdy_sem) {
+        return AD7779_HAL_ERR_INTERNAL;
+    }
     /* Record per-frame params; the streaming task picks them up on next DRDY. */
     hal->cur_rx_buf   = rx_buf;
     hal->cur_len      = len;
@@ -274,7 +306,7 @@ ad7779_hal_status_t ad7779_hal_attach_drdy_isr(ad7779_hal_t *hal,
                                                ad7779_drdy_isr_cb_t cb,
                                                void *user_ctx)
 {
-    if (!hal) return AD7779_HAL_ERR_PARAM;
+    if (!hal || !hal->drdy_sem) return AD7779_HAL_ERR_PARAM;
 
     hal->drdy_cb  = cb;
     hal->drdy_ctx = user_ctx;
@@ -295,6 +327,9 @@ ad7779_hal_status_t ad7779_hal_attach_drdy_isr(ad7779_hal_t *hal,
 ad7779_hal_status_t ad7779_hal_drdy_enable(ad7779_hal_t *hal, bool enable)
 {
     if (!hal) return AD7779_HAL_ERR_PARAM;
+    if (enable && (!hal->drdy_sem || !hal->stream_task || !hal->stream_dev)) {
+        return AD7779_HAL_ERR_INTERNAL;
+    }
     hal->stream_enabled = enable;
     if (enable) gpio_intr_enable(AD7779_PIN_DRDY);
     else        gpio_intr_disable(AD7779_PIN_DRDY);

@@ -1,10 +1,18 @@
 idf_component_register(
-    SRCS "main.c"
-    INCLUDE_DIRS "."
+    SRCS
+        "main.c"
+        "adc_stream.c"
+        "board_control.c"
+        "debug/imu_debug.c"
+        "debug/sd_card_debug.c"
+        "serial_control.c"
+    INCLUDE_DIRS "." "debug"
     REQUIRES
         shift_register
         board_detect
         hmc100x
+        lsm6dsv
+        scl3300
         ad7779
         fatfs
         sdmmc

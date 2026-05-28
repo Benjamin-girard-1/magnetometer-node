@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "magnode_symbols")(type "KiCad")(uri "/Users/benja/Desktop/Master/magnetometer-node/hardware/pcb/lib/magnode_symbols.kicad_sym")(options "")(descr ""))
+)

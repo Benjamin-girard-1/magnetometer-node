@@ -88,7 +88,19 @@ static scl3300_status_t xfer_one(scl3300_t *dev, uint32_t tx, uint32_t *rx_out)
     uint8_t rx_crc = SCL3300_FRAME_CRC(rx);
     uint8_t expected = scl3300_crc(rx);
     if (rx_crc != expected) {
-        return SCL3300_ERR_CRC;
+        /* The SCL3300 returns the response to the previous command. On a
+         * shared bus, the first frame after another SPI mode used the bus can
+         * occasionally be a stale/garbled response. Re-issuing the same
+         * command realigns the SCL3300 command pipeline without changing what
+         * the caller receives from the next valid response. */
+        if (scl3300_port_xfer(dev->port_ctx, tx, &rx) != 0) {
+            return SCL3300_ERR_BUS;
+        }
+        rx_crc = SCL3300_FRAME_CRC(rx);
+        expected = scl3300_crc(rx);
+        if (rx_crc != expected) {
+            return SCL3300_ERR_CRC;
+        }
     }
     if (rx_out) *rx_out = rx;
     return SCL3300_OK;

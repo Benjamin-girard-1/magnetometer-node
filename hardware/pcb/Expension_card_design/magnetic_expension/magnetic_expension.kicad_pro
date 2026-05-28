@@ -618,7 +618,7 @@
           "show": false
         }
       ],
-      "filter_string": "r2",
+      "filter_string": "r",
       "group_symbols": false,
       "include_excluded_from_bom": false,
       "name": "",

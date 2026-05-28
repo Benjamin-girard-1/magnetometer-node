@@ -40,6 +40,16 @@ from PyQt6 import QtCore, QtWidgets
 
 
 FRAME_RE = re.compile(rb"/\*<\s*([^>]+?)\s*>\*/")
+LSM6DSV_SAMPLE_RE = re.compile(
+    r"LSM6DSV sample: acc\[g\]=([+-]?\d+(?:\.\d+)?)\s+([+-]?\d+(?:\.\d+)?)\s+([+-]?\d+(?:\.\d+)?)\s+"
+    r"gyro\[dps\]=([+-]?\d+(?:\.\d+)?)\s+([+-]?\d+(?:\.\d+)?)\s+([+-]?\d+(?:\.\d+)?)\s+"
+    r"temp=([+-]?\d+(?:\.\d+)?) C"
+)
+SCL3300_SAMPLE_RE = re.compile(
+    r"SCL3300 sample: acc\[g\]=([+-]?\d+(?:\.\d+)?)\s+([+-]?\d+(?:\.\d+)?)\s+([+-]?\d+(?:\.\d+)?)\s+"
+    r"angle\[deg\]=([+-]?\d+(?:\.\d+)?)\s+([+-]?\d+(?:\.\d+)?)\s+([+-]?\d+(?:\.\d+)?)\s+"
+    r"temp=([+-]?\d+(?:\.\d+)?) C"
+)
 CHANNEL_COUNT = 8
 ADC_FULL_SCALE_CODE = 8388608.0
 ADC_REF_V = 2.5
@@ -267,10 +277,16 @@ class SerialScope(QtWidgets.QMainWindow):
         self.queue: collections.deque[Sample] = collections.deque(maxlen=args.queue)
         self.reader: SerialReader | None = None
         self.plot_hold_until = 0.0
-        self.dac_test_steps: list[tuple[str, list[int]]] = []
-        self.dac_test_results: list[dict[str, float | int | str]] = []
-        self.dac_test_axis = 0
-        self.dac_test_step_idx = 0
+        self.imu_test_running = False
+        self.imu_test_started_at = 0.0
+        self.imu_test_next_cycle = 0.0
+        self.imu_test_rows: list[dict[str, float]] = []
+        self.imu_test_pending_lsm: dict[str, float] | None = None
+        self.imu_test_output_path: Path | None = None
+        self.imu_test_current_segment: list[dict[str, float]] = []
+        self.imu_test_segment_count = 0
+        self.imu_test_last_event = ""
+        self.imu_test_stable = False
 
         self.frames = np.empty(args.buffer, dtype=np.float64)
         self.host_times = np.empty(args.buffer, dtype=np.float64)
@@ -372,21 +388,6 @@ class SerialScope(QtWidgets.QMainWindow):
         self.dac_enable.setEnabled(False)
         controls.addWidget(self.dac_enable)
 
-        self.accept_bad_checksum = QtWidgets.QCheckBox("Accept bad checksum")
-        self.accept_bad_checksum.setToolTip("Debug only: parse binary packets even if checksum fails.")
-        controls.addWidget(self.accept_bad_checksum)
-
-        self.autorange = QtWidgets.QCheckBox("Auto range")
-        self.autorange.setChecked(True)
-        controls.addWidget(self.autorange)
-
-        controls.addWidget(QtWidgets.QLabel("Manual span mV:"))
-        self.span = QtWidgets.QDoubleSpinBox()
-        self.span.setRange(0.01, 100000.0)
-        self.span.setValue(args.span)
-        self.span.setDecimals(3)
-        controls.addWidget(self.span)
-
         controls.addWidget(QtWidgets.QLabel("Window s:"))
         self.window_box = QtWidgets.QDoubleSpinBox()
         max_window_s = max(1.0, args.buffer / max(args.sample_rate, 1.0))
@@ -418,50 +419,11 @@ class SerialScope(QtWidgets.QMainWindow):
 
         self.control_tab = QtWidgets.QWidget()
         control_layout = QtWidgets.QVBoxLayout(self.control_tab)
-        self.tabs.addTab(self.control_tab, "Control / SD")
+        self.tabs.addTab(self.control_tab, "Control")
 
-        dac_controls = QtWidgets.QHBoxLayout()
-        scope_layout.addLayout(dac_controls)
-        dac_controls.addWidget(QtWidgets.QLabel("DAC:"))
-        self.last_dac_sent = [DAC_CENTER_CODE, DAC_CENTER_CODE, DAC_CENTER_CODE]
-        self.dac_send_timer = QtCore.QTimer(self)
-        self.dac_send_timer.setSingleShot(True)
-        self.dac_send_timer.setInterval(DAC_LIVE_INTERVAL_MS)
-        self.dac_send_timer.timeout.connect(self.send_dac_command)
-        self.dac_sliders: list[QtWidgets.QSlider] = []
-        self.dac_values: list[QtWidgets.QLabel] = []
-        for label in ("X", "Y", "Z"):
-            dac_controls.addWidget(QtWidgets.QLabel(label))
-            slider = QtWidgets.QSlider(QtCore.Qt.Orientation.Horizontal)
-            slider.setRange(DAC_MIN_CODE, DAC_MAX_CODE)
-            slider.setValue(DAC_CENTER_CODE)
-            slider.setSingleStep(1)
-            slider.setPageStep(1)
-            slider.setMinimumWidth(160)
-            value_label = QtWidgets.QLabel("2048")
-            value_label.setMinimumWidth(42)
-            slider.valueChanged.connect(self.on_dac_slider_changed)
-            slider.sliderReleased.connect(self.send_dac_command)
-            self.dac_sliders.append(slider)
-            self.dac_values.append(value_label)
-            dac_controls.addWidget(slider)
-            dac_controls.addWidget(value_label)
-
-        self.dac_center_btn = QtWidgets.QPushButton("Center")
-        self.dac_center_btn.clicked.connect(self.center_dac_sliders)
-        dac_controls.addWidget(self.dac_center_btn)
-
-        dac_controls.addWidget(QtWidgets.QLabel("Test:"))
-        self.dac_test_axis_box = QtWidgets.QComboBox()
-        self.dac_test_axis_box.addItems(["X", "Y", "Z"])
-        dac_controls.addWidget(self.dac_test_axis_box)
-
-        self.dac_test_btn = QtWidgets.QPushButton("DAC Step Test")
-        self.dac_test_btn.setToolTip("Step one DAC axis low/center/high and save per-channel response stats.")
-        self.dac_test_btn.clicked.connect(self.start_dac_step_test)
-        self.dac_test_btn.setEnabled(False)
-        dac_controls.addWidget(self.dac_test_btn)
-        dac_controls.addStretch(1)
+        self.imu_test_tab = QtWidgets.QWidget()
+        imu_test_layout = QtWidgets.QVBoxLayout(self.imu_test_tab)
+        self.tabs.addTab(self.imu_test_tab, "IMU Test")
 
         channel_controls = QtWidgets.QHBoxLayout()
         scope_layout.addLayout(channel_controls)
@@ -546,74 +508,72 @@ class SerialScope(QtWidgets.QMainWindow):
         self.adc_mode_btn.setEnabled(False)
         mode_controls.addWidget(self.adc_mode_btn)
 
-        self.sd_test_btn = QtWidgets.QPushButton("Run SD Test")
-        self.sd_test_btn.setToolTip("Mount the SD card from the ESP32, write the test file, read it back, then idle the mux.")
-        self.sd_test_btn.clicked.connect(lambda: self.send_control_command(b"SD\n", "run SD write/read test"))
-        self.sd_test_btn.setEnabled(False)
-        mode_controls.addWidget(self.sd_test_btn)
-
-        self.sd_probe_all_btn = QtWidgets.QPushButton("Probe Mux")
-        self.sd_probe_all_btn.setToolTip("Try all EN_SD_MUX and SD_MUX_SEL combinations at 1-bit 400 kHz.")
-        self.sd_probe_all_btn.clicked.connect(lambda: self.send_control_command(b"SD PROBEALL\n", "probe SD mux combinations"))
-        self.sd_probe_all_btn.setEnabled(False)
-        mode_controls.addWidget(self.sd_probe_all_btn)
-
-        self.sd_spi_probe_btn = QtWidgets.QPushButton("SPI Probe")
-        self.sd_spi_probe_btn.setToolTip("Try the SD-card path in SPI mode using CLK/CMD/D0/D3.")
-        self.sd_spi_probe_btn.clicked.connect(lambda: self.send_control_command(b"SD SPIPROBE\n", "probe SD card in SPI mode"))
-        self.sd_spi_probe_btn.setEnabled(False)
-        mode_controls.addWidget(self.sd_spi_probe_btn)
-
-        self.sd_line_probe_btn = QtWidgets.QPushButton("Line Probe")
-        self.sd_line_probe_btn.setToolTip("Read SD line idle levels through all mux states.")
-        self.sd_line_probe_btn.clicked.connect(lambda: self.send_control_command(b"SD LINEPROBE\n", "probe SD line levels"))
-        self.sd_line_probe_btn.setEnabled(False)
-        mode_controls.addWidget(self.sd_line_probe_btn)
-
-        self.sd_write_btn = QtWidgets.QPushButton("Write Test File")
-        self.sd_write_btn.clicked.connect(lambda: self.send_control_command(b"SD WRITE_TEST\n", "write SD test file"))
-        self.sd_write_btn.setEnabled(False)
-        mode_controls.addWidget(self.sd_write_btn)
-
-        self.sd_read_btn = QtWidgets.QPushButton("Read Test File")
-        self.sd_read_btn.clicked.connect(lambda: self.send_control_command(b"SD READ_TEST\n", "read SD test file"))
-        self.sd_read_btn.setEnabled(False)
-        mode_controls.addWidget(self.sd_read_btn)
-
-        self.sd_usb_btn = QtWidgets.QPushButton("Mux Idle")
-        self.sd_usb_btn.setToolTip("Assert USB2641 reset and disable the SD mux.")
-        self.sd_usb_btn.clicked.connect(lambda: self.send_control_command(b"SD IDLE\n", "idle SD mux"))
-        self.sd_usb_btn.setEnabled(False)
-        mode_controls.addWidget(self.sd_usb_btn)
-
-        self.sd_hiz_btn = QtWidgets.QPushButton("SD Hi-Z")
-        self.sd_hiz_btn.setToolTip("Put ESP32 SD pins in input/no-pull and disable the mux.")
-        self.sd_hiz_btn.clicked.connect(lambda: self.send_control_command(b"SD HIZ\n", "set SD pins high-Z"))
-        self.sd_hiz_btn.setEnabled(False)
-        mode_controls.addWidget(self.sd_hiz_btn)
-        mode_controls.addStretch(1)
-
-        command_controls = QtWidgets.QHBoxLayout()
-        control_layout.addLayout(command_controls)
-        self.custom_command = QtWidgets.QLineEdit()
-        self.custom_command.setPlaceholderText("Command, for example: SD READ_TEST")
-        self.custom_command.returnPressed.connect(self.send_custom_control_command)
-        command_controls.addWidget(self.custom_command, stretch=1)
-
-        self.custom_send_btn = QtWidgets.QPushButton("Send")
-        self.custom_send_btn.clicked.connect(self.send_custom_control_command)
-        self.custom_send_btn.setEnabled(False)
-        command_controls.addWidget(self.custom_send_btn)
-
         self.clear_control_log_btn = QtWidgets.QPushButton("Clear Output")
         self.clear_control_log_btn.clicked.connect(self.clear_control_log)
-        command_controls.addWidget(self.clear_control_log_btn)
+        mode_controls.addWidget(self.clear_control_log_btn)
+        mode_controls.addStretch(1)
 
         self.control_log = QtWidgets.QPlainTextEdit()
         self.control_log.setReadOnly(True)
         self.control_log.setMaximumBlockCount(500)
-        self.control_log.setPlaceholderText("Control and SD command log")
+        self.control_log.setPlaceholderText("Control command log")
         control_layout.addWidget(self.control_log, stretch=1)
+
+        imu_test_controls = QtWidgets.QHBoxLayout()
+        imu_test_layout.addLayout(imu_test_controls)
+
+        imu_test_controls.addWidget(QtWidgets.QLabel("Length min:"))
+        self.imu_test_duration_min = QtWidgets.QDoubleSpinBox()
+        self.imu_test_duration_min.setRange(0.1, 240.0)
+        self.imu_test_duration_min.setValue(10.0)
+        self.imu_test_duration_min.setDecimals(1)
+        imu_test_controls.addWidget(self.imu_test_duration_min)
+
+        imu_test_controls.addWidget(QtWidgets.QLabel("Sample s:"))
+        self.imu_test_interval_s = QtWidgets.QDoubleSpinBox()
+        self.imu_test_interval_s.setRange(0.5, 60.0)
+        self.imu_test_interval_s.setValue(2.0)
+        self.imu_test_interval_s.setDecimals(1)
+        imu_test_controls.addWidget(self.imu_test_interval_s)
+
+        imu_test_controls.addWidget(QtWidgets.QLabel("Stable s:"))
+        self.imu_test_stable_window_s = QtWidgets.QDoubleSpinBox()
+        self.imu_test_stable_window_s.setRange(2.0, 60.0)
+        self.imu_test_stable_window_s.setValue(10.0)
+        self.imu_test_stable_window_s.setDecimals(1)
+        imu_test_controls.addWidget(self.imu_test_stable_window_s)
+
+        imu_test_controls.addWidget(QtWidgets.QLabel("New avg deg:"))
+        self.imu_test_new_avg_deg = QtWidgets.QDoubleSpinBox()
+        self.imu_test_new_avg_deg.setRange(0.05, 5.0)
+        self.imu_test_new_avg_deg.setValue(0.3)
+        self.imu_test_new_avg_deg.setDecimals(2)
+        imu_test_controls.addWidget(self.imu_test_new_avg_deg)
+
+        self.imu_test_start_btn = QtWidgets.QPushButton("Start")
+        self.imu_test_start_btn.clicked.connect(self.start_imu_test)
+        self.imu_test_start_btn.setEnabled(False)
+        imu_test_controls.addWidget(self.imu_test_start_btn)
+
+        self.imu_test_stop_btn = QtWidgets.QPushButton("Stop")
+        self.imu_test_stop_btn.clicked.connect(self.stop_imu_test)
+        self.imu_test_stop_btn.setEnabled(False)
+        imu_test_controls.addWidget(self.imu_test_stop_btn)
+
+        self.imu_test_load_btn = QtWidgets.QPushButton("Load CSV")
+        self.imu_test_load_btn.clicked.connect(self.load_imu_test_csv)
+        imu_test_controls.addWidget(self.imu_test_load_btn)
+        imu_test_controls.addStretch(1)
+
+        self.imu_test_progress = QtWidgets.QProgressBar()
+        self.imu_test_progress.setRange(0, 1000)
+        self.imu_test_progress.setValue(0)
+        imu_test_layout.addWidget(self.imu_test_progress)
+
+        self.imu_test_summary = QtWidgets.QPlainTextEdit()
+        self.imu_test_summary.setReadOnly(True)
+        self.imu_test_summary.setPlaceholderText("IMU tilt test summary")
+        imu_test_layout.addWidget(self.imu_test_summary, stretch=1)
 
         self.refresh_ports()
         if args.port:
@@ -796,7 +756,7 @@ class SerialScope(QtWidgets.QMainWindow):
             port,
             baud,
             self.queue,
-            accept_bad_checksum=self.accept_bad_checksum.isChecked(),
+            accept_bad_checksum=False,
         )
         self.reader.start()
         self.connect_btn.setText("Disconnect")
@@ -811,20 +771,9 @@ class SerialScope(QtWidgets.QMainWindow):
         self.enable_neg5v.setEnabled(True)
         self.dac_enable.setEnabled(True)
         self.save_stats_btn.setEnabled(True)
-        self.dac_test_btn.setEnabled(True)
         self.control_mode_btn.setEnabled(True)
         self.adc_mode_btn.setEnabled(True)
-        self.sd_test_btn.setEnabled(True)
-        self.sd_probe_all_btn.setEnabled(True)
-        self.sd_spi_probe_btn.setEnabled(True)
-        self.sd_line_probe_btn.setEnabled(True)
-        self.sd_write_btn.setEnabled(True)
-        self.sd_read_btn.setEnabled(True)
-        self.sd_usb_btn.setEnabled(True)
-        self.sd_hiz_btn.setEnabled(True)
-        self.custom_command.setEnabled(True)
-        self.custom_send_btn.setEnabled(True)
-        self.clear_control_log_btn.setEnabled(True)
+        self.imu_test_start_btn.setEnabled(True)
         self.reader.write_command(b"9V 0\n")
         self.append_control_log(f"Connected to {port} at {baud}.")
         if self.reader.write_command(b"MODE ADC\n"):
@@ -834,9 +783,10 @@ class SerialScope(QtWidgets.QMainWindow):
             self.info.setText(f"Connected to {port} at {baud}. Waiting for frames...")
         if THERMAL_ISOLATION_UI:
             self.dac_enable.setEnabled(False)
-            self.dac_test_btn.setEnabled(False)
 
     def disconnect(self) -> None:
+        if self.imu_test_running:
+            self.finish_imu_test(manual=True)
         if self.reader:
             self.reader.stop()
             self.reader.join(timeout=1.0)
@@ -853,20 +803,10 @@ class SerialScope(QtWidgets.QMainWindow):
         self.enable_neg5v.setEnabled(False)
         self.dac_enable.setEnabled(False)
         self.save_stats_btn.setEnabled(False)
-        self.dac_test_btn.setEnabled(False)
         self.control_mode_btn.setEnabled(False)
         self.adc_mode_btn.setEnabled(False)
-        self.sd_test_btn.setEnabled(False)
-        self.sd_probe_all_btn.setEnabled(False)
-        self.sd_spi_probe_btn.setEnabled(False)
-        self.sd_line_probe_btn.setEnabled(False)
-        self.sd_write_btn.setEnabled(False)
-        self.sd_read_btn.setEnabled(False)
-        self.sd_usb_btn.setEnabled(False)
-        self.sd_hiz_btn.setEnabled(False)
-        self.custom_command.setEnabled(False)
-        self.custom_send_btn.setEnabled(False)
-        self.clear_control_log_btn.setEnabled(False)
+        self.imu_test_start_btn.setEnabled(False)
+        self.imu_test_stop_btn.setEnabled(False)
         self.stats_label.setText("")
 
     def append_control_log(self, text: str) -> None:
@@ -875,6 +815,305 @@ class SerialScope(QtWidgets.QMainWindow):
 
     def clear_control_log(self) -> None:
         self.control_log.clear()
+
+    def process_control_line(self, line: str) -> None:
+        self.append_control_log(line)
+        if self.imu_test_running:
+            self.capture_imu_test_line(line)
+
+    def start_imu_test(self) -> None:
+        if not self.reader:
+            self.info.setText("Connect before starting an IMU test.")
+            return
+
+        out_dir = Path(__file__).resolve().parent / "imu_tests"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = time.strftime("%Y%m%d-%H%M%S")
+        self.imu_test_output_path = out_dir / f"imu_tilt_test_{timestamp}.csv"
+        self.imu_test_rows = []
+        self.imu_test_pending_lsm = None
+        self.imu_test_current_segment = []
+        self.imu_test_segment_count = 0
+        self.imu_test_last_event = "waiting for first stable average"
+        self.imu_test_stable = False
+        self.imu_test_started_at = time.monotonic()
+        self.imu_test_next_cycle = 0.0
+        self.imu_test_running = True
+        self.imu_test_progress.setValue(0)
+        self.imu_test_summary.setPlainText(f"Running IMU tilt test...\nSaving to {self.imu_test_output_path}")
+        self.imu_test_start_btn.setEnabled(False)
+        self.imu_test_stop_btn.setEnabled(True)
+        self.tabs.setCurrentWidget(self.imu_test_tab)
+
+        self.reader.write_command(b"MODE CTRL\n")
+        self.append_control_log("> MODE CTRL")
+        self.run_imu_test_cycle()
+
+    def stop_imu_test(self) -> None:
+        if not self.imu_test_running:
+            return
+        self.finish_imu_test(manual=True)
+
+    def update_imu_test(self) -> None:
+        if not self.imu_test_running:
+            return
+
+        elapsed = time.monotonic() - self.imu_test_started_at
+        duration = self.imu_test_duration_min.value() * 60.0
+        remaining = max(0.0, duration - elapsed)
+        progress = int(min(1000.0, (elapsed / max(duration, 0.001)) * 1000.0))
+        self.imu_test_progress.setValue(progress)
+        self.imu_test_progress.setFormat(
+            f"{int(remaining // 60):02d}:{int(remaining % 60):02d} remaining"
+        )
+
+        if elapsed >= duration:
+            self.finish_imu_test(manual=False)
+        elif time.monotonic() >= self.imu_test_next_cycle:
+            self.run_imu_test_cycle()
+        else:
+            self.update_imu_test_live_summary()
+
+    def run_imu_test_cycle(self) -> None:
+        if not self.imu_test_running or not self.reader:
+            return
+        self.reader.write_command(b"LSM6DSV ON\n")
+        QtCore.QTimer.singleShot(250, self.send_scl3300_imu_test_command)
+        self.imu_test_next_cycle = time.monotonic() + self.imu_test_interval_s.value()
+
+    def send_scl3300_imu_test_command(self) -> None:
+        if self.imu_test_running and self.reader:
+            self.reader.write_command(b"SCL3300 ON\n")
+
+    @staticmethod
+    def acc_tilt_x_deg(ax: float, ay: float, az: float) -> float:
+        return math.degrees(math.atan2(ax, math.sqrt((ay * ay) + (az * az))))
+
+    @staticmethod
+    def acc_tilt_y_deg(ax: float, ay: float, az: float) -> float:
+        return math.degrees(math.atan2(ay, math.sqrt((ax * ax) + (az * az))))
+
+    def capture_imu_test_line(self, line: str) -> None:
+        lsm = LSM6DSV_SAMPLE_RE.search(line)
+        if lsm:
+            ax, ay, az, gx, gy, gz, temp = [float(v) for v in lsm.groups()]
+            self.imu_test_pending_lsm = {
+                "elapsed_s": time.monotonic() - self.imu_test_started_at,
+                "lsm_ax_g": ax,
+                "lsm_ay_g": ay,
+                "lsm_az_g": az,
+                "lsm_acc_norm_g": math.sqrt((ax * ax) + (ay * ay) + (az * az)),
+                "lsm_tilt_x_deg": self.acc_tilt_x_deg(ax, ay, az),
+                "lsm_tilt_y_deg": self.acc_tilt_y_deg(ax, ay, az),
+                "lsm_gx_dps": gx,
+                "lsm_gy_dps": gy,
+                "lsm_gz_dps": gz,
+                "lsm_gyro_norm_dps": math.sqrt((gx * gx) + (gy * gy) + (gz * gz)),
+                "lsm_temp_c": temp,
+            }
+            return
+
+        scl = SCL3300_SAMPLE_RE.search(line)
+        if scl and self.imu_test_pending_lsm:
+            ax, ay, az, ang_x, ang_y, ang_z, temp = [float(v) for v in scl.groups()]
+            row = dict(self.imu_test_pending_lsm)
+            row.update(
+                {
+                    "elapsed_s": time.monotonic() - self.imu_test_started_at,
+                    "scl_ax_g": ax,
+                    "scl_ay_g": ay,
+                    "scl_az_g": az,
+                    "scl_acc_norm_g": math.sqrt((ax * ax) + (ay * ay) + (az * az)),
+                    "scl_ang_x_deg": ang_x,
+                    "scl_ang_y_deg": ang_y,
+                    "scl_ang_z_deg": ang_z,
+                    "scl_temp_c": temp,
+                    "err_x_deg": row["lsm_tilt_x_deg"] - ang_x,
+                    "err_y_deg": row["lsm_tilt_y_deg"] - ang_y,
+                }
+            )
+            self.imu_test_rows.append(row)
+            self.update_gated_average(row)
+            self.imu_test_pending_lsm = None
+
+    def recent_imu_rows(self) -> list[dict[str, float]]:
+        if not self.imu_test_rows:
+            return []
+        cutoff = self.imu_test_rows[-1]["elapsed_s"] - self.imu_test_stable_window_s.value()
+        return [row for row in self.imu_test_rows if row["elapsed_s"] >= cutoff]
+
+    @staticmethod
+    def values_from_rows(rows: list[dict[str, float]], key: str) -> np.ndarray:
+        return np.array([row[key] for row in rows], dtype=np.float64)
+
+    def recent_window_is_stable(self, rows: list[dict[str, float]]) -> bool:
+        min_samples = max(5, int(math.ceil(self.imu_test_stable_window_s.value() / self.imu_test_interval_s.value())))
+        if len(rows) < min_samples:
+            return False
+
+        lsm_x = self.values_from_rows(rows, "lsm_tilt_x_deg")
+        lsm_y = self.values_from_rows(rows, "lsm_tilt_y_deg")
+        lsm_norm = self.values_from_rows(rows, "lsm_acc_norm_g")
+        gyro = self.values_from_rows(rows, "lsm_gyro_norm_dps")
+
+        return (
+            float(np.std(lsm_x)) < 0.20 and
+            float(np.std(lsm_y)) < 0.20 and
+            float(np.std(lsm_norm)) < 0.012 and
+            float(np.percentile(gyro, 95)) < 1.5
+        )
+
+    def segment_mean(self, key: str) -> float:
+        if not self.imu_test_current_segment:
+            return float("nan")
+        return float(np.mean(self.values_from_rows(self.imu_test_current_segment, key)))
+
+    def update_gated_average(self, row: dict[str, float]) -> None:
+        stable = self.recent_window_is_stable(self.recent_imu_rows())
+        self.imu_test_stable = stable
+        row["stable"] = 1.0 if stable else 0.0
+
+        if not stable:
+            row["segment_id"] = float(self.imu_test_segment_count)
+            row["segment_samples"] = float(len(self.imu_test_current_segment))
+            row["avg_lsm_tilt_x_deg"] = self.segment_mean("lsm_tilt_x_deg")
+            row["avg_lsm_tilt_y_deg"] = self.segment_mean("lsm_tilt_y_deg")
+            row["avg_scl_ang_x_deg"] = self.segment_mean("scl_ang_x_deg")
+            row["avg_scl_ang_y_deg"] = self.segment_mean("scl_ang_y_deg")
+            row["avg_err_x_deg"] = float("nan")
+            row["avg_err_y_deg"] = float("nan")
+            return
+
+        if not self.imu_test_current_segment:
+            self.imu_test_segment_count += 1
+            self.imu_test_current_segment = [row]
+            self.imu_test_last_event = f"started average {self.imu_test_segment_count}"
+        else:
+            avg_x = self.segment_mean("lsm_tilt_x_deg")
+            avg_y = self.segment_mean("lsm_tilt_y_deg")
+            moved = (
+                abs(row["lsm_tilt_x_deg"] - avg_x) > self.imu_test_new_avg_deg.value() or
+                abs(row["lsm_tilt_y_deg"] - avg_y) > self.imu_test_new_avg_deg.value()
+            )
+            if moved:
+                self.imu_test_segment_count += 1
+                self.imu_test_current_segment = [row]
+                self.imu_test_last_event = f"tilt changed, started average {self.imu_test_segment_count}"
+            else:
+                self.imu_test_current_segment.append(row)
+
+        row["segment_id"] = float(self.imu_test_segment_count)
+        row["segment_samples"] = float(len(self.imu_test_current_segment))
+        row["avg_lsm_tilt_x_deg"] = self.segment_mean("lsm_tilt_x_deg")
+        row["avg_lsm_tilt_y_deg"] = self.segment_mean("lsm_tilt_y_deg")
+        row["avg_scl_ang_x_deg"] = self.segment_mean("scl_ang_x_deg")
+        row["avg_scl_ang_y_deg"] = self.segment_mean("scl_ang_y_deg")
+        row["avg_err_x_deg"] = row["avg_lsm_tilt_x_deg"] - row["avg_scl_ang_x_deg"]
+        row["avg_err_y_deg"] = row["avg_lsm_tilt_y_deg"] - row["avg_scl_ang_y_deg"]
+        self.update_imu_test_live_summary()
+
+    def update_imu_test_live_summary(self) -> None:
+        if not self.imu_test_running:
+            return
+
+        elapsed = time.monotonic() - self.imu_test_started_at
+        duration = self.imu_test_duration_min.value() * 60.0
+        remaining = max(0.0, duration - elapsed)
+        state = "stable" if self.imu_test_stable else "collecting / moving"
+        avg_x = self.segment_mean("lsm_tilt_x_deg")
+        avg_y = self.segment_mean("lsm_tilt_y_deg")
+        seg_n = len(self.imu_test_current_segment)
+
+        lines = [
+            f"remaining: {int(remaining // 60):02d}:{int(remaining % 60):02d}",
+            f"samples: {len(self.imu_test_rows)}",
+            f"state: {state}",
+            f"average segment: {self.imu_test_segment_count} ({seg_n} stable samples)",
+            f"current LSM average: X={avg_x:+.4f} deg  Y={avg_y:+.4f} deg",
+            f"last event: {self.imu_test_last_event}",
+            f"saving to: {self.imu_test_output_path}",
+        ]
+        self.imu_test_summary.setPlainText("\n".join(lines))
+
+    def finish_imu_test(self, manual: bool) -> None:
+        self.imu_test_running = False
+        self.imu_test_start_btn.setEnabled(self.reader is not None)
+        self.imu_test_stop_btn.setEnabled(False)
+        self.imu_test_progress.setValue(1000)
+
+        if not self.imu_test_output_path or not self.imu_test_rows:
+            self.imu_test_summary.setPlainText("IMU test stopped without paired samples.")
+            return
+
+        fieldnames = list(self.imu_test_rows[0].keys())
+        with self.imu_test_output_path.open("w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(self.imu_test_rows)
+
+        prefix = "Stopped" if manual else "Completed"
+        summary = self.analyze_imu_test_csv(self.imu_test_output_path)
+        self.imu_test_summary.setPlainText(f"{prefix}: {self.imu_test_output_path}\n\n{summary}")
+
+    def load_imu_test_csv(self) -> None:
+        path, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self,
+            "Load IMU tilt test",
+            str(Path(__file__).resolve().parent / "imu_tests"),
+            "CSV files (*.csv);;All files (*)",
+        )
+        if not path:
+            return
+        summary = self.analyze_imu_test_csv(Path(path))
+        self.imu_test_summary.setPlainText(f"Loaded: {path}\n\n{summary}")
+
+    @staticmethod
+    def rms(values: np.ndarray) -> float:
+        return float(np.sqrt(np.mean(values * values))) if values.size else float("nan")
+
+    def analyze_imu_test_csv(self, path: Path) -> str:
+        try:
+            with path.open("r", newline="", encoding="utf-8") as f:
+                rows = list(csv.DictReader(f))
+        except OSError as exc:
+            return f"Could not read CSV: {exc}"
+        if not rows:
+            return "No samples in CSV."
+
+        cols: dict[str, np.ndarray] = {}
+        for key in rows[0].keys():
+            vals = []
+            for row in rows:
+                try:
+                    vals.append(float(row[key]))
+                except (TypeError, ValueError):
+                    pass
+            cols[key] = np.array(vals, dtype=np.float64)
+
+        err_x = cols.get("err_x_deg", np.empty(0))
+        err_y = cols.get("err_y_deg", np.empty(0))
+        elapsed = cols.get("elapsed_s", np.empty(0))
+        gyro = cols.get("lsm_gyro_norm_dps", np.empty(0))
+        lsm_norm = cols.get("lsm_acc_norm_g", np.empty(0))
+        scl_norm = cols.get("scl_acc_norm_g", np.empty(0))
+        stable = cols.get("stable", np.empty(0))
+        segment_id = cols.get("segment_id", np.empty(0))
+
+        duration = float(np.max(elapsed) - np.min(elapsed)) if elapsed.size else 0.0
+        stable_mask = stable > 0.5 if stable.size else np.zeros(len(rows), dtype=bool)
+        stable_count = int(np.count_nonzero(stable_mask))
+        segment_count = int(len(set(int(v) for v in segment_id[stable_mask] if v > 0))) if segment_id.size else 0
+        lines = [
+            f"samples: {len(rows)}",
+            f"duration: {duration:.1f} s",
+            f"stable samples: {stable_count} ({(100.0 * stable_count / max(len(rows), 1)):.1f}%), average segments: {segment_count}",
+            f"LSM tilt X - SCL angle X: mean {np.mean(err_x):+.4f} deg, rms {self.rms(err_x):.4f} deg, p2p {np.ptp(err_x):.4f} deg",
+            f"LSM tilt Y - SCL angle Y: mean {np.mean(err_y):+.4f} deg, rms {self.rms(err_y):.4f} deg, p2p {np.ptp(err_y):.4f} deg",
+            f"LSM |acc|: mean {np.mean(lsm_norm):.5f} g, std {np.std(lsm_norm):.5f} g",
+            f"SCL |acc|: mean {np.mean(scl_norm):.5f} g, std {np.std(scl_norm):.5f} g",
+            f"LSM gyro norm: mean {np.mean(gyro):.4f} dps, p95 {np.percentile(gyro, 95):.4f} dps",
+        ]
+        return "\n".join(lines)
 
     def send_control_command(self, command: bytes, description: str) -> bool:
         if not self.reader:
@@ -898,14 +1137,6 @@ class SerialScope(QtWidgets.QMainWindow):
         if self.send_control_command(b"MODE ADC\n", "ADC stream mode"):
             self.clear_buffers()
             self.tabs.setCurrentWidget(self.scope_tab)
-
-    def send_custom_control_command(self) -> None:
-        text = self.custom_command.text().strip()
-        if not text:
-            return
-        command = f"{text}\n".encode("ascii", errors="replace")
-        if self.send_control_command(command, f"command {text!r}"):
-            self.custom_command.clear()
 
     def send_zero_command(self) -> None:
         if not self.reader:
@@ -966,38 +1197,6 @@ class SerialScope(QtWidgets.QMainWindow):
         else:
             self.info.setText("-5V enable command failed: serial port is not ready.")
 
-    def update_dac_labels(self) -> None:
-        for slider, label in zip(self.dac_sliders, self.dac_values):
-            label.setText(str(slider.value()))
-
-    def on_dac_slider_changed(self) -> None:
-        self.update_dac_labels()
-        if self.reader:
-            self.dac_send_timer.start()
-
-    def center_dac_sliders(self) -> None:
-        for slider in self.dac_sliders:
-            slider.setValue(DAC_CENTER_CODE)
-        self.send_dac_command()
-
-    def set_dac_sliders_silent(self, codes: list[int]) -> None:
-        for slider, code in zip(self.dac_sliders, codes):
-            slider.blockSignals(True)
-            slider.setValue(code)
-            slider.blockSignals(False)
-        self.update_dac_labels()
-
-    def write_dac_codes_direct(self, codes: list[int]) -> bool:
-        if not self.reader:
-            return False
-        x, y, z = codes
-        cmd = f"DAC {x} {y} {z}\n".encode("ascii")
-        if not self.reader.write_command(cmd):
-            return False
-        self.last_dac_sent = list(codes)
-        self.set_dac_sliders_silent(list(codes))
-        return True
-
     def send_dac_enable_command(self) -> None:
         enabled = self.dac_enable.isChecked()
         self.dac_enable.setText("DAC On" if enabled else "DAC Off")
@@ -1010,179 +1209,6 @@ class SerialScope(QtWidgets.QMainWindow):
             self.info.setText(f"Sent DAC {state} command.")
         else:
             self.info.setText("DAC enable command failed: serial port is not ready.")
-
-    def send_dac_command(self) -> None:
-        self.dac_send_timer.stop()
-        if not self.reader:
-            self.info.setText("Connect before sending DAC command.")
-            return
-        target = [slider.value() for slider in self.dac_sliders]
-        next_codes = []
-        at_target = True
-        for current, wanted in zip(self.last_dac_sent, target):
-            delta = wanted - current
-            if abs(delta) > DAC_MAX_STEP_LSB:
-                at_target = False
-                delta = DAC_MAX_STEP_LSB if delta > 0 else -DAC_MAX_STEP_LSB
-            next_codes.append(current + delta)
-
-        x, y, z = next_codes
-        cmd = f"DAC {x} {y} {z}\n".encode("ascii")
-        if self.reader.write_command(cmd):
-            self.last_dac_sent = next_codes
-            suffix = "" if at_target else " slewing"
-            disabled = "" if self.dac_enable.isChecked() else " (stored while disabled)"
-            self.info.setText(f"Sent DAC X={x} Y={y} Z={z}.{suffix}{disabled}")
-            if not at_target:
-                self.dac_send_timer.start()
-        else:
-            self.info.setText("DAC command failed: serial port is not ready.")
-
-    def recent_channel_stats(self, seconds: float) -> list[dict[str, float]]:
-        self.drain_queue()
-        frames, host_times, channels, status = self.ordered_data()
-        if len(host_times) < 2:
-            return []
-        cutoff = host_times[-1] - seconds
-        mask = host_times >= cutoff
-        if np.count_nonzero(mask) < 2:
-            return []
-        return self.channel_stats(channels[:, mask], list(range(CHANNEL_COUNT)))
-
-    def start_dac_step_test(self) -> None:
-        if not self.reader:
-            self.info.setText("Connect before running DAC step test.")
-            return
-        if not self.dac_enable.isChecked():
-            self.info.setText("Turn DAC On before running DAC step test.")
-            return
-
-        self.dac_send_timer.stop()
-        self.dac_test_axis = self.dac_test_axis_box.currentIndex()
-        axis_name = self.dac_test_axis_box.currentText()
-        self.dac_test_results = []
-        self.dac_test_step_idx = 0
-        self.dac_test_btn.setEnabled(False)
-
-        center = [DAC_CENTER_CODE, DAC_CENTER_CODE, DAC_CENTER_CODE]
-        low = list(center)
-        high = list(center)
-        low[self.dac_test_axis] = DAC_MIN_CODE
-        high[self.dac_test_axis] = DAC_MAX_CODE
-        self.dac_test_steps = [
-            ("center_a", center),
-            ("low", low),
-            ("center_b", center),
-            ("high", high),
-            ("center_c", center),
-        ]
-
-        self.clear_buffers()
-        self.info.setText(f"Starting DAC {axis_name} step test...")
-        self.run_next_dac_test_step()
-
-    def run_next_dac_test_step(self) -> None:
-        if self.dac_test_step_idx >= len(self.dac_test_steps):
-            self.finish_dac_step_test()
-            return
-
-        step_name, codes = self.dac_test_steps[self.dac_test_step_idx]
-        if not self.write_dac_codes_direct(codes):
-            self.info.setText("DAC step test failed: serial port is not ready.")
-            self.dac_test_btn.setEnabled(True)
-            return
-
-        axis_name = self.dac_test_axis_box.currentText()
-        self.info.setText(
-            f"DAC {axis_name} test step {self.dac_test_step_idx + 1}/"
-            f"{len(self.dac_test_steps)}: {step_name} X={codes[0]} Y={codes[1]} Z={codes[2]}"
-        )
-        QtCore.QTimer.singleShot(DAC_TEST_SETTLE_MS, self.capture_dac_test_step)
-
-    def capture_dac_test_step(self) -> None:
-        stats = self.recent_channel_stats(DAC_TEST_CAPTURE_MS / 1000.0)
-        if not stats:
-            self.info.setText("DAC step test waiting for data...")
-            QtCore.QTimer.singleShot(DAC_TEST_SETTLE_MS, self.capture_dac_test_step)
-            return
-
-        step_name, codes = self.dac_test_steps[self.dac_test_step_idx]
-        for row in stats:
-            self.dac_test_results.append(
-                {
-                    "axis": self.dac_test_axis_box.currentText(),
-                    "step": step_name,
-                    "step_index": self.dac_test_step_idx,
-                    "dac_x": codes[0],
-                    "dac_y": codes[1],
-                    "dac_z": codes[2],
-                    **row,
-                }
-            )
-        self.dac_test_step_idx += 1
-        QtCore.QTimer.singleShot(250, self.run_next_dac_test_step)
-
-    def finish_dac_step_test(self) -> None:
-        self.write_dac_codes_direct([DAC_CENTER_CODE, DAC_CENTER_CODE, DAC_CENTER_CODE])
-        self.dac_test_btn.setEnabled(True)
-
-        if not self.dac_test_results:
-            self.info.setText("DAC step test finished without valid samples.")
-            return
-
-        out_dir = Path(__file__).resolve().parent / "save stats"
-        out_dir.mkdir(parents=True, exist_ok=True)
-        timestamp = time.strftime("%Y%m%d-%H%M%S")
-        axis_name = self.dac_test_axis_box.currentText()
-        out_path = out_dir / f"dac_{axis_name}_step_test_{timestamp}.csv"
-        fieldnames = [
-            "timestamp",
-            "axis",
-            "step",
-            "step_index",
-            "dac_x",
-            "dac_y",
-            "dac_z",
-            "channel",
-            "samples",
-            "mean_mv",
-            "rms_noise_mv",
-            "peak_to_peak_mv",
-            "min_mv",
-            "max_mv",
-        ]
-        try:
-            with out_path.open("w", newline="", encoding="utf-8") as f:
-                writer = csv.DictWriter(f, fieldnames=fieldnames)
-                writer.writeheader()
-                for row in self.dac_test_results:
-                    writer.writerow({"timestamp": timestamp, **row})
-        except OSError as exc:
-            self.info.setText(f"DAC step test save failed: {exc}")
-            return
-
-        by_step_ch: dict[tuple[str, int], float] = {}
-        for row in self.dac_test_results:
-            by_step_ch[(str(row["step"]), int(row["channel"]))] = float(row["mean_mv"])
-        responses = []
-        for ch in range(CHANNEL_COUNT):
-            low = by_step_ch.get(("low", ch))
-            high = by_step_ch.get(("high", ch))
-            if low is None or high is None:
-                continue
-            delta = high - low
-            slope = delta / float(DAC_MAX_CODE - DAC_MIN_CODE)
-            responses.append((abs(delta), delta, slope, ch))
-        responses.sort(reverse=True)
-        if responses:
-            _, delta, slope, ch = responses[0]
-            self.info.setText(
-                f"DAC {axis_name} test saved to {out_path}. "
-                f"Strongest response: CH{ch} high-low={delta:+.3f} mV "
-                f"({slope:+.6f} mV/code)."
-            )
-        else:
-            self.info.setText(f"DAC {axis_name} test saved to {out_path}. No channel response computed.")
 
     def toggle_connection(self) -> None:
         if self.reader:
@@ -1231,17 +1257,29 @@ class SerialScope(QtWidgets.QMainWindow):
             )
             status = np.concatenate((self.status[start:], self.status[: (start + n) % self.args.buffer]))
 
-        window_s = self.window_box.value()
-        max_samples = max(2, int(window_s * self.nominal_stream_rate()))
-        if len(frames) > max_samples:
-            frames = frames[-max_samples:]
-            host_times = host_times[-max_samples:]
-            channels = channels[:, -max_samples:]
-            status = status[-max_samples:]
+        frame_times = self.frame_times_s(frames)
+        if len(frame_times):
+            mask = frame_times >= -self.window_box.value()
+            if np.count_nonzero(mask) >= 2:
+                frames = frames[mask]
+                host_times = host_times[mask]
+                channels = channels[:, mask]
+                status = status[mask]
+            else:
+                max_samples = max(2, int(self.window_box.value() * self.nominal_stream_rate()))
+                frames = frames[-max_samples:]
+                host_times = host_times[-max_samples:]
+                channels = channels[:, -max_samples:]
+                status = status[-max_samples:]
         return frames.copy(), host_times.copy(), channels.copy(), status.copy()
 
     def nominal_stream_rate(self) -> float:
         return self.args.sample_rate
+
+    def frame_times_s(self, frames: np.ndarray) -> np.ndarray:
+        if len(frames) == 0:
+            return np.empty(0)
+        return ((frames - frames[-1]) / self.args.adc_rate).astype(np.float64, copy=False)
 
     def timing_stats(self, frames: np.ndarray) -> tuple[float, float, int]:
         if len(frames) < 2:
@@ -1279,7 +1317,8 @@ class SerialScope(QtWidgets.QMainWindow):
             return
 
         for line in self.reader.drain_text_lines():
-            self.append_control_log(line)
+            self.process_control_line(line)
+        self.update_imu_test()
 
         if time.monotonic() < self.plot_hold_until:
             return
@@ -1302,31 +1341,24 @@ class SerialScope(QtWidgets.QMainWindow):
         sample_rate, frame_step, missed = self.timing_stats(frames)
         window_host_rate = self.window_host_sample_rate(host_times)
         avg_rx_rate = self.reader.average_sample_rate() if self.reader else float("nan")
-        fft_rate = avg_rx_rate if math.isfinite(avg_rx_rate) else sample_rate
-        t = (frames - frames[-1]) / fft_rate
+        plot_rate = sample_rate
+        t = self.frame_times_s(frames)
         for ch in range(CHANNEL_COUNT):
             if self.channel_checks[ch].isChecked():
                 self.time_curves[ch].setData(t, channels[ch])
         self.time_plot.setXRange(-self.window_box.value(), 0.0, padding=0.0)
 
         active = self.active_channels()
-        if self.autorange.isChecked():
-            visible = channels[active].reshape(-1) if active else np.empty(0)
-            visible = visible[np.isfinite(visible)]
-            if visible.size:
-                y_min = float(np.min(visible))
-                y_max = float(np.max(visible))
-                span = max(y_max - y_min, 0.1)
-                margin = max(span * 0.08, 0.05)
-                self.time_plot.setYRange(y_min - margin, y_max + margin, padding=0.0)
-        elif active:
-            span = self.span.value()
-            visible = channels[active].reshape(-1)
-            visible = visible[np.isfinite(visible)]
-            center = float(np.median(visible)) if visible.size else 0.0
-            self.time_plot.setYRange(center - span, center + span, padding=0.0)
+        visible = channels[active].reshape(-1) if active else np.empty(0)
+        visible = visible[np.isfinite(visible)]
+        if visible.size:
+            y_min = float(np.min(visible))
+            y_max = float(np.max(visible))
+            span = max(y_max - y_min, 0.1)
+            margin = max(span * 0.08, 0.05)
+            self.time_plot.setYRange(y_min - margin, y_max + margin, padding=0.0)
 
-        self.update_fft(channels, active, fft_rate)
+        self.update_fft(channels, active, plot_rate)
         self.stats_label.setText(self.format_stats(self.channel_stats(channels, active)))
 
         status_max = int(np.max(status)) if len(status) else 0
@@ -1339,7 +1371,7 @@ class SerialScope(QtWidgets.QMainWindow):
             f"frame fs {sample_rate:.2f} Hz | "
             f"avg rx fs {avg_rx_rate:.2f} Hz | "
             f"window host fs {window_host_rate:.2f} Hz | "
-            f"fft fs {fft_rate:.2f} Hz | "
+            f"plot/fft fs {plot_rate:.2f} Hz | "
             f"frame step {frame_step:.1f} | "
             f"missed~{missed} | "
             f"buffer {len(frames)}/{self.args.buffer} | "
@@ -1386,7 +1418,6 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--refresh-hz", type=float, default=30.0, help="UI redraw rate")
     p.add_argument("--fft-size", type=int, default=0, help="FFT samples; 0 uses the visible time window")
     p.add_argument("--fft-max-hz", type=float, default=128.0)
-    p.add_argument("--span", type=float, default=5.0, help="Manual half-span in mV")
     args = p.parse_args()
     min_buffer = max(2, int(math.ceil(args.window_s * args.sample_rate)))
     if args.buffer < min_buffer:

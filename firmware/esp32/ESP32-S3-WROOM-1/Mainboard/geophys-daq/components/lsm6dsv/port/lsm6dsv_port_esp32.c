@@ -21,6 +21,8 @@
 
 #include "lsm6dsv_port.h"
 
+#include "imu_spi_bus.h"
+
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"
@@ -34,61 +36,10 @@
 /* ------------------------------------------------------------------------- */
 /*  Board-specific pinout (edit if you re-route)                             */
 /* ------------------------------------------------------------------------- */
-#define IMU_SPI_HOST       SPI3_HOST
-#define IMU_PIN_MOSI       8
-#define IMU_PIN_MISO       9
-#define IMU_PIN_SCLK       3
-#define LSM6DSV_PIN_CS     17
-#define SCL3300_PIN_CS     46
-
 /* Datasheet §2 Table 5: SPI clock max = 10 MHz.                             */
 #define LSM6DSV_SPI_HZ     (1 * 1000 * 1000)
 
 static const char *TAG = "lsm6dsv_port";
-
-/* ------------------------------------------------------------------------- */
-/*  Shared-bus init guard                                                    */
-/* ------------------------------------------------------------------------- */
-static bool s_bus_initialized = false;
-
-static esp_err_t imu_bus_init_once(void)
-{
-    if (s_bus_initialized) {
-        return ESP_OK;
-    }
-
-    gpio_config_t cs_cfg = {
-        .pin_bit_mask = (1ULL << LSM6DSV_PIN_CS) | (1ULL << SCL3300_PIN_CS),
-        .mode         = GPIO_MODE_OUTPUT,
-        .pull_up_en   = 0,
-        .pull_down_en = 0,
-        .intr_type    = GPIO_INTR_DISABLE,
-    };
-    gpio_config(&cs_cfg);
-    gpio_set_level(LSM6DSV_PIN_CS, 1);
-    gpio_set_level(SCL3300_PIN_CS, 1);
-
-    spi_bus_config_t buscfg = {
-        .mosi_io_num     = IMU_PIN_MOSI,
-        .miso_io_num     = IMU_PIN_MISO,
-        .sclk_io_num     = IMU_PIN_SCLK,
-        .quadwp_io_num   = -1,
-        .quadhd_io_num   = -1,
-        .max_transfer_sz = 64,
-    };
-    esp_err_t err = spi_bus_initialize(IMU_SPI_HOST, &buscfg, SPI_DMA_CH_AUTO);
-    if (err == ESP_ERR_INVALID_STATE) {
-        /* Already initialized by another driver on this shared bus.        */
-        s_bus_initialized = true;
-        return ESP_OK;
-    }
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "spi_bus_initialize failed: %s", esp_err_to_name(err));
-        return err;
-    }
-    s_bus_initialized = true;
-    return ESP_OK;
-}
 
 /* ------------------------------------------------------------------------- */
 /*  Port context                                                             */
@@ -104,7 +55,7 @@ int lsm6dsv_port_init(void **out_ctx)
 {
     if (!out_ctx) return -1;
 
-    if (imu_bus_init_once() != ESP_OK) return -1;
+    if (imu_spi_bus_init_once() != ESP_OK) return -1;
 
     gpio_config_t cs_cfg = {
         .pin_bit_mask = (1ULL << LSM6DSV_PIN_CS),

@@ -6,7 +6,11 @@
 #include "ad7779.h"
 #include "ad7779_crc.h"
 
+#include "esp_log.h"
+
 #include <string.h>
+
+static const char *TAG = "ad7779";
 
 /* -------------------------------------------------------------------- */
 /* Internal helpers                                                      */
@@ -66,7 +70,16 @@ ad7779_status_t ad7779_reg_read(ad7779_t *dev, uint8_t addr, uint8_t *val)
          * The 0x20 header echo on rx[0] is NOT part of the CRC input. */
         uint8_t crc_input[2] = { tx[0], rx[1] };
         uint8_t expected = ad7779_crc8(crc_input, 2);
-        if (expected != rx[2]) return AD7779_ERR_VERIFY;
+        if (expected != rx[2]) {
+            ESP_LOGE(TAG,
+                     "CRC mismatch reading reg 0x%02x: rx=[0x%02x 0x%02x 0x%02x], expected crc=0x%02x",
+                     addr,
+                     rx[0],
+                     rx[1],
+                     rx[2],
+                     expected);
+            return AD7779_ERR_VERIFY;
+        }
     }
     *val = rx[1];
     return AD7779_OK;
@@ -90,7 +103,14 @@ ad7779_status_t ad7779_reg_write(ad7779_t *dev, uint8_t addr, uint8_t val)
          * by toggling the cfg field. */
         uint8_t readback = 0;
         CHECK(ad7779_reg_read(dev, addr, &readback));
-        if (readback != val) return AD7779_ERR_VERIFY;
+        if (readback != val) {
+            ESP_LOGE(TAG,
+                     "verify failed reg 0x%02x: wrote 0x%02x read 0x%02x",
+                     addr,
+                     val,
+                     readback);
+            return AD7779_ERR_VERIFY;
+        }
     }
     return AD7779_OK;
 }
@@ -185,9 +205,9 @@ static void on_xfer_done(void *user_ctx, ad7779_hal_status_t status);
 /* Init / deinit                                                         */
 /* -------------------------------------------------------------------- */
 
-ad7779_status_t ad7779_init(ad7779_t *dev,
-                            ad7779_hal_t *hal,
-                            const ad7779_config_t *cfg)
+static ad7779_status_t ad7779_init_impl(ad7779_t *dev,
+                                        ad7779_hal_t *hal,
+                                        const ad7779_config_t *cfg)
 {
     if (!dev || !hal || !cfg) return AD7779_ERR_PARAM;
 
@@ -206,20 +226,27 @@ ad7779_status_t ad7779_init(ad7779_t *dev,
     /* Soft reset to known state. */
     CHECK(ad7779_soft_reset(dev));
 
-    /* Poll INIT_COMPLETE with 100 ms timeout. */
+    /* Poll INIT_COMPLETE with 500 ms timeout. */
     uint32_t t0 = ad7779_hal_now_ms(hal);
     uint8_t status3 = 0;
+    ad7779_status_t last_read = AD7779_OK;
     do {
-        if (ad7779_reg_read(dev, AD7779_REG_STATUS_REG_3, &status3) !=
-            AD7779_OK) {
+        last_read = ad7779_reg_read(dev, AD7779_REG_STATUS_REG_3, &status3);
+        if (last_read != AD7779_OK) {
             /* The very first reads after reset may return stale data;
              * keep polling instead of bailing. */
         }
         if (status3 & AD7779_STAT3_INIT_COMPLETE) break;
         ad7779_hal_delay_ms(hal, 1);
-    } while ((ad7779_hal_now_ms(hal) - t0) < 100U);
+    } while ((ad7779_hal_now_ms(hal) - t0) < 500U);
 
-    if (!(status3 & AD7779_STAT3_INIT_COMPLETE)) return AD7779_ERR_TIMEOUT;
+    if (!(status3 & AD7779_STAT3_INIT_COMPLETE)) {
+        ESP_LOGE(TAG,
+                 "INIT_COMPLETE timeout: status3=0x%02x last_read=%d",
+                 status3,
+                 last_read);
+        return AD7779_ERR_TIMEOUT;
+    }
 
     /* ----------------------------------------------------------------
      * CRC handling. We always send 24-bit frames; what changes is
@@ -244,7 +271,12 @@ ad7779_status_t ad7779_init(ad7779_t *dev,
         ad7779_status_t cr = ad7779_reg_read(dev, AD7779_REG_GEN_ERR_REG_1_EN,
                                              &check);
         if (cr != AD7779_OK) return cr;
-        if (!(check & AD7779_ERR1_EN_SPI_CRC_TEST)) return AD7779_ERR_VERIFY;
+        if (!(check & AD7779_ERR1_EN_SPI_CRC_TEST)) {
+            ESP_LOGE(TAG,
+                     "CRC enable bit did not stick: GEN_ERR_REG_1_EN=0x%02x",
+                     check);
+            return AD7779_ERR_VERIFY;
+        }
     } else {
         CHECK(ad7779_reg_write(dev, AD7779_REG_GEN_ERR_REG_1_EN, 0));
         dev->crc_enabled = false;
@@ -324,6 +356,22 @@ ad7779_status_t ad7779_init(ad7779_t *dev,
         return AD7779_ERR_BUS;
 
     return AD7779_OK;
+}
+
+ad7779_status_t ad7779_init(ad7779_t *dev,
+                            ad7779_hal_t *hal,
+                            const ad7779_config_t *cfg)
+{
+    ad7779_status_t st = ad7779_init_impl(dev, hal, cfg);
+    if (st != AD7779_OK) {
+        if (hal) {
+            (void)ad7779_hal_deinit(hal);
+        }
+        if (dev) {
+            memset(dev, 0, sizeof(*dev));
+        }
+    }
+    return st;
 }
 
 ad7779_status_t ad7779_deinit(ad7779_t *dev)
