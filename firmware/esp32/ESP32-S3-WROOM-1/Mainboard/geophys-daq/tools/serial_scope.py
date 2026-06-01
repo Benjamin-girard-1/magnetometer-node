@@ -53,7 +53,14 @@ SCL3300_SAMPLE_RE = re.compile(
 CHANNEL_COUNT = 8
 ADC_FULL_SCALE_CODE = 8388608.0
 ADC_REF_V = 2.5
-ADC_GAIN = 1.0
+ADC_GAINS = (1, 2, 4, 8)
+ADC_SR_PINS = (
+    ("3V3A LDO", 14, "Enable EN_LDO_3V3 for the +3V3A analog rail; this is not the main +3V3D digital rail."),
+    ("MCLK EN", 3, "Enable the AD7779 master clock source."),
+    ("~RESET high", 5, "Release the AD7779 reset pin. Unchecked asserts reset low."),
+    ("START", 4, "Drive the AD7779 START pin."),
+    ("CONVST SAR", 2, "Drive the AD7779 CONVST_SAR pin."),
+)
 BINARY_SYNC = b"\xA5\x5A"
 BINARY_PAYLOAD_LEN = 4 + CHANNEL_COUNT * 4 + 1
 BINARY_PACKET_LEN = 2 + 1 + BINARY_PAYLOAD_LEN + 1
@@ -76,6 +83,8 @@ CHANNEL_COLORS = [
     "#8b5cf6",
     "#ec4899",
 ]
+HELD_SAMPLE_STATUS = 0x80
+HELD_SAMPLE_MAX_BATCH = 200
 
 
 @dataclass
@@ -111,8 +120,11 @@ class SerialReader(threading.Thread):
         self.bad_lengths = 0
         self.start_time: float | None = None
         self.serial_lock = threading.Lock()
+        self.gain_lock = threading.Lock()
         self.ser: serial.Serial | None = None
         self.text_lines: collections.deque[str] = collections.deque(maxlen=200)
+        self.channel_gains = [1.0] * CHANNEL_COUNT
+        self.input_referred = False
 
     @staticmethod
     def preview(chunk: bytes) -> str:
@@ -169,10 +181,16 @@ class SerialReader(threading.Thread):
                                 frame = unpacked[0]
                                 raw = unpacked[1 : 1 + CHANNEL_COUNT]
                                 status = unpacked[-1]
-                                scale = (ADC_REF_V * 1000.0) / (ADC_FULL_SCALE_CODE * ADC_GAIN)
+                                with self.gain_lock:
+                                    gains = tuple(self.channel_gains)
+                                    input_referred = self.input_referred
+                                base_scale = (ADC_REF_V * 1000.0) / ADC_FULL_SCALE_CODE
                                 sample = Sample(
                                     frame=frame,
-                                    channels_mv=tuple(v * scale for v in raw),
+                                    channels_mv=tuple(
+                                        v * base_scale / (gains[ch] if input_referred else 1.0)
+                                        for ch, v in enumerate(raw)
+                                    ),
                                     status=status,
                                     t_host=time.monotonic(),
                                 )
@@ -255,6 +273,14 @@ class SerialReader(threading.Thread):
             self.ser.write(command)
             return True
 
+    def set_channel_gain(self, ch: int, gain: int) -> None:
+        with self.gain_lock:
+            self.channel_gains[ch] = float(gain)
+
+    def set_input_referred(self, enabled: bool) -> None:
+        with self.gain_lock:
+            self.input_referred = enabled
+
     def drain_text_lines(self) -> list[str]:
         lines: list[str] = []
         while self.text_lines:
@@ -295,6 +321,10 @@ class SerialScope(QtWidgets.QMainWindow):
         self.write_idx = 0
         self.count = 0
         self.last_queue_drained = 0
+        self.channel_gains = [1] * CHANNEL_COUNT
+        self.input_referred = False
+        self.held_samples_inserted = 0
+        self.held_samples_replaced = 0
 
         self.setWindowTitle("Magnetic Serial Scope")
         self.resize(1200, 800)
@@ -450,7 +480,32 @@ class SerialScope(QtWidgets.QMainWindow):
         self.save_stats_btn.clicked.connect(self.save_stats_csv)
         self.save_stats_btn.setEnabled(False)
         channel_controls.addWidget(self.save_stats_btn)
+
+        self.input_referred_check = QtWidgets.QCheckBox("Input-referred")
+        self.input_referred_check.setToolTip(
+            "Divide binary ADC values by the selected AD7779 PGA gain. "
+            "Unchecked shows the ADC full-scale/post-PGA value."
+        )
+        self.input_referred_check.setChecked(False)
+        self.input_referred_check.stateChanged.connect(self.set_voltage_scale_mode)
+        channel_controls.addWidget(self.input_referred_check)
         channel_controls.addStretch(1)
+
+        gain_controls = QtWidgets.QHBoxLayout()
+        scope_layout.addLayout(gain_controls)
+        gain_controls.addWidget(QtWidgets.QLabel("ADC gain:"))
+        self.gain_combos: list[QtWidgets.QComboBox] = []
+        for ch in range(CHANNEL_COUNT):
+            gain_controls.addWidget(QtWidgets.QLabel(f"CH{ch}"))
+            combo = QtWidgets.QComboBox()
+            combo.addItems([f"x{gain}" for gain in ADC_GAINS])
+            combo.setCurrentText("x1")
+            combo.setEnabled(False)
+            combo.setToolTip("Set this AD7779 channel PGA gain.")
+            combo.currentIndexChanged.connect(lambda _idx, channel=ch: self.send_gain_command(channel))
+            self.gain_combos.append(combo)
+            gain_controls.addWidget(combo)
+        gain_controls.addStretch(1)
 
         self.stats_label = QtWidgets.QLabel()
         self.stats_label.setTextFormat(QtCore.Qt.TextFormat.PlainText)
@@ -462,7 +517,7 @@ class SerialScope(QtWidgets.QMainWindow):
         scope_layout.addWidget(self.stats_label)
 
         self.time_plot = pg.PlotWidget(title="Time Domain")
-        self.time_plot.setLabel("left", "field proxy", units="mV")
+        self.time_plot.setLabel("left", "ADC/PGA voltage", units="mV")
         self.time_plot.setLabel("bottom", "time", units="s")
         self.time_plot.showGrid(x=True, y=True, alpha=0.25)
         scope_layout.addWidget(self.time_plot, stretch=3)
@@ -477,7 +532,7 @@ class SerialScope(QtWidgets.QMainWindow):
         self.time_plot.addLegend()
 
         self.fft_plot = pg.PlotWidget(title="Spectrum")
-        self.fft_plot.setLabel("left", "amplitude", units="mV")
+        self.fft_plot.setLabel("left", "ADC/PGA amplitude", units="mV")
         self.fft_plot.setLabel("bottom", "frequency", units="Hz")
         self.fft_plot.showGrid(x=True, y=True, alpha=0.25)
         self.update_fft_xrange()
@@ -493,6 +548,26 @@ class SerialScope(QtWidgets.QMainWindow):
         self.fft_plot.addLegend()
         self.update_channel_visibility()
 
+        adc_pin_group = QtWidgets.QGroupBox("ADC pins")
+        adc_pin_layout = QtWidgets.QHBoxLayout(adc_pin_group)
+        control_layout.addWidget(adc_pin_group)
+
+        self.adc_pin_checks: list[QtWidgets.QCheckBox] = []
+        for label, pin, tooltip in ADC_SR_PINS:
+            cb = QtWidgets.QCheckBox(label)
+            cb.setToolTip(f"{tooltip}  SR pin {pin}.")
+            cb.setEnabled(False)
+            cb.stateChanged.connect(lambda _state, sr_pin=pin, name=label: self.send_adc_pin_command(sr_pin, name))
+            self.adc_pin_checks.append(cb)
+            adc_pin_layout.addWidget(cb)
+
+        self.adc_pins_off_btn = QtWidgets.QPushButton("ADC Pins Off")
+        self.adc_pins_off_btn.setToolTip("Set ADC START, CONVST_SAR, ~RESET, MCLK_EN, and 3V3A LDO enable low/off.")
+        self.adc_pins_off_btn.clicked.connect(self.send_adc_pins_off_command)
+        self.adc_pins_off_btn.setEnabled(False)
+        adc_pin_layout.addWidget(self.adc_pins_off_btn)
+        adc_pin_layout.addStretch(1)
+
         mode_controls = QtWidgets.QHBoxLayout()
         control_layout.addLayout(mode_controls)
 
@@ -507,6 +582,18 @@ class SerialScope(QtWidgets.QMainWindow):
         self.adc_mode_btn.clicked.connect(self.send_adc_mode_command)
         self.adc_mode_btn.setEnabled(False)
         mode_controls.addWidget(self.adc_mode_btn)
+
+        self.adc_reset_btn = QtWidgets.QPushButton("ADC Reset")
+        self.adc_reset_btn.setToolTip("Force AD7779 hardware reset and SPI software reset, then leave it ready for MODE ADC.")
+        self.adc_reset_btn.clicked.connect(self.send_adc_reset_command)
+        self.adc_reset_btn.setEnabled(False)
+        mode_controls.addWidget(self.adc_reset_btn)
+
+        self.adc_diag_btn = QtWidgets.QPushButton("ADC Diag")
+        self.adc_diag_btn.setToolTip("Run non-streaming AD7779 SPI/register diagnostic logging.")
+        self.adc_diag_btn.clicked.connect(self.send_adc_diag_command)
+        self.adc_diag_btn.setEnabled(False)
+        mode_controls.addWidget(self.adc_diag_btn)
 
         self.clear_control_log_btn = QtWidgets.QPushButton("Clear Output")
         self.clear_control_log_btn.clicked.connect(self.clear_control_log)
@@ -626,6 +713,8 @@ class SerialScope(QtWidgets.QMainWindow):
         self.write_idx = 0
         self.count = 0
         self.last_queue_drained = 0
+        self.held_samples_inserted = 0
+        self.held_samples_replaced = 0
         for curve in self.time_curves + self.fft_curves:
             curve.setData([], [])
 
@@ -691,11 +780,13 @@ class SerialScope(QtWidgets.QMainWindow):
             "port",
             "baud",
             "window_s",
+            "scale_mode",
             "sample_rate_hz",
             "frame_step",
             "missed_estimate",
             "status_max_hex",
             "channel",
+            "gain_x",
             "samples",
             "mean_mv",
             "rms_noise_mv",
@@ -714,10 +805,12 @@ class SerialScope(QtWidgets.QMainWindow):
                             "port": self.reader.port if self.reader else "",
                             "baud": self.reader.baud if self.reader else "",
                             "window_s": self.window_box.value(),
+                            "scale_mode": "input_referred" if self.input_referred else "adc_pga",
                             "sample_rate_hz": sample_rate,
                             "frame_step": frame_step,
                             "missed_estimate": missed,
                             "status_max_hex": f"0x{status_max:02X}",
+                            "gain_x": self.channel_gains[int(row["channel"])],
                             **row,
                         }
                     )
@@ -738,6 +831,20 @@ class SerialScope(QtWidgets.QMainWindow):
     def set_all_channels(self, checked: bool) -> None:
         for cb in self.channel_checks:
             cb.setChecked(checked)
+
+    def set_voltage_scale_mode(self) -> None:
+        self.input_referred = self.input_referred_check.isChecked()
+        if self.reader:
+            self.reader.set_input_referred(self.input_referred)
+        if self.input_referred:
+            self.time_plot.setLabel("left", "ADC input voltage", units="mV")
+            self.fft_plot.setLabel("left", "ADC input amplitude", units="mV")
+            self.append_control_log("Scale: input-referred mV")
+        else:
+            self.time_plot.setLabel("left", "ADC/PGA voltage", units="mV")
+            self.fft_plot.setLabel("left", "ADC/PGA amplitude", units="mV")
+            self.append_control_log("Scale: ADC/PGA mV")
+        self.clear_buffers()
 
     def update_fft_xrange(self) -> None:
         if hasattr(self, "fft_plot"):
@@ -773,6 +880,13 @@ class SerialScope(QtWidgets.QMainWindow):
         self.save_stats_btn.setEnabled(True)
         self.control_mode_btn.setEnabled(True)
         self.adc_mode_btn.setEnabled(True)
+        self.adc_reset_btn.setEnabled(True)
+        self.adc_diag_btn.setEnabled(True)
+        for cb in self.adc_pin_checks:
+            cb.setEnabled(True)
+        self.adc_pins_off_btn.setEnabled(True)
+        for combo in self.gain_combos:
+            combo.setEnabled(True)
         self.imu_test_start_btn.setEnabled(True)
         self.reader.write_command(b"9V 0\n")
         self.append_control_log(f"Connected to {port} at {baud}.")
@@ -781,6 +895,8 @@ class SerialScope(QtWidgets.QMainWindow):
             self.info.setText(f"Connected to {port} at {baud}. Requested ADC stream...")
         else:
             self.info.setText(f"Connected to {port} at {baud}. Waiting for frames...")
+        self.reader.set_input_referred(self.input_referred)
+        self.sync_adc_gain_settings()
         if THERMAL_ISOLATION_UI:
             self.dac_enable.setEnabled(False)
 
@@ -805,6 +921,13 @@ class SerialScope(QtWidgets.QMainWindow):
         self.save_stats_btn.setEnabled(False)
         self.control_mode_btn.setEnabled(False)
         self.adc_mode_btn.setEnabled(False)
+        self.adc_reset_btn.setEnabled(False)
+        self.adc_diag_btn.setEnabled(False)
+        for cb in self.adc_pin_checks:
+            cb.setEnabled(False)
+        self.adc_pins_off_btn.setEnabled(False)
+        for combo in self.gain_combos:
+            combo.setEnabled(False)
         self.imu_test_start_btn.setEnabled(False)
         self.imu_test_stop_btn.setEnabled(False)
         self.stats_label.setText("")
@@ -1135,8 +1258,61 @@ class SerialScope(QtWidgets.QMainWindow):
 
     def send_adc_mode_command(self) -> None:
         if self.send_control_command(b"MODE ADC\n", "ADC stream mode"):
-            self.clear_buffers()
+            if self.reader:
+                self.reader.set_input_referred(self.input_referred)
+            self.sync_adc_gain_settings()
             self.tabs.setCurrentWidget(self.scope_tab)
+
+    def send_adc_reset_command(self) -> None:
+        if self.send_control_command(b"ADC RESET\n", "ADC reset/recovery"):
+            self.clear_buffers()
+            self.tabs.setCurrentWidget(self.control_tab)
+
+    def send_adc_diag_command(self) -> None:
+        if self.send_control_command(b"ADC DIAG\n", "ADC diagnostic"):
+            self.clear_buffers()
+            self.tabs.setCurrentWidget(self.control_tab)
+
+    def send_adc_pin_command(self, sr_pin: int, name: str) -> None:
+        if not self.reader:
+            return
+        cb = self.sender()
+        level = 1 if isinstance(cb, QtWidgets.QCheckBox) and cb.isChecked() else 0
+        cmd = f"SR PIN {sr_pin} {level}\n".encode("ascii")
+        self.send_control_command(cmd, f"{name} {'high/on' if level else 'low/off'}")
+
+    def send_adc_pins_off_command(self) -> None:
+        if not self.reader:
+            return
+        for cb in self.adc_pin_checks:
+            cb.blockSignals(True)
+            cb.setChecked(False)
+            cb.blockSignals(False)
+        for _label, pin, _tooltip in ADC_SR_PINS:
+            cmd = f"SR PIN {pin} 0\n".encode("ascii")
+            self.send_control_command(cmd, f"ADC SR pin {pin} low/off")
+
+    def send_gain_command(self, ch: int) -> None:
+        if not hasattr(self, "gain_combos"):
+            return
+        gain = ADC_GAINS[self.gain_combos[ch].currentIndex()]
+        cmd = f"ADC GAIN {ch} {gain}\n".encode("ascii")
+        if self.send_control_command(cmd, f"CH{ch} gain x{gain}"):
+            self.channel_gains[ch] = gain
+            if self.reader:
+                self.reader.set_channel_gain(ch, gain)
+            self.info.setText(f"CH{ch} gain set to x{gain}.")
+
+    def sync_adc_gain_settings(self) -> None:
+        if not self.reader or not hasattr(self, "gain_combos"):
+            return
+        for ch, combo in enumerate(self.gain_combos):
+            gain = ADC_GAINS[combo.currentIndex()]
+            self.channel_gains[ch] = gain
+            self.reader.set_channel_gain(ch, gain)
+            cmd = f"ADC GAIN {ch} {gain}\n".encode("ascii")
+            if self.reader.write_command(cmd):
+                self.append_control_log(f"> ADC GAIN {ch} {gain}")
 
     def send_zero_command(self) -> None:
         if not self.reader:
@@ -1221,16 +1397,76 @@ class SerialScope(QtWidgets.QMainWindow):
         drained = 0
         while self.queue:
             s = self.queue.popleft()
-            i = self.write_idx
-            self.frames[i] = s.frame
-            self.host_times[i] = s.t_host
-            self.channels[:, i] = s.channels_mv
-            self.status[i] = s.status
-            self.write_idx = (self.write_idx + 1) % self.args.buffer
-            self.count = min(self.count + 1, self.args.buffer)
+            self.discard_trailing_held_samples(s.frame)
+            self.append_plot_sample(
+                float(s.frame),
+                s.t_host,
+                np.asarray(s.channels_mv, dtype=np.float64),
+                float(s.status),
+            )
             drained += 1
         self.last_queue_drained = drained
         return drained
+
+    def discard_trailing_held_samples(self, next_real_frame: int) -> int:
+        removed = 0
+        while self.count > 0:
+            last_idx = (self.write_idx - 1) % self.args.buffer
+            last_status = int(self.status[last_idx])
+            if (last_status & HELD_SAMPLE_STATUS) == 0:
+                break
+            if self.frames[last_idx] < float(next_real_frame):
+                break
+            self.write_idx = last_idx
+            self.count -= 1
+            removed += 1
+        self.held_samples_replaced += removed
+        return removed
+
+    def append_plot_sample(
+        self,
+        frame: float,
+        host_time: float,
+        channels_mv: np.ndarray,
+        status: float,
+    ) -> None:
+        i = self.write_idx
+        self.frames[i] = frame
+        self.host_times[i] = host_time
+        self.channels[:, i] = channels_mv
+        self.status[i] = status
+        self.write_idx = (self.write_idx + 1) % self.args.buffer
+        self.count = min(self.count + 1, self.args.buffer)
+
+    def insert_held_samples(self) -> int:
+        if not self.reader or self.count == 0:
+            return 0
+
+        last_idx = (self.write_idx - 1) % self.args.buffer
+        last_host_time = float(self.host_times[last_idx])
+        if not np.isfinite(last_host_time):
+            return 0
+
+        period_s = 1.0 / max(self.args.adc_rate, 1.0)
+        now = time.monotonic()
+        missing = int((now - last_host_time) / period_s)
+        if missing <= 0:
+            return 0
+        missing = min(missing, HELD_SAMPLE_MAX_BATCH)
+
+        last_frame = float(self.frames[last_idx])
+        last_channels = self.channels[:, last_idx].copy()
+        last_status = float(int(self.status[last_idx]) | HELD_SAMPLE_STATUS)
+
+        for n in range(missing):
+            self.append_plot_sample(
+                last_frame + float(n + 1),
+                last_host_time + period_s * float(n + 1),
+                last_channels,
+                last_status,
+            )
+        self.held_samples_inserted += missing
+        return missing
 
     def ordered_data(self) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         n = self.count
@@ -1305,7 +1541,8 @@ class SerialScope(QtWidgets.QMainWindow):
         return (len(host_times) - 1) / elapsed
 
     def update_plots(self) -> None:
-        self.drain_queue()
+        drained = self.drain_queue()
+        held = 0 if drained else self.insert_held_samples()
 
         if not self.reader:
             self.info.setText("Disconnected. Select a port and click Connect.")
@@ -1362,9 +1599,12 @@ class SerialScope(QtWidgets.QMainWindow):
         self.stats_label.setText(self.format_stats(self.channel_stats(channels, active)))
 
         status_max = int(np.max(status)) if len(status) else 0
+        scale_mode = "input-ref" if self.input_referred else "ADC/PGA"
         self.info.setText(
             f"{self.reader.port} @ {self.reader.baud} | "
+            f"scale {scale_mode} mV | "
             f"rx {self.reader.samples_seen} samples | "
+            f"held {self.held_samples_inserted} (+{held}, repl {self.held_samples_replaced}) | "
             f"bin {self.reader.binary_packets} text {self.reader.text_packets} "
             f"sync {self.reader.sync_hits} badlen {self.reader.bad_lengths} "
             f"badcrc {self.reader.bad_checksums} | "

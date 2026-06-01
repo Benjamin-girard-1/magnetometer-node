@@ -127,6 +127,25 @@ static void uart_handle_command(const char *line)
         return;
     }
 
+    if (strcmp(line, "ADC RESET") == 0 ||
+        strcmp(line, "ADC HARDRESET") == 0 ||
+        strcmp(line, "ADC RECOVER") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        if (adc_recover() != ESP_OK) {
+            ESP_LOGW(TAG, "ADC recovery command failed");
+        }
+        return;
+    }
+
+    if (strcmp(line, "ADC DIAG") == 0 ||
+        strcmp(line, "ADC DEBUG") == 0) {
+        serial_select_output(UART_OUTPUT_TEXT);
+        if (adc_diag() != ESP_OK) {
+            ESP_LOGW(TAG, "ADC diagnostic command failed");
+        }
+        return;
+    }
+
     if (strcmp(line, "IMU LSM") == 0 ||
         strcmp(line, "IMU LSM ON") == 0 ||
         strcmp(line, "LSM6DSV") == 0 ||
@@ -331,6 +350,21 @@ static void uart_handle_command(const char *line)
             return;
         }
         board_set_neg5v(enable);
+        return;
+    }
+
+    int adc_ch = -1;
+    int adc_gain = -1;
+    if (sscanf(line, "ADC GAIN %d %d", &adc_ch, &adc_gain) == 2 ||
+        sscanf(line, "GAIN %d %d", &adc_ch, &adc_gain) == 2) {
+        if (adc_ch < 0 || adc_ch >= (int)AD7779_NUM_CHANNELS ||
+            (adc_gain != 1 && adc_gain != 2 && adc_gain != 4 && adc_gain != 8)) {
+            ESP_LOGW(TAG, "bad ADC GAIN command: %s", line);
+            return;
+        }
+        if (adc_set_channel_gain((uint8_t)adc_ch, (uint8_t)adc_gain) != ESP_OK) {
+            ESP_LOGW(TAG, "ADC GAIN command failed: %s", line);
+        }
         return;
     }
 

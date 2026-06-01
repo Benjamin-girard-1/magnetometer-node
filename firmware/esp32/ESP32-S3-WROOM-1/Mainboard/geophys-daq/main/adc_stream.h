@@ -7,6 +7,9 @@
 
 esp_err_t adc_stream_start(void);
 esp_err_t adc_power_on(void);
+esp_err_t adc_recover(void);
+esp_err_t adc_diag(void);
+esp_err_t adc_set_channel_gain(uint8_t ch, uint8_t gain_x);
 void adc_power_off(void);
 bool adc_streaming(void);
 void adc_log_drops_if_changed(void);

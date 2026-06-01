@@ -62,6 +62,7 @@ struct ad7779_hal_s {
 
     TaskHandle_t          stream_task;
     SemaphoreHandle_t     drdy_sem;
+    SemaphoreHandle_t     bus_mutex;
     volatile bool         stream_enabled;
 
     uint8_t               nop_tx[NOP_BUF_LEN];
@@ -92,6 +93,10 @@ static void hal_release_resources(ad7779_hal_t *hal, bool clear)
     if (hal->drdy_sem) {
         vSemaphoreDelete(hal->drdy_sem);
         hal->drdy_sem = NULL;
+    }
+    if (hal->bus_mutex) {
+        vSemaphoreDelete(hal->bus_mutex);
+        hal->bus_mutex = NULL;
     }
     if (hal->drdy_isr_installed) {
         gpio_isr_handler_remove(AD7779_PIN_DRDY);
@@ -146,11 +151,13 @@ static void stream_task_fn(void *arg)
             .tx_buffer = hal->nop_tx,
             .rx_buffer = hal->cur_rx_buf,
         };
+        xSemaphoreTake(hal->bus_mutex, portMAX_DELAY);
         gpio_set_level(AD7779_PIN_CS, 0);
         esp_rom_delay_us(1);
         esp_err_t err = spi_device_polling_transmit(hal->stream_dev, &t);
         esp_rom_delay_us(1);
         gpio_set_level(AD7779_PIN_CS, 1);
+        xSemaphoreGive(hal->bus_mutex);
 
         ad7779_hal_status_t st = (err == ESP_OK) ? AD7779_HAL_OK : AD7779_HAL_ERR_BUS;
         if (hal->cur_done_cb) {
@@ -241,6 +248,12 @@ ad7779_hal_status_t ad7779_hal_init(ad7779_hal_t *hal)
         return AD7779_HAL_ERR_INTERNAL;
     }
 
+    hal->bus_mutex = xSemaphoreCreateMutex();
+    if (!hal->bus_mutex) {
+        hal_release_resources(hal, true);
+        return AD7779_HAL_ERR_INTERNAL;
+    }
+
     BaseType_t r = xTaskCreate(stream_task_fn, "ad7779_stream",
                                STREAM_TASK_STACK, hal,
                                STREAM_TASK_PRIO, &hal->stream_task);
@@ -273,11 +286,15 @@ ad7779_hal_status_t ad7779_hal_spi_xfer(ad7779_hal_t *hal,
         .rx_buffer = rx,
     };
 
+    if (xSemaphoreTake(hal->bus_mutex, portMAX_DELAY) != pdTRUE) {
+        return AD7779_HAL_ERR_INTERNAL;
+    }
     gpio_set_level(AD7779_PIN_CS, 0);
     esp_rom_delay_us(1);
     esp_err_t err = spi_device_polling_transmit(hal->reg_dev, &t);
     esp_rom_delay_us(1);
     gpio_set_level(AD7779_PIN_CS, 1);
+    xSemaphoreGive(hal->bus_mutex);
 
     return (err == ESP_OK) ? AD7779_HAL_OK : AD7779_HAL_ERR_BUS;
 }

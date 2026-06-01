@@ -65,6 +65,11 @@ ad7779_status_t ad7779_reg_read(ad7779_t *dev, uint8_t addr, uint8_t *val)
 
     HAL_CHECK(ad7779_hal_spi_xfer(dev->hal, tx, rx, sizeof(tx)));
 
+    if (rx[0] == 0xFFU && rx[1] == 0xFFU && rx[2] == 0xFFU) {
+        ESP_LOGE(TAG, "SPI read reg 0x%02x returned all 0xff; SDO/MISO is high or floating", addr);
+        return AD7779_ERR_BUS;
+    }
+
     if (dev->crc_enabled) {
         /* Chip computes its CRC over [cmd_byte_sent, data_byte_returned].
          * The 0x20 header echo on rx[0] is NOT part of the CRC input. */
@@ -389,9 +394,26 @@ ad7779_status_t ad7779_set_channel_gain(ad7779_t *dev, uint8_t ch,
                                         ad7779_gain_t gain)
 {
     if (!dev || ch >= AD7779_NUM_CHANNELS) return AD7779_ERR_PARAM;
+    if (gain > AD7779_GAIN_8) return AD7779_ERR_PARAM;
     return ad7779_reg_update(dev, AD7779_REG_CH_CONFIG(ch),
                              AD7779_CH_CONFIG_GAIN_MSK,
                              (uint8_t)((gain & 0x3U) << AD7779_CH_CONFIG_GAIN_POS));
+}
+
+ad7779_status_t ad7779_set_channel_gain_writeonly(ad7779_t *dev, uint8_t ch,
+                                                  ad7779_gain_t gain)
+{
+    if (!dev || ch >= AD7779_NUM_CHANNELS) return AD7779_ERR_PARAM;
+    if (gain > AD7779_GAIN_8) return AD7779_ERR_PARAM;
+
+    uint8_t reg_val = (uint8_t)((gain & 0x3U) << AD7779_CH_CONFIG_GAIN_POS);
+    bool verify_writes = dev->cfg.verify_writes;
+    dev->cfg.verify_writes = false;
+    ad7779_status_t st = ad7779_reg_write(dev, AD7779_REG_CH_CONFIG(ch), reg_val);
+    dev->cfg.verify_writes = verify_writes;
+    CHECK(st);
+    dev->cfg.gain[ch] = gain;
+    return AD7779_OK;
 }
 
 ad7779_status_t ad7779_set_channel_enable(ad7779_t *dev, uint8_t ch,
