@@ -38,18 +38,12 @@ static ad7779_status_t map_hal(ad7779_hal_status_t s)
 /* -------------------------------------------------------------------- */
 /* Register access                                                       */
 /*                                                                       */
-/* We ALWAYS send 24-bit frames (3 bytes per register access). When CRC  */
-/* is disabled at the chip, the third byte is ignored on writes and is   */
-/* don't-care on reads. When CRC is enabled, the third byte is the CRC.  */
-/* This way the same code path works regardless of CRC state, which is   */
-/* essential during bring-up because the chip's reset state for CRC      */
-/* enable can vary.                                                      */
+/* We send 16-bit frames when CRC is disabled and 24-bit frames when CRC */
+/* is enabled, matching the AD7779 SPI control-mode framing.             */
 /*                                                                       */
-/* Frame layout (always 24 bits):                                        */
-/*   Read:  SDI: [R/W=1|addr(7)] [0x00]   [CRC of bytes 0,1]             */
-/*          SDO: [0x20 echo]     [data]   [CRC of bytes 0,1] (if en)     */
-/*   Write: SDI: [R/W=0|addr(7)] [data]   [CRC of bytes 0,1]             */
-/*          SDO: [0x20 echo]     [0x00]   [CRC]            (if en)       */
+/* Frame layout:                                                         */
+/*   CRC off:  [R/W=1|addr(7)] [data/dummy]                              */
+/*   CRC on:   [R/W=1|addr(7)] [data/dummy] [CRC of bytes 0,1]            */
 /* -------------------------------------------------------------------- */
 
 ad7779_status_t ad7779_reg_read(ad7779_t *dev, uint8_t addr, uint8_t *val)
@@ -58,14 +52,16 @@ ad7779_status_t ad7779_reg_read(ad7779_t *dev, uint8_t addr, uint8_t *val)
 
     uint8_t tx[3];
     uint8_t rx[3] = { 0 };
+    size_t xfer_len = dev->crc_enabled ? 3U : 2U;
 
     tx[0] = (uint8_t)(AD7779_SPI_READ | (addr & 0x7FU));
     tx[1] = 0x00U;
-    tx[2] = ad7779_crc8(tx, 2);     /* harmless if chip ignores it */
+    tx[2] = ad7779_crc8(tx, 2);
 
-    HAL_CHECK(ad7779_hal_spi_xfer(dev->hal, tx, rx, sizeof(tx)));
+    HAL_CHECK(ad7779_hal_spi_xfer(dev->hal, tx, rx, xfer_len));
 
-    if (rx[0] == 0xFFU && rx[1] == 0xFFU && rx[2] == 0xFFU) {
+    if (rx[0] == 0xFFU && rx[1] == 0xFFU &&
+        (!dev->crc_enabled || rx[2] == 0xFFU)) {
         ESP_LOGE(TAG, "SPI read reg 0x%02x returned all 0xff; SDO/MISO is high or floating", addr);
         return AD7779_ERR_BUS;
     }
@@ -95,11 +91,12 @@ ad7779_status_t ad7779_reg_write(ad7779_t *dev, uint8_t addr, uint8_t val)
     if (!dev || addr & 0x80U) return AD7779_ERR_PARAM;
 
     uint8_t tx[3];
+    size_t xfer_len = dev->crc_enabled ? 3U : 2U;
     tx[0] = (uint8_t)(AD7779_SPI_WRITE | (addr & 0x7FU));
     tx[1] = val;
     tx[2] = ad7779_crc8(tx, 2);
 
-    HAL_CHECK(ad7779_hal_spi_xfer(dev->hal, tx, NULL, sizeof(tx)));
+    HAL_CHECK(ad7779_hal_spi_xfer(dev->hal, tx, NULL, xfer_len));
 
     if (dev->cfg.verify_writes) {
         /* Some registers don't read back exactly what was written
@@ -254,19 +251,21 @@ static ad7779_status_t ad7779_init_impl(ad7779_t *dev,
     }
 
     /* ----------------------------------------------------------------
-     * CRC handling. We always send 24-bit frames; what changes is
-     * whether we VALIDATE the third byte. The chip's reset state for
-     * SPI_CRC_TEST_EN may vary, so we explicitly set it here.
+     * CRC handling. Register access starts in non-CRC framing after
+     * reset. Enable CRC explicitly for the configuration sequence, then
+     * validate all register reads until sigma-delta SPI readback is armed.
      *
-     * Important sequencing: we have NOT yet validated any CRC, so
-     * dev->crc_enabled is still false at this point — meaning reads
-     * up to here ignored byte 2. Now we write 0x5A to set/clear the
-     * CRC enable bit. The write is sent as 24 bits with a valid CRC
-     * regardless of current chip state, so it always lands.
+     * Important sequencing: dev->crc_enabled is still false when the
+     * enable bit is written, so that write must not verify with the old
+     * framing after the chip switches into CRC mode.
      * ---------------------------------------------------------------- */
     if (dev->cfg.use_crc) {
-        CHECK(ad7779_reg_write(dev, AD7779_REG_GEN_ERR_REG_1_EN,
-                               AD7779_ERR1_EN_SPI_CRC_TEST));
+        bool verify_writes = dev->cfg.verify_writes;
+        dev->cfg.verify_writes = false;
+        ad7779_status_t wr = ad7779_reg_write(dev, AD7779_REG_GEN_ERR_REG_1_EN,
+                                              AD7779_ERR1_EN_SPI_CRC_TEST);
+        dev->cfg.verify_writes = verify_writes;
+        CHECK(wr);
         dev->crc_enabled = true;   /* now validate CRC on all reads */
 
         /* Sanity check: after enabling, a read should return a valid
@@ -287,9 +286,11 @@ static ad7779_status_t ad7779_init_impl(ad7779_t *dev,
         dev->crc_enabled = false;
     }
 
-    /* Power mode (HR vs LP), keep VCM and oscillator on. */
+    /* Power mode (HR vs LP), keep VCM, REF_OUT, and oscillator on. */
     {
-        uint8_t guc1 = AD7779_GUC1_PDB_VCM | AD7779_GUC1_PDB_RC_OSC;
+        uint8_t guc1 = AD7779_GUC1_PDB_VCM |
+                       AD7779_GUC1_PDB_REFOUT_BUF |
+                       AD7779_GUC1_PDB_RC_OSC;
         if (dev->cfg.power_mode == AD7779_PWR_HIGH_RES)
             guc1 |= AD7779_GUC1_HR_MODE;
         CHECK(ad7779_reg_write(dev, AD7779_REG_GENERAL_USER_CONFIG_1, guc1));
@@ -308,12 +309,13 @@ static ad7779_status_t ad7779_init_impl(ad7779_t *dev,
     /* SRC for target ODR. */
     CHECK(program_src(dev));
 
-    /* Set DOUT_FORMAT to status-header mode (not CRC) — must be done
-     * BEFORE enabling SPI_SLAVE_MODE_EN, because once that bit is set
-     * we can't write registers anymore through SPI. */
+    /* Use a single output stream in channel order with status headers.
+     * The SPI readback path uses the same conversion framing as the DOUTx
+     * path, so do not leave DOUT_FORMAT at its reset 4-line mode. */
     CHECK(ad7779_reg_update(dev, AD7779_REG_DOUT_FORMAT,
+                            AD7779_DOUT_FORMAT_MSK |
                             AD7779_DOUT_HEADER_FORMAT,
-                            0));   /* status header, no CRC */
+                            AD7779_DOUT_FORMAT_1_LINE));   /* status header */
 
     /* Make sure SAR diag mode is OFF (we want Σ-Δ on SDO, not SAR). */
     CHECK(ad7779_reg_update(dev, AD7779_REG_GENERAL_USER_CONFIG_2,
@@ -332,28 +334,36 @@ static ad7779_status_t ad7779_init_impl(ad7779_t *dev,
     ad7779_hal_delay_ms(hal, 5);
 
     /* ============================================================
-     * FINAL STEP: enable SPI slave readback mode. After this write,
-     * the SPI interface is no longer usable for register access —
-     * it now carries Σ-Δ streaming data only. We do this LAST so
-     * all configuration is in place first.
+     * FINAL STEP: enable SPI slave readback mode. The datasheet says
+     * SPI_CRC_TEST_EN must be cleared when sigma-delta conversion data
+     * is read back through the SPI interface. Keep CRC-protected register
+     * access for the whole setup sequence, then clear it immediately
+     * before switching SDO over to conversion data.
      *
-     * The write itself uses the standard 24-bit + CRC frame, and
-     * the chip processes it normally. We do NOT verify by readback
-     * (verify_writes is bypassed for this single write) because the
-     * subsequent read would return streaming bytes, not register data.
+     * After SPI_SLAVE_MODE_EN is set, the SPI interface is no longer usable
+     * for register readback; SDO carries sigma-delta conversion bytes.
      * ============================================================ */
     {
-        /* Read current GUC3, set the bit, write it back without verify. */
+        /* Read current GUC3 before SDO is switched away from registers. */
         uint8_t guc3_cur = 0;
         CHECK(ad7779_reg_read(dev, AD7779_REG_GENERAL_USER_CONFIG_3, &guc3_cur));
         uint8_t guc3_new = guc3_cur | AD7779_GUC3_SPI_SLAVE_MODE_EN;
 
-        /* Manually write WITHOUT the verify_writes step (we'd lose CRC sync). */
+        if (dev->crc_enabled) {
+            uint8_t crc_off[3];
+            crc_off[0] = (uint8_t)(AD7779_SPI_WRITE | (AD7779_REG_GEN_ERR_REG_1_EN & 0x7FU));
+            crc_off[1] = 0x00U;
+            crc_off[2] = ad7779_crc8(crc_off, 2);
+            HAL_CHECK(ad7779_hal_spi_xfer(dev->hal, crc_off, NULL, sizeof(crc_off)));
+            dev->crc_enabled = false;
+        }
+
+        /* Manually write WITHOUT readback verify; SDO changes role here. */
         uint8_t tx[3];
         tx[0] = (uint8_t)(AD7779_SPI_WRITE | (AD7779_REG_GENERAL_USER_CONFIG_3 & 0x7FU));
         tx[1] = guc3_new;
-        tx[2] = ad7779_crc8(tx, 2);
-        HAL_CHECK(ad7779_hal_spi_xfer(dev->hal, tx, NULL, sizeof(tx)));
+        tx[2] = 0x00U;
+        HAL_CHECK(ad7779_hal_spi_xfer(dev->hal, tx, NULL, 2U));
     }
 
     /* Hook DRDY but keep it disabled until start_streaming. */
@@ -568,13 +578,32 @@ void ad7779_decode_frame(const uint8_t *raw32,
                          uint8_t *header_or)
 {
     uint8_t hdr_or = 0;
-    for (uint8_t ch = 0; ch < AD7779_NUM_CHANNELS; ++ch) {
-        const uint8_t *p = &raw32[ch * AD7779_FRAME_BYTES_PER_CH];
-        hdr_or |= p[0];
+    int32_t routed[AD7779_NUM_CHANNELS] = { 0 };
+    uint8_t seen = 0;
+    bool route_by_header = true;
+
+    for (uint8_t slot = 0; slot < AD7779_NUM_CHANNELS; ++slot) {
+        const uint8_t *p = &raw32[slot * AD7779_FRAME_BYTES_PER_CH];
+        uint8_t hdr = p[0];
+        uint8_t ch_id = (uint8_t)((hdr >> 4) & 0x7U);
+        hdr_or |= (uint8_t)(hdr & 0x8FU); /* alert + status bits, not CH_ID */
         uint32_t raw24 = ((uint32_t)p[1] << 16) |
                          ((uint32_t)p[2] << 8)  |
                           (uint32_t)p[3];
-        out_samples_8[ch] = ad7779_s24_to_s32(raw24);
+        int32_t sample = ad7779_s24_to_s32(raw24);
+
+        if ((seen & (uint8_t)(1U << ch_id)) != 0U) {
+            route_by_header = false;
+        }
+        seen |= (uint8_t)(1U << ch_id);
+        routed[ch_id] = sample;
+        out_samples_8[slot] = sample;
+    }
+
+    if (route_by_header && seen == 0xFFU) {
+        for (uint8_t ch = 0; ch < AD7779_NUM_CHANNELS; ++ch) {
+            out_samples_8[ch] = routed[ch];
+        }
     }
     if (header_or) *header_or = hdr_or;
 }

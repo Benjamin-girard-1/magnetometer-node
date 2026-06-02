@@ -124,9 +124,8 @@ typedef struct ad7779_s {
     void                *cb_ctx;
 
     /** True if SPI CRC is currently enabled at the chip side.
-     *  When true, all register accesses validate the CRC byte returned
-     *  by the chip. When false, the CRC byte is sent on writes anyway
-     *  (24-bit frames always) but ignored on reads. */
+     *  When true, register accesses use and validate 24-bit CRC frames.
+     *  When false, register accesses use 16-bit non-CRC frames. */
     bool                 crc_enabled;
 
     /* Double buffer for DMA-friendly streaming. */

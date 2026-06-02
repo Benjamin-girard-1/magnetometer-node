@@ -125,6 +125,7 @@ class SerialReader(threading.Thread):
         self.text_lines: collections.deque[str] = collections.deque(maxlen=200)
         self.channel_gains = [1.0] * CHANNEL_COUNT
         self.input_referred = False
+        self.raw_codes = False
 
     @staticmethod
     def preview(chunk: bytes) -> str:
@@ -184,11 +185,13 @@ class SerialReader(threading.Thread):
                                 with self.gain_lock:
                                     gains = tuple(self.channel_gains)
                                     input_referred = self.input_referred
+                                    raw_codes = self.raw_codes
                                 base_scale = (ADC_REF_V * 1000.0) / ADC_FULL_SCALE_CODE
+                                scale = 1.0 if raw_codes else base_scale
                                 sample = Sample(
                                     frame=frame,
                                     channels_mv=tuple(
-                                        v * base_scale / (gains[ch] if input_referred else 1.0)
+                                        v * scale / (gains[ch] if input_referred and not raw_codes else 1.0)
                                         for ch, v in enumerate(raw)
                                     ),
                                     status=status,
@@ -281,6 +284,10 @@ class SerialReader(threading.Thread):
         with self.gain_lock:
             self.input_referred = enabled
 
+    def set_raw_codes(self, enabled: bool) -> None:
+        with self.gain_lock:
+            self.raw_codes = enabled
+
     def drain_text_lines(self) -> list[str]:
         lines: list[str] = []
         while self.text_lines:
@@ -323,6 +330,7 @@ class SerialScope(QtWidgets.QMainWindow):
         self.last_queue_drained = 0
         self.channel_gains = [1] * CHANNEL_COUNT
         self.input_referred = False
+        self.raw_codes = False
         self.held_samples_inserted = 0
         self.held_samples_replaced = 0
 
@@ -481,6 +489,12 @@ class SerialScope(QtWidgets.QMainWindow):
         self.save_stats_btn.setEnabled(False)
         channel_controls.addWidget(self.save_stats_btn)
 
+        self.save_scope_btn = QtWidgets.QPushButton("Save Scope CSV")
+        self.save_scope_btn.setToolTip("Save the currently visible scope data as a simple CSV.")
+        self.save_scope_btn.clicked.connect(self.save_scope_csv)
+        self.save_scope_btn.setEnabled(False)
+        channel_controls.addWidget(self.save_scope_btn)
+
         self.input_referred_check = QtWidgets.QCheckBox("Input-referred")
         self.input_referred_check.setToolTip(
             "Divide binary ADC values by the selected AD7779 PGA gain. "
@@ -489,6 +503,13 @@ class SerialScope(QtWidgets.QMainWindow):
         self.input_referred_check.setChecked(False)
         self.input_referred_check.stateChanged.connect(self.set_voltage_scale_mode)
         channel_controls.addWidget(self.input_referred_check)
+
+        self.raw_codes_check = QtWidgets.QCheckBox("Raw ADC codes")
+        self.raw_codes_check.setToolTip("Bypass voltage/gain scaling and plot signed 24-bit ADC codes directly.")
+        self.raw_codes_check.setChecked(False)
+        self.raw_codes_check.stateChanged.connect(self.set_voltage_scale_mode)
+        channel_controls.addWidget(self.raw_codes_check)
+
         channel_controls.addStretch(1)
 
         gain_controls = QtWidgets.QHBoxLayout()
@@ -744,15 +765,19 @@ class SerialScope(QtWidgets.QMainWindow):
     def format_stats(self, stats: list[dict[str, float]]) -> str:
         if not stats:
             return "Stats: select at least one channel with valid data."
+        unit = self.value_unit()
         parts = []
         for row in stats:
             parts.append(
                 f"CH{int(row['channel'])}: "
-                f"mean {row['mean_mv']:+.3f} mV, "
-                f"rms {row['rms_noise_mv']:.3f} mV, "
-                f"p2p {row['peak_to_peak_mv']:.3f} mV"
+                f"mean {row['mean_mv']:+.3f} {unit}, "
+                f"rms {row['rms_noise_mv']:.3f} {unit}, "
+                f"p2p {row['peak_to_peak_mv']:.3f} {unit}"
             )
         return " | ".join(parts)
+
+    def value_unit(self) -> str:
+        return "codes" if self.raw_codes else "mV"
 
     def save_stats_csv(self) -> None:
         frames, host_times, channels, status = self.ordered_data()
@@ -805,7 +830,11 @@ class SerialScope(QtWidgets.QMainWindow):
                             "port": self.reader.port if self.reader else "",
                             "baud": self.reader.baud if self.reader else "",
                             "window_s": self.window_box.value(),
-                            "scale_mode": "input_referred" if self.input_referred else "adc_pga",
+                            "scale_mode": (
+                                "raw_codes" if self.raw_codes
+                                else "input_referred" if self.input_referred
+                                else "adc_pga"
+                            ),
                             "sample_rate_hz": sample_rate,
                             "frame_step": frame_step,
                             "missed_estimate": missed,
@@ -819,6 +848,49 @@ class SerialScope(QtWidgets.QMainWindow):
             return
 
         self.info.setText(f"Saved channel stats to {path}.")
+
+    def save_scope_csv(self) -> None:
+        frames, host_times, channels, status = self.ordered_data()
+        if len(frames) == 0:
+            self.info.setText("No scope data to save yet.")
+            return
+        active = self.active_channels()
+        if not active:
+            self.info.setText("Select at least one visible channel before saving scope data.")
+            return
+
+        timestamp = time.strftime("%Y%m%d-%H%M%S")
+        default_name = f"mag_scope_data_{timestamp}.csv"
+        path, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self,
+            "Save visible scope data",
+            default_name,
+            "CSV files (*.csv);;All files (*)",
+        )
+        if not path:
+            return
+
+        t = self.frame_times_s(frames)
+        suffix = "raw" if self.raw_codes else "mv"
+        fieldnames = ["time_s", "frame"] + [f"ch{ch}_{suffix}" for ch in active] + ["status"]
+        try:
+            with open(path, "w", newline="", encoding="utf-8") as f:
+                writer = csv.DictWriter(f, fieldnames=fieldnames)
+                writer.writeheader()
+                for i in range(len(frames)):
+                    row = {
+                        "time_s": f"{t[i]:.9g}",
+                        "frame": int(frames[i]),
+                        "status": int(status[i]),
+                    }
+                    for ch in active:
+                        row[f"ch{ch}_{suffix}"] = f"{channels[ch, i]:.9g}"
+                    writer.writerow(row)
+        except OSError as exc:
+            self.info.setText(f"Scope CSV save failed: {exc}")
+            return
+
+        self.info.setText(f"Saved visible scope data to {path}.")
 
     def update_channel_visibility(self) -> None:
         for ch in range(CHANNEL_COUNT):
@@ -834,9 +906,15 @@ class SerialScope(QtWidgets.QMainWindow):
 
     def set_voltage_scale_mode(self) -> None:
         self.input_referred = self.input_referred_check.isChecked()
+        self.raw_codes = self.raw_codes_check.isChecked()
         if self.reader:
             self.reader.set_input_referred(self.input_referred)
-        if self.input_referred:
+            self.reader.set_raw_codes(self.raw_codes)
+        if self.raw_codes:
+            self.time_plot.setLabel("left", "ADC raw code", units="")
+            self.fft_plot.setLabel("left", "ADC raw amplitude", units="")
+            self.append_control_log("Scale: raw ADC codes")
+        elif self.input_referred:
             self.time_plot.setLabel("left", "ADC input voltage", units="mV")
             self.fft_plot.setLabel("left", "ADC input amplitude", units="mV")
             self.append_control_log("Scale: input-referred mV")
@@ -878,6 +956,7 @@ class SerialScope(QtWidgets.QMainWindow):
         self.enable_neg5v.setEnabled(True)
         self.dac_enable.setEnabled(True)
         self.save_stats_btn.setEnabled(True)
+        self.save_scope_btn.setEnabled(True)
         self.control_mode_btn.setEnabled(True)
         self.adc_mode_btn.setEnabled(True)
         self.adc_reset_btn.setEnabled(True)
@@ -896,6 +975,7 @@ class SerialScope(QtWidgets.QMainWindow):
         else:
             self.info.setText(f"Connected to {port} at {baud}. Waiting for frames...")
         self.reader.set_input_referred(self.input_referred)
+        self.reader.set_raw_codes(self.raw_codes)
         self.sync_adc_gain_settings()
         if THERMAL_ISOLATION_UI:
             self.dac_enable.setEnabled(False)
@@ -919,6 +999,7 @@ class SerialScope(QtWidgets.QMainWindow):
         self.enable_neg5v.setEnabled(False)
         self.dac_enable.setEnabled(False)
         self.save_stats_btn.setEnabled(False)
+        self.save_scope_btn.setEnabled(False)
         self.control_mode_btn.setEnabled(False)
         self.adc_mode_btn.setEnabled(False)
         self.adc_reset_btn.setEnabled(False)
@@ -1260,6 +1341,7 @@ class SerialScope(QtWidgets.QMainWindow):
         if self.send_control_command(b"MODE ADC\n", "ADC stream mode"):
             if self.reader:
                 self.reader.set_input_referred(self.input_referred)
+                self.reader.set_raw_codes(self.raw_codes)
             self.sync_adc_gain_settings()
             self.tabs.setCurrentWidget(self.scope_tab)
 
@@ -1579,14 +1661,15 @@ class SerialScope(QtWidgets.QMainWindow):
         window_host_rate = self.window_host_sample_rate(host_times)
         avg_rx_rate = self.reader.average_sample_rate() if self.reader else float("nan")
         plot_rate = sample_rate
+        active = self.active_channels()
         t = self.frame_times_s(frames)
+        display_channels = channels
         for ch in range(CHANNEL_COUNT):
             if self.channel_checks[ch].isChecked():
-                self.time_curves[ch].setData(t, channels[ch])
+                self.time_curves[ch].setData(t, display_channels[ch])
         self.time_plot.setXRange(-self.window_box.value(), 0.0, padding=0.0)
 
-        active = self.active_channels()
-        visible = channels[active].reshape(-1) if active else np.empty(0)
+        visible = display_channels[active].reshape(-1) if active else np.empty(0)
         visible = visible[np.isfinite(visible)]
         if visible.size:
             y_min = float(np.min(visible))
@@ -1595,14 +1678,14 @@ class SerialScope(QtWidgets.QMainWindow):
             margin = max(span * 0.08, 0.05)
             self.time_plot.setYRange(y_min - margin, y_max + margin, padding=0.0)
 
-        self.update_fft(channels, active, plot_rate)
-        self.stats_label.setText(self.format_stats(self.channel_stats(channels, active)))
+        self.update_fft(display_channels, active, plot_rate)
+        self.stats_label.setText(self.format_stats(self.channel_stats(display_channels, active)))
 
         status_max = int(np.max(status)) if len(status) else 0
-        scale_mode = "input-ref" if self.input_referred else "ADC/PGA"
+        scale_mode = "raw codes" if self.raw_codes else "input-ref mV" if self.input_referred else "ADC/PGA mV"
         self.info.setText(
             f"{self.reader.port} @ {self.reader.baud} | "
-            f"scale {scale_mode} mV | "
+            f"scale {scale_mode} | "
             f"rx {self.reader.samples_seen} samples | "
             f"held {self.held_samples_inserted} (+{held}, repl {self.held_samples_replaced}) | "
             f"bin {self.reader.binary_packets} text {self.reader.text_packets} "

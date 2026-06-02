@@ -243,8 +243,9 @@ esp_err_t adc_stream_start(void)
     if (!s_adc_ready) {
         ad7779_config_t cfg = AD7779_DEFAULT_CONFIG;
         cfg.odr_hz = MAG_ODR_HZ;
-        cfg.reference = AD7779_REF_INTERNAL;
-        cfg.channels_enabled = 0xFFU;
+        /* REF_OUT is filtered on-board and fed back into REF1+/REF2+. */
+        cfg.reference = AD7779_REF_EXTERNAL;
+        cfg.channels_enabled = (uint8_t)(0xFFU & ~((1U << 3) | (1U << 6)));
         cfg.verify_writes = true;
         cfg.use_crc = true;
 

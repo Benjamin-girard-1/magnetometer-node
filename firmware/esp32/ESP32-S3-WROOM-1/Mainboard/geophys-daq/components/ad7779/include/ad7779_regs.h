@@ -55,6 +55,9 @@
 #define AD7779_REG_DOUT_FORMAT             0x14U
 #  define AD7779_DOUT_FORMAT_POS           6
 #  define AD7779_DOUT_FORMAT_MSK           (0x3U << 6)
+#  define AD7779_DOUT_FORMAT_4_LINES       (0x0U << 6)
+#  define AD7779_DOUT_FORMAT_2_LINES       (0x1U << 6)
+#  define AD7779_DOUT_FORMAT_1_LINE        (0x2U << 6)
 #  define AD7779_DOUT_HEADER_FORMAT        (1U << 5)      /* 1 = CRC, 0 = status */
 #  define AD7779_DCLK_CLK_DIV_POS          1
 #  define AD7779_DCLK_CLK_DIV_MSK          (0x7U << 1)
