@@ -1841,14 +1841,6 @@
 		(uuid "357f7103-19bd-497d-b7d1-89fa1f37c045")
 	)
 	(no_connect
-		(at 93.98 160.02)
-		(uuid "4dcd314b-b6c4-4a83-9bea-f8cacbb0abcf")
-	)
-	(no_connect
-		(at 93.98 111.76)
-		(uuid "5ef12331-fb20-493c-92ae-891a133bbe58")
-	)
-	(no_connect
 		(at 184.15 120.65)
 		(uuid "7613c8e2-9166-4f33-91fe-d119dadbdc55")
 	)
@@ -2371,6 +2363,16 @@
 			(type default)
 		)
 		(uuid "264a99a3-1678-48bc-8b49-0f87d19915ef")
+	)
+	(wire
+		(pts
+			(xy 93.98 111.76) (xy 111.76 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "26c30c75-ab09-404f-a929-2f09497767f5")
 	)
 	(bus
 		(pts
@@ -3074,7 +3076,7 @@
 	)
 	(wire
 		(pts
-			(xy 93.98 119.38) (xy 113.03 119.38)
+			(xy 93.98 119.38) (xy 120.65 119.38)
 		)
 		(stroke
 			(width 0)
@@ -3121,6 +3123,16 @@
 			(type default)
 		)
 		(uuid "fc07d593-9d5d-4581-be0d-b51f541d14ce")
+	)
+	(wire
+		(pts
+			(xy 93.98 160.02) (xy 111.76 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "fe1178e8-5e01-4aa6-9a25-44c0a138eff5")
 	)
 	(label "RESET_2"
 		(at 71.12 152.4 180)
@@ -4145,6 +4157,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3V3")
+		(at 111.76 152.4 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "264597d2-cce4-4c75-a553-0347c51934ab")
+		(property "Reference" "#PWR0216"
+			(at 111.76 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 111.76 148.844 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 111.76 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 111.76 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a8b9186d-185c-4e3f-a641-2d0afed725c4")
+		)
+		(instances
+			(project "geophys_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/3098db7b-b921-40c3-86cb-85a991bb6b10"
+					(reference "#PWR0216")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 165.1 158.75 90)
 		(mirror x)
@@ -4290,6 +4367,71 @@
 			(project "geophys_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/3098db7b-b921-40c3-86cb-85a991bb6b10"
 					(reference "#PWR040")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 111.76 104.14 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3ee4f9e4-5844-4840-9c5c-eb6a7b973514")
+		(property "Reference" "#PWR0215"
+			(at 111.76 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 111.76 100.584 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 111.76 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 111.76 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 111.76 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "02a64b24-10aa-47a0-8c69-47c3e0939797")
+		)
+		(instances
+			(project "geophys_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/3098db7b-b921-40c3-86cb-85a991bb6b10"
+					(reference "#PWR0215")
 					(unit 1)
 				)
 			)
@@ -4458,6 +4600,102 @@
 	)
 	(symbol
 		(lib_id "Device:R")
+		(at 111.76 107.95 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "46434112-4a8b-472f-b2c5-1c9c9ee1f9ee")
+		(property "Reference" "R77"
+			(at 113.284 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k"
+			(at 113.284 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 109.982 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 111.76 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 111.76 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25804"
+			(at 111.76 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 111.76 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" ""
+			(at 111.76 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "7c058348-ab5f-48e2-bc67-793d9a5c95ea")
+		)
+		(pin "1"
+			(uuid "03591a0e-f9be-43ec-8ad3-68275d27e302")
+		)
+		(instances
+			(project "geophys_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/3098db7b-b921-40c3-86cb-85a991bb6b10"
+					(reference "R77")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
 		(at 165.1 161.29 90)
 		(mirror x)
 		(unit 1)
@@ -4543,6 +4781,102 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 111.76 156.21 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "816c5e3c-0f49-497e-97c8-0d917e88b88f")
+		(property "Reference" "R79"
+			(at 113.284 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10k"
+			(at 113.284 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 109.982 156.21 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 111.76 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 111.76 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C25804"
+			(at 111.76 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Device" ""
+			(at 111.76 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pins" ""
+			(at 111.76 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "e7f32cd7-279b-40b2-8925-2bc2185d632f")
+		)
+		(pin "1"
+			(uuid "6e5c5a01-c49f-473e-89a4-b1ce9c769e47")
+		)
+		(instances
+			(project "geophys_mainboard"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/3098db7b-b921-40c3-86cb-85a991bb6b10"
+					(reference "R79")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 176.53 111.76 0)
 		(unit 1)
@@ -4609,7 +4943,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 113.03 115.57 0)
+		(at 120.65 115.57 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4617,7 +4951,7 @@
 		(dnp no)
 		(uuid "83b3a1e4-5aa2-423c-897f-83eb19450f2d")
 		(property "Reference" "R18"
-			(at 114.554 114.3 0)
+			(at 122.174 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4626,7 +4960,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 114.554 116.84 0)
+			(at 122.174 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4635,7 +4969,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 111.252 115.57 90)
+			(at 118.872 115.57 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4644,7 +4978,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 113.03 115.57 0)
+			(at 120.65 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4653,7 +4987,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 113.03 115.57 0)
+			(at 120.65 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4662,7 +4996,7 @@
 			)
 		)
 		(property "LCSC" "C25804"
-			(at 113.03 115.57 0)
+			(at 120.65 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4671,7 +5005,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 113.03 115.57 0)
+			(at 120.65 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4680,7 +5014,7 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 113.03 115.57 0)
+			(at 120.65 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5812,7 +6146,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 113.03 111.76 0)
+		(at 120.65 111.76 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5820,7 +6154,7 @@
 		(dnp no)
 		(uuid "fc8b0ebd-169a-4c20-b4ba-098305cbb79f")
 		(property "Reference" "#PWR033"
-			(at 113.03 115.57 0)
+			(at 120.65 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5829,7 +6163,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 113.03 108.204 0)
+			(at 120.65 108.204 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5837,7 +6171,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 113.03 111.76 0)
+			(at 120.65 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5846,7 +6180,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 113.03 111.76 0)
+			(at 120.65 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5855,7 +6189,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 113.03 111.76 0)
+			(at 120.65 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)

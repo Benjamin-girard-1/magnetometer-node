@@ -4796,15 +4796,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 252.73 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "2"
 			(uuid "a58cf398-9bc8-444a-8435-2f680baeeed3")
 		)
@@ -4868,15 +4859,6 @@
 			)
 		)
 		(property "Description" "Quad 36V, Precision, Rail-to-Rail Input/Output, Low Offset Voltage, Operational Amplifier, TSSOP-14"
-			(at 226.06 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 226.06 125.73 0)
 			(effects
 				(font
@@ -4983,15 +4965,6 @@
 			)
 		)
 		(property "Description" "Quad 36V, Precision, Rail-to-Rail Input/Output, Low Offset Voltage, Operational Amplifier, TSSOP-14"
-			(at 330.2 198.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 330.2 198.12 0)
 			(effects
 				(font
@@ -5469,15 +5442,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 184.15 52.07 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "8"
 			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb47")
 		)
@@ -5769,15 +5733,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 350.52 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "6af0d887-a44f-453c-9d6c-ff0802d53340")
 		)
@@ -5846,15 +5801,6 @@
 			)
 		)
 		(property "LCSC" "C29718"
-			(at 229.87 27.94 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 229.87 27.94 90)
 			(effects
 				(font
@@ -6221,15 +6167,6 @@
 			)
 		)
 		(property "Description" "Quad 36V, Precision, Rail-to-Rail Input/Output, Low Offset Voltage, Operational Amplifier, TSSOP-14"
-			(at 219.71 55.88 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 219.71 55.88 0)
 			(effects
 				(font
@@ -7175,10 +7112,10 @@
 			)
 		)
 		(pin "8"
-			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb48")
+			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb49")
 		)
 		(pin "2"
-			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b66")
+			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b67")
 		)
 		(pin "6"
 			(uuid "6b91b50c-1a33-47d2-9f15-79f5562be5a8")
@@ -7187,16 +7124,16 @@
 			(uuid "8614c01f-3879-4a96-9f1b-4158760c3094")
 		)
 		(pin "5"
-			(uuid "135a49f2-ea2a-40a2-a765-206762170489")
+			(uuid "135a49f2-ea2a-40a2-a765-20676217048a")
 		)
 		(pin "4"
-			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f21354c")
+			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f21354d")
 		)
 		(pin "1"
-			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e49")
+			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e4a")
 		)
 		(pin "7"
-			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a63")
+			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a64")
 		)
 		(instances
 			(project "magnetic_expension"
@@ -7469,15 +7406,6 @@
 			)
 		)
 		(property "LCSC" "C29718"
-			(at 184.15 59.69 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 184.15 59.69 90)
 			(effects
 				(font
@@ -8059,15 +7987,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 252.73 67.31 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "1"
 			(uuid "32bf0416-18b8-4b30-9683-5a1583ba6627")
 		)
@@ -8131,15 +8050,6 @@
 			)
 		)
 		(property "Description" "Quad 36V, Precision, Rail-to-Rail Input/Output, Low Offset Voltage, Operational Amplifier, TSSOP-14"
-			(at 226.06 195.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 226.06 195.58 0)
 			(effects
 				(font
@@ -8498,25 +8408,25 @@
 			)
 		)
 		(pin "8"
-			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb4c")
+			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb4d")
 		)
 		(pin "2"
 			(uuid "e0cdbe98-662f-4ab9-92db-1b716595001f")
 		)
 		(pin "6"
-			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745775")
+			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745776")
 		)
 		(pin "3"
-			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6b1")
+			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6b2")
 		)
 		(pin "5"
-			(uuid "135a49f2-ea2a-40a2-a765-20676217048c")
+			(uuid "135a49f2-ea2a-40a2-a765-20676217048d")
 		)
 		(pin "4"
-			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f21354f")
+			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f213550")
 		)
 		(pin "1"
-			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e4d")
+			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e4e")
 		)
 		(pin "7"
 			(uuid "90747cc1-ae53-4940-b761-08b56d8f52e2")
@@ -8592,16 +8502,16 @@
 			)
 		)
 		(pin "8"
-			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb4f")
+			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb50")
 		)
 		(pin "2"
-			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b6e")
+			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b6f")
 		)
 		(pin "6"
-			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745778")
+			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745779")
 		)
 		(pin "3"
-			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6b4")
+			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6b5")
 		)
 		(pin "5"
 			(uuid "a47e6708-20bd-4aa9-b1e6-78de1a553a7c")
@@ -8610,10 +8520,10 @@
 			(uuid "08365947-8263-46f6-ac67-1141af2a6912")
 		)
 		(pin "1"
-			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e50")
+			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e51")
 		)
 		(pin "7"
-			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a6b")
+			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a6c")
 		)
 		(instances
 			(project "magnetic_expension"
@@ -8901,25 +8811,25 @@
 			(uuid "e501efc6-538a-4c7f-b2e8-386c64d6e93d")
 		)
 		(pin "2"
-			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b65")
+			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b68")
 		)
 		(pin "6"
-			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745770")
+			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745772")
 		)
 		(pin "3"
-			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6ac")
+			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6ae")
 		)
 		(pin "5"
-			(uuid "135a49f2-ea2a-40a2-a765-206762170488")
+			(uuid "135a49f2-ea2a-40a2-a765-20676217048b")
 		)
 		(pin "4"
-			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f21354b")
+			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f21354e")
 		)
 		(pin "1"
 			(uuid "817a6ae4-bc37-49dc-89c1-371949a24487")
 		)
 		(pin "7"
-			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a62")
+			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a65")
 		)
 		(instances
 			(project "magnetic_expension"
@@ -8975,15 +8885,6 @@
 			)
 		)
 		(property "Description" "Quad 36V, Precision, Rail-to-Rail Input/Output, Low Offset Voltage, Operational Amplifier, TSSOP-14"
-			(at 331.47 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 331.47 100.33 0)
 			(effects
 				(font
@@ -9170,10 +9071,10 @@
 			)
 		)
 		(pin "8"
-			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb48")
+			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb4a")
 		)
 		(pin "2"
-			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b66")
+			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b69")
 		)
 		(pin "6"
 			(uuid "cd7825ce-00f3-4e50-a0e5-bb122c531ade")
@@ -9182,16 +9083,16 @@
 			(uuid "bc40fc03-1461-4a46-a0c1-c225aba713e5")
 		)
 		(pin "5"
-			(uuid "135a49f2-ea2a-40a2-a765-206762170489")
+			(uuid "135a49f2-ea2a-40a2-a765-20676217048e")
 		)
 		(pin "4"
-			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f21354c")
+			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f213551")
 		)
 		(pin "1"
-			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e49")
+			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e4b")
 		)
 		(pin "7"
-			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a63")
+			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a66")
 		)
 		(instances
 			(project "magnetic_expension"
@@ -9258,15 +9159,6 @@
 		)
 		(property "LCSC" "C17955"
 			(at 344.17 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
-			(at 344.17 100.33 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9482,25 +9374,25 @@
 			)
 		)
 		(pin "8"
-			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb4c")
+			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb4e")
 		)
 		(pin "2"
 			(uuid "8bb59786-0084-4269-963a-ba026e9ad50f")
 		)
 		(pin "6"
-			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745775")
+			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745777")
 		)
 		(pin "3"
-			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6b1")
+			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6b3")
 		)
 		(pin "5"
-			(uuid "135a49f2-ea2a-40a2-a765-20676217048c")
+			(uuid "135a49f2-ea2a-40a2-a765-20676217048f")
 		)
 		(pin "4"
-			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f21354f")
+			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f213552")
 		)
 		(pin "1"
-			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e4d")
+			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e4f")
 		)
 		(pin "7"
 			(uuid "63500e26-e5ed-4b13-9ecd-91bacdfcde86")
@@ -10147,25 +10039,25 @@
 			(uuid "877f3abb-ca15-45c2-93f9-b769ffcbf2be")
 		)
 		(pin "2"
-			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b65")
+			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b6a")
 		)
 		(pin "6"
-			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745770")
+			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745773")
 		)
 		(pin "3"
-			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6ac")
+			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6af")
 		)
 		(pin "5"
-			(uuid "135a49f2-ea2a-40a2-a765-206762170488")
+			(uuid "135a49f2-ea2a-40a2-a765-206762170490")
 		)
 		(pin "4"
-			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f21354b")
+			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f213553")
 		)
 		(pin "1"
 			(uuid "d0b971c6-a244-4111-872d-a819c4a3bcb5")
 		)
 		(pin "7"
-			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a62")
+			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a67")
 		)
 		(instances
 			(project "magnetic_expension"
@@ -10855,38 +10747,29 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 229.87 81.28 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "8"
-			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb4f")
+			(uuid "a5ca0ac1-0909-42c5-a808-0aec39cacb51")
 		)
 		(pin "2"
-			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b6e")
+			(uuid "d9160f90-30c1-4b85-ac54-9002cccd3b70")
 		)
 		(pin "6"
-			(uuid "0f0525e6-b3c7-494c-aecf-fe0913745778")
+			(uuid "0f0525e6-b3c7-494c-aecf-fe091374577a")
 		)
 		(pin "3"
-			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6b4")
+			(uuid "5cd686d3-74a9-41d0-bead-061f4fada6b6")
 		)
 		(pin "5"
-			(uuid "135a49f2-ea2a-40a2-a765-206762170490")
+			(uuid "135a49f2-ea2a-40a2-a765-206762170491")
 		)
 		(pin "4"
-			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f213553")
+			(uuid "ff4b0f57-c615-4929-8e44-cd0b8f213554")
 		)
 		(pin "1"
-			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e50")
+			(uuid "982e23aa-9132-4a15-bd15-c9bdb2ce1e52")
 		)
 		(pin "7"
-			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a6b")
+			(uuid "f747e645-75ab-45f4-b844-a198f3ae6a6d")
 		)
 		(instances
 			(project ""

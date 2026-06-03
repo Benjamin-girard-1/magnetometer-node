@@ -1504,20 +1504,7 @@
 	(bus_alias "ESP32_SDMMC"
 		(members "CLK" "CMD" "D0" "D1" "D2" "D3")
 	)
-	(text "SENSOR_SET_CTRL\nSENSOR_RESET_CTRL\n\nExpension card detect\n\nI2C_SDA\nI2C_SCL"
-		(exclude_from_sim no)
-		(at 45.466 156.972 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-			(justify left)
-		)
-		(uuid "2b8c061d-400a-4477-afbe-17916ad35216")
-	)
-	(text "Expension card detect\n-------------------\nMagnetic sensor	= 20k\nAccelerometer	= 10k\nResistivity		= 5k\n-------------------"
+	(text "Expension card detect\n-------------------\nMagnetic sensor	= 20k\nAccelerometer	= 10k\nGeophone		= 40k?\nResistivity		= 5k\n-------------------"
 		(exclude_from_sim no)
 		(at 88.138 157.226 0)
 		(effects
@@ -1529,32 +1516,6 @@
 			(justify left)
 		)
 		(uuid "3a1c5d12-a2c9-4a44-bcf2-3cc8da4a8f10")
-	)
-	(text "X_INA_OUT+\nX_INA_OUT-\nY_INA_OUT+\nY_INA_OUT-\nZ_INA_OUT+\nZ_INA_OUT-"
-		(exclude_from_sim no)
-		(at 30.48 155.448 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-			(justify left)
-		)
-		(uuid "b7a60365-7c32-47a6-9770-5826e8e35ba9")
-	)
-	(text "-6V2\n+10V\n+18\n+3V3D\n+1V65\nGND"
-		(exclude_from_sim no)
-		(at 21.59 155.448 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-				(thickness 0.254)
-				(bold yes)
-			)
-			(justify left)
-		)
-		(uuid "dff7def2-c344-4d1c-9590-bb591b1a1dff")
 	)
 	(junction
 		(at 152.4 125.73)
@@ -2365,15 +2326,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 39.37 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(instances
 			(project ""
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
@@ -2430,15 +2382,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 39.37 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 39.37 87.63 0)
 			(effects
 				(font
@@ -2574,15 +2517,6 @@
 			)
 		)
 		(property "LCSC" "C4184"
-			(at 166.37 104.14 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 166.37 104.14 0)
 			(effects
 				(font
@@ -2984,15 +2918,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 144.78 119.38 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(pin "10"
 			(uuid "241d52de-8e51-4145-8fe5-99554bf452d8")
 		)
@@ -3188,15 +3113,6 @@
 				(hide yes)
 			)
 		)
-		(property "Sim.Enable" ""
-			(at 39.37 97.79 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
@@ -3383,15 +3299,6 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 39.37 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Enable" ""
 			(at 39.37 92.71 0)
 			(effects
 				(font

@@ -16,6 +16,12 @@
 # Log files
 *.log
 
+# Local calibration captures
+noise_weird_vbridge_behavior.csv
+tools/calibration_2_juin_2026/*.csv
+tools/calibration_2_juin_2026/*.svg
+tools/calibration_2_juin_2026/.matplotlib/
+
 # Build artifacts and directories
 **/build/
 build/
