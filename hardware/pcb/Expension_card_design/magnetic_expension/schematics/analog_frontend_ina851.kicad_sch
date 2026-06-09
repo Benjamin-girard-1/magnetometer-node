@@ -3921,7 +3921,7 @@
 			)
 		)
 		(property "Value" "-5VA"
-			(at 81.28 101.6 0)
+			(at 81.28 101.854 0)
 			(effects
 				(font
 					(size 1.27 1.27)

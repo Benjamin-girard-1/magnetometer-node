@@ -5,7 +5,7 @@
 	(layer "F.Cu")
 	(tags "550910274 ")
 	(property "Reference" "REF**"
-		(at 0 -5.588 0)
+		(at 0 -5.6 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "d7042b4a-5114-4644-ab45-3f4c89d08437")
@@ -17,7 +17,7 @@
 		)
 	)
 	(property "Value" "CON_550910274_MOL"
-		(at 0 -5.588 0)
+		(at 0 -7.5 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "45a55392-4dda-43c3-90d2-a441fea6cd60")
@@ -163,6 +163,17 @@
 		(layer "F.SilkS")
 		(uuid "8d41da31-a057-429a-a5fc-63ffffdc08db")
 	)
+	(fp_circle
+		(center 0 0)
+		(end 0 0.1)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.SilkS")
+		(uuid "712d0b30-48ad-4efa-b29d-b669d126ca9b")
+	)
 	(fp_line
 		(start -7.879986 -3.87)
 		(end -7.879986 3.87)
@@ -274,7 +285,7 @@
 		(uuid "416b8c43-f280-4879-a1c2-42f06aeea5b6")
 	)
 	(fp_text user "550910274"
-		(at 0 -8.128 0)
+		(at 0 -9.3 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "8aca6b05-4073-45f6-83b5-5c8b743310b7")
@@ -298,7 +309,7 @@
 		)
 	)
 	(fp_text user "550910274"
-		(at 0 -8.128 0)
+		(at 0 -9.3 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "2e902a99-f182-4c63-b0e4-0c13243f4e97")

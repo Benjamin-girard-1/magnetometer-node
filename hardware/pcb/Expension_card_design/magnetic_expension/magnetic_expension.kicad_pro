@@ -37,9 +37,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.8,
-          "height": 1.27,
-          "width": 2.54
+          "drill": 4.3,
+          "height": 4.3,
+          "width": 4.3
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -681,6 +681,10 @@
     [
       "3f9cf723-c387-4595-bc4e-8c996d2fd0b8",
       "SENSOR_OFFSET_DRIVERS"
+    ],
+    [
+      "0a13a391-065e-4b36-b802-09a3f1325672",
+      "CONNECTOR"
     ],
     [
       "d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3",

@@ -333,6 +333,9 @@ class SerialScope(QtWidgets.QMainWindow):
         self.raw_codes = False
         self.held_samples_inserted = 0
         self.held_samples_replaced = 0
+        self.next_fft_update_at = 0.0
+        self.next_stats_update_at = 0.0
+        self.last_stats_text = ""
 
         self.setWindowTitle("Magnetic Serial Scope")
         self.resize(1200, 800)
@@ -469,7 +472,7 @@ class SerialScope(QtWidgets.QMainWindow):
         self.channel_checks: list[QtWidgets.QCheckBox] = []
         for ch in range(CHANNEL_COUNT):
             cb = QtWidgets.QCheckBox(f"CH{ch}")
-            cb.setChecked(ch in (1, 2))
+            cb.setChecked(ch in (1, 2, 6))
             cb.setStyleSheet(f"color: {CHANNEL_COLORS[ch]};")
             cb.stateChanged.connect(self.update_channel_visibility)
             self.channel_checks.append(cb)
@@ -549,6 +552,8 @@ class SerialScope(QtWidgets.QMainWindow):
                 pen=pg.mkPen(CHANNEL_COLORS[ch], width=1),
                 name=f"CH{ch}",
             )
+            curve.setClipToView(True)
+            curve.setDownsampling(auto=True, method="peak")
             self.time_curves.append(curve)
         self.time_plot.addLegend()
 
@@ -565,6 +570,7 @@ class SerialScope(QtWidgets.QMainWindow):
                 pen=pg.mkPen(CHANNEL_COLORS[ch], width=1),
                 name=f"CH{ch} FFT",
             )
+            curve.setClipToView(True)
             self.fft_curves.append(curve)
         self.fft_plot.addLegend()
         self.update_channel_visibility()
@@ -736,6 +742,9 @@ class SerialScope(QtWidgets.QMainWindow):
         self.last_queue_drained = 0
         self.held_samples_inserted = 0
         self.held_samples_replaced = 0
+        self.next_fft_update_at = 0.0
+        self.next_stats_update_at = 0.0
+        self.last_stats_text = ""
         for curve in self.time_curves + self.fft_curves:
             curve.setData([], [])
 
@@ -1624,7 +1633,9 @@ class SerialScope(QtWidgets.QMainWindow):
 
     def update_plots(self) -> None:
         drained = self.drain_queue()
-        held = 0 if drained else self.insert_held_samples()
+        held = 0
+        if not drained and self.args.hold_samples:
+            held = self.insert_held_samples()
 
         if not self.reader:
             self.info.setText("Disconnected. Select a port and click Connect.")
@@ -1663,13 +1674,12 @@ class SerialScope(QtWidgets.QMainWindow):
         plot_rate = sample_rate
         active = self.active_channels()
         t = self.frame_times_s(frames)
-        display_channels = channels
         for ch in range(CHANNEL_COUNT):
             if self.channel_checks[ch].isChecked():
-                self.time_curves[ch].setData(t, display_channels[ch])
+                self.time_curves[ch].setData(t, channels[ch])
         self.time_plot.setXRange(-self.window_box.value(), 0.0, padding=0.0)
 
-        visible = display_channels[active].reshape(-1) if active else np.empty(0)
+        visible = channels[active].reshape(-1) if active else np.empty(0)
         visible = visible[np.isfinite(visible)]
         if visible.size:
             y_min = float(np.min(visible))
@@ -1678,8 +1688,14 @@ class SerialScope(QtWidgets.QMainWindow):
             margin = max(span * 0.08, 0.05)
             self.time_plot.setYRange(y_min - margin, y_max + margin, padding=0.0)
 
-        self.update_fft(display_channels, active, plot_rate)
-        self.stats_label.setText(self.format_stats(self.channel_stats(display_channels, active)))
+        now = time.monotonic()
+        if now >= self.next_fft_update_at:
+            self.update_fft(channels, active, plot_rate)
+            self.next_fft_update_at = now + (1.0 / max(self.args.fft_refresh_hz, 0.1))
+        if now >= self.next_stats_update_at:
+            self.last_stats_text = self.format_stats(self.channel_stats(channels, active))
+            self.stats_label.setText(self.last_stats_text)
+            self.next_stats_update_at = now + (1.0 / max(self.args.stats_refresh_hz, 0.1))
 
         status_max = int(np.max(status)) if len(status) else 0
         scale_mode = "raw codes" if self.raw_codes else "input-ref mV" if self.input_referred else "ADC/PGA mV"
@@ -1715,8 +1731,9 @@ class SerialScope(QtWidgets.QMainWindow):
 
         freqs = np.fft.rfftfreq(n, d=1.0 / sample_rate)
         mask = freqs <= self.fft_max_box.value()
+        active_set = set(active)
         for ch in range(CHANNEL_COUNT):
-            if ch not in active:
+            if ch not in active_set:
                 self.fft_curves[ch].setData([], [])
                 continue
             seg = channels[ch, -n:]
@@ -1740,7 +1757,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--queue", type=int, default=65536, help="Reader queue capacity")
     p.add_argument("--refresh-hz", type=float, default=30.0, help="UI redraw rate")
     p.add_argument("--fft-size", type=int, default=0, help="FFT samples; 0 uses the visible time window")
+    p.add_argument("--fft-refresh-hz", type=float, default=30.0, help="Maximum FFT redraw rate")
+    p.add_argument("--stats-refresh-hz", type=float, default=4.0, help="Maximum channel-stat redraw rate")
     p.add_argument("--fft-max-hz", type=float, default=128.0)
+    p.add_argument("--no-held-samples", dest="hold_samples", action="store_false",
+                   help="Do not synthesize repeated samples when serial packets pause")
+    p.set_defaults(hold_samples=True)
     args = p.parse_args()
     min_buffer = max(2, int(math.ceil(args.window_s * args.sample_rate)))
     if args.buffer < min_buffer:
