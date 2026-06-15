@@ -443,6 +443,23 @@ ad7779_status_t ad7779_set_odr(ad7779_t *dev, uint32_t odr_hz)
     return program_src(dev);
 }
 
+ad7779_status_t ad7779_set_odr_writeonly(ad7779_t *dev, uint32_t odr_hz)
+{
+    if (!dev || odr_hz == 0) return AD7779_ERR_PARAM;
+
+    uint32_t old_odr = dev->cfg.odr_hz;
+    bool verify_writes = dev->cfg.verify_writes;
+    dev->cfg.odr_hz = odr_hz;
+    dev->cfg.verify_writes = false;
+    ad7779_status_t st = program_src(dev);
+    dev->cfg.verify_writes = verify_writes;
+    if (st != AD7779_OK) {
+        dev->cfg.odr_hz = old_odr;
+        return st;
+    }
+    return AD7779_OK;
+}
+
 ad7779_status_t ad7779_set_reference(ad7779_t *dev, ad7779_reference_t ref)
 {
     if (!dev) return AD7779_ERR_PARAM;

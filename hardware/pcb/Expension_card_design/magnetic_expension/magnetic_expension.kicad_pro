@@ -680,7 +680,7 @@
     ],
     [
       "3f9cf723-c387-4595-bc4e-8c996d2fd0b8",
-      "SENSOR_OFFSET_DRIVERS"
+      "MAGNETIC_OFFSET_DRIVERS"
     ],
     [
       "0a13a391-065e-4b36-b802-09a3f1325672",
@@ -688,7 +688,11 @@
     ],
     [
       "d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3",
-      "ANALOG_FRONTEND_INA851"
+      "INA_GAIN"
+    ],
+    [
+      "040d9538-e897-4d2d-a074-74773357e15f",
+      "BRIDGE_DC_OFFSET"
     ]
   ],
   "text_variables": {}

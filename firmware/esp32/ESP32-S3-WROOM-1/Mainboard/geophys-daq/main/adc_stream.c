@@ -19,6 +19,7 @@ static const char *TAG = "adc_stream";
 static ad7779_t s_adc;
 static bool s_adc_ready;
 static bool s_adc_streaming;
+static uint32_t s_adc_odr_hz = MAG_ODR_HZ;
 static uint32_t s_last_dropped;
 
 static void adc_forget_driver_state(void)
@@ -242,7 +243,7 @@ esp_err_t adc_stream_start(void)
 
     if (!s_adc_ready) {
         ad7779_config_t cfg = AD7779_DEFAULT_CONFIG;
-        cfg.odr_hz = MAG_ODR_HZ;
+        cfg.odr_hz = s_adc_odr_hz;
         /* REF_OUT is filtered on-board and fed back into REF1+/REF2+. */
         cfg.reference = AD7779_REF_EXTERNAL;
         cfg.channels_enabled = 0xFFU;
@@ -276,8 +277,9 @@ esp_err_t adc_stream_start(void)
              "Binary serial output = %lu Hz at %lu baud.",
              (MAG_ENABLE_BRIDGE_9V != 0) ? "on" : "off",
              (MAG_ENABLE_NEG5V != 0) ? "on" : "off",
-             ADC_REF_V, (unsigned long)MAG_ODR_HZ, MAG_ADC_GAIN,
-             (unsigned long)SERIAL_STUDIO_RATE_HZ, (unsigned long)MAG_UART_BAUD);
+             ADC_REF_V, (unsigned long)s_adc_odr_hz, MAG_ADC_GAIN,
+             (unsigned long)(s_adc_odr_hz / SERIAL_STUDIO_DECIMATION),
+             (unsigned long)MAG_UART_BAUD);
     return ESP_OK;
 }
 
@@ -307,6 +309,60 @@ esp_err_t adc_set_channel_gain(uint8_t ch, uint8_t gain_x)
     }
 
     ESP_LOGI(TAG, "ADC CH%u gain set to x%u", ch, gain_x);
+    return ESP_OK;
+}
+
+esp_err_t adc_set_odr(uint32_t odr_hz)
+{
+    if (odr_hz < MAG_ODR_MIN_HZ || odr_hz > MAG_ODR_MAX_HZ) {
+        ESP_LOGW(TAG,
+                 "bad ADC ODR request: %lu Hz (allowed %lu..%lu Hz)",
+                 (unsigned long)odr_hz,
+                 (unsigned long)MAG_ODR_MIN_HZ,
+                 (unsigned long)MAG_ODR_MAX_HZ);
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    if (!s_adc_ready) {
+        s_adc_odr_hz = odr_hz;
+        ESP_LOGI(TAG, "ADC ODR queued: %lu Hz", (unsigned long)s_adc_odr_hz);
+        return ESP_OK;
+    }
+
+    uint32_t previous_odr_hz = s_adc_odr_hz;
+    bool was_streaming = s_adc_streaming;
+    if (was_streaming) {
+        ad7779_status_t stop_st = ad7779_stop_streaming(&s_adc);
+        if (stop_st != AD7779_OK) {
+            ESP_LOGW(TAG, "ADC ODR stop failed: st=%d", stop_st);
+            return ESP_FAIL;
+        }
+        s_adc_streaming = false;
+        vTaskDelay(pdMS_TO_TICKS(2));
+    }
+
+    ad7779_status_t st = ad7779_set_odr_writeonly(&s_adc, odr_hz);
+    if (st != AD7779_OK) {
+        s_adc_odr_hz = previous_odr_hz;
+        ESP_LOGW(TAG, "ADC ODR set failed: %lu Hz st=%d", (unsigned long)odr_hz, st);
+        if (was_streaming && ad7779_start_streaming(&s_adc) == AD7779_OK) {
+            s_adc_streaming = true;
+        }
+        return ESP_FAIL;
+    }
+    s_adc_odr_hz = odr_hz;
+
+    if (was_streaming) {
+        st = ad7779_start_streaming(&s_adc);
+        if (st != AD7779_OK) {
+            ESP_LOGW(TAG, "ADC ODR restart failed: st=%d", st);
+            return ESP_FAIL;
+        }
+        s_adc_streaming = true;
+        s_last_dropped = 0;
+    }
+
+    ESP_LOGI(TAG, "ADC ODR set to %lu Hz", (unsigned long)s_adc_odr_hz);
     return ESP_OK;
 }
 

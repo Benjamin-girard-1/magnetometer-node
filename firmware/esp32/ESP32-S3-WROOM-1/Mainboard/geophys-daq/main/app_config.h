@@ -7,6 +7,8 @@
 #define ADC_REF_V                 2.5f
 #define MAG_ADC_GAIN              1.0f
 #define MAG_ODR_HZ                1000U
+#define MAG_ODR_MIN_HZ            501U
+#define MAG_ODR_MAX_HZ            2000U
 #define SERIAL_STUDIO_DECIMATION  1U
 #define SERIAL_STUDIO_RATE_HZ     (MAG_ODR_HZ / SERIAL_STUDIO_DECIMATION)
 #define MAG_UART_BAUD             921600U

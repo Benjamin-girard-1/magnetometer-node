@@ -1587,7 +1587,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "11aab347-61b7-458f-8940-deab77603915")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR06"
 			(at 114.3 88.265 0)
 			(effects
 				(font
@@ -1637,7 +1637,7 @@
 		(instances
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR016")
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -1652,7 +1652,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "26adafbe-0ada-4aa3-9017-d96bdbb7de37")
-		(property "Reference" "#PWR022"
+		(property "Reference" "#PWR012"
 			(at 137.16 149.86 0)
 			(effects
 				(font
@@ -1702,7 +1702,7 @@
 		(instances
 			(project ""
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR022")
+					(reference "#PWR012")
 					(unit 1)
 				)
 			)
@@ -1795,7 +1795,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6c2e8a95-d818-4143-8b67-313abf33b45a")
-		(property "Reference" "#PWR015"
+		(property "Reference" "#PWR05"
 			(at 142.24 69.85 0)
 			(effects
 				(font
@@ -1845,7 +1845,7 @@
 		(instances
 			(project ""
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR015")
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -1860,7 +1860,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "841f7e2a-b297-430c-bb01-204da2d32548")
-		(property "Reference" "#PWR014"
+		(property "Reference" "#PWR04"
 			(at 124.46 66.04 0)
 			(effects
 				(font
@@ -1910,7 +1910,7 @@
 		(instances
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR014")
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -2003,7 +2003,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8ab6d941-7ff1-4a56-92d3-bd3ff3693f08")
-		(property "Reference" "#PWR017"
+		(property "Reference" "#PWR07"
 			(at 120.65 100.33 0)
 			(effects
 				(font
@@ -2053,7 +2053,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR017")
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
@@ -2068,7 +2068,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8e18de74-c070-499f-8740-6ce39e28ae67")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR09"
 			(at 116.84 128.27 0)
 			(effects
 				(font
@@ -2118,7 +2118,7 @@
 		(instances
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR019")
+					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -2133,7 +2133,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a06c4562-eaed-4c77-b231-a5e838d51326")
-		(property "Reference" "#PWR021"
+		(property "Reference" "#PWR011"
 			(at 115.57 143.51 0)
 			(effects
 				(font
@@ -2183,7 +2183,7 @@
 		(instances
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR021")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -2401,7 +2401,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b9a1eef1-2e3c-462d-b03a-dd74bde6ab4c")
-		(property "Reference" "#PWR018"
+		(property "Reference" "#PWR08"
 			(at 132.08 100.33 0)
 			(effects
 				(font
@@ -2451,7 +2451,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR018")
+					(reference "#PWR08")
 					(unit 1)
 				)
 			)
@@ -2554,7 +2554,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c61a7977-78fa-4b89-88e8-14376a437f58")
-		(property "Reference" "#PWR011"
+		(property "Reference" "#PWR01"
 			(at 124.46 32.385 0)
 			(effects
 				(font
@@ -2604,7 +2604,7 @@
 		(instances
 			(project ""
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR011")
+					(reference "#PWR01")
 					(unit 1)
 				)
 			)
@@ -2619,7 +2619,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d2c9a747-51c4-4e5d-9c64-455292f8e89a")
-		(property "Reference" "#PWR012"
+		(property "Reference" "#PWR02"
 			(at 104.14 45.72 0)
 			(effects
 				(font
@@ -2669,7 +2669,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR012")
+					(reference "#PWR02")
 					(unit 1)
 				)
 			)
@@ -2684,7 +2684,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e542bd76-abe0-4b32-8c56-7b39349a6605")
-		(property "Reference" "#PWR013"
+		(property "Reference" "#PWR03"
 			(at 115.57 45.72 0)
 			(effects
 				(font
@@ -2734,7 +2734,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR013")
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -2749,7 +2749,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e60fabe3-9ddd-4542-b0a0-b9a701dfbf6f")
-		(property "Reference" "#PWR020"
+		(property "Reference" "#PWR010"
 			(at 102.87 143.51 0)
 			(effects
 				(font
@@ -2799,7 +2799,7 @@
 		(instances
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/95fd4708-3510-44cf-9b01-8535361ee411"
-					(reference "#PWR020")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)

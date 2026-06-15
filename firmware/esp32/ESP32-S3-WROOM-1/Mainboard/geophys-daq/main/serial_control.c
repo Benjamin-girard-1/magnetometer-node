@@ -355,6 +355,16 @@ static void uart_handle_command(const char *line)
 
     int adc_ch = -1;
     int adc_gain = -1;
+    int adc_odr = -1;
+    if (sscanf(line, "ADC ODR %d", &adc_odr) == 1 ||
+        sscanf(line, "ADC RATE %d", &adc_odr) == 1 ||
+        sscanf(line, "ODR %d", &adc_odr) == 1) {
+        if (adc_odr <= 0 || adc_set_odr((uint32_t)adc_odr) != ESP_OK) {
+            ESP_LOGW(TAG, "ADC ODR command failed: %s", line);
+        }
+        return;
+    }
+
     if (sscanf(line, "ADC GAIN %d %d", &adc_ch, &adc_gain) == 2 ||
         sscanf(line, "GAIN %d %d", &adc_ch, &adc_gain) == 2) {
         if (adc_ch < 0 || adc_ch >= (int)AD7779_NUM_CHANNELS ||

@@ -85,6 +85,8 @@ CHANNEL_COLORS = [
 ]
 HELD_SAMPLE_STATUS = 0x80
 HELD_SAMPLE_MAX_BATCH = 200
+ADC_RATE_MIN_HZ = 501
+ADC_RATE_MAX_HZ = 2000
 
 
 @dataclass
@@ -119,6 +121,8 @@ class SerialReader(threading.Thread):
         self.sync_hits = 0
         self.bad_lengths = 0
         self.start_time: float | None = None
+        self.rate_start_time: float | None = None
+        self.rate_start_samples = 0
         self.serial_lock = threading.Lock()
         self.gain_lock = threading.Lock()
         self.ser: serial.Serial | None = None
@@ -150,6 +154,7 @@ class SerialReader(threading.Thread):
                     self.ser = ser
                 ser.reset_input_buffer()
                 self.start_time = time.monotonic()
+                self.reset_average_sample_rate()
                 while not self.stop_event.is_set():
                     chunk = ser.read(4096)
                     if not chunk:
@@ -294,13 +299,20 @@ class SerialReader(threading.Thread):
             lines.append(self.text_lines.popleft())
         return lines
 
+    def reset_average_sample_rate(self) -> None:
+        self.rate_start_time = time.monotonic()
+        self.rate_start_samples = self.samples_seen
+
     def average_sample_rate(self) -> float:
-        if self.start_time is None or self.samples_seen < 1000:
+        if self.rate_start_time is None:
             return float("nan")
-        elapsed = time.monotonic() - self.start_time
+        samples = self.samples_seen - self.rate_start_samples
+        if samples < 1000:
+            return float("nan")
+        elapsed = time.monotonic() - self.rate_start_time
         if elapsed <= 1.0:
             return float("nan")
-        return self.samples_seen / elapsed
+        return samples / elapsed
 
 
 class SerialScope(QtWidgets.QMainWindow):
@@ -331,6 +343,7 @@ class SerialScope(QtWidgets.QMainWindow):
         self.channel_gains = [1] * CHANNEL_COUNT
         self.input_referred = False
         self.raw_codes = False
+        self.auto_polarity_next_set = True
         self.held_samples_inserted = 0
         self.held_samples_replaced = 0
         self.next_fft_update_at = 0.0
@@ -379,6 +392,24 @@ class SerialScope(QtWidgets.QMainWindow):
         self.connect_btn.clicked.connect(self.toggle_connection)
         controls.addWidget(self.connect_btn)
 
+        controls.addWidget(QtWidgets.QLabel("ADC Hz:"))
+        self.adc_rate_box = QtWidgets.QDoubleSpinBox()
+        self.adc_rate_box.setRange(ADC_RATE_MIN_HZ, ADC_RATE_MAX_HZ)
+        self.adc_rate_box.setValue(args.adc_rate)
+        self.adc_rate_box.setDecimals(0)
+        self.adc_rate_box.setSingleStep(10.0)
+        self.adc_rate_box.setToolTip(
+            f"Set the AD7779 output data rate ({ADC_RATE_MIN_HZ}-{ADC_RATE_MAX_HZ} Hz). "
+            "The firmware briefly pauses streaming while changing it."
+        )
+        controls.addWidget(self.adc_rate_box)
+
+        self.adc_rate_btn = QtWidgets.QPushButton("Set Hz")
+        self.adc_rate_btn.setToolTip("Send ADC ODR and update scope timing.")
+        self.adc_rate_btn.clicked.connect(self.send_adc_rate_command)
+        self.adc_rate_btn.setEnabled(False)
+        controls.addWidget(self.adc_rate_btn)
+
         self.clear_btn = QtWidgets.QPushButton("Clear")
         self.clear_btn.clicked.connect(self.clear_buffers)
         controls.addWidget(self.clear_btn)
@@ -406,6 +437,17 @@ class SerialScope(QtWidgets.QMainWindow):
         self.reset_btn.clicked.connect(self.send_reset_command)
         self.reset_btn.setEnabled(False)
         controls.addWidget(self.reset_btn)
+
+        self.auto_polarity_btn = QtWidgets.QPushButton("Auto Polarity")
+        self.auto_polarity_btn.setToolTip("Alternate HMC100x SET and RESET pulses once per second.")
+        self.auto_polarity_btn.setCheckable(True)
+        self.auto_polarity_btn.toggled.connect(self.toggle_auto_polarity)
+        self.auto_polarity_btn.setEnabled(False)
+        controls.addWidget(self.auto_polarity_btn)
+
+        self.auto_polarity_timer = QtCore.QTimer(self)
+        self.auto_polarity_timer.setInterval(1000)
+        self.auto_polarity_timer.timeout.connect(self.send_next_auto_polarity_command)
 
         self.enable_9v = QtWidgets.QCheckBox("+9V enable")
         self.enable_9v.setToolTip("Toggle the shift-register enable for the +10V boost feeding +9VA.")
@@ -788,6 +830,14 @@ class SerialScope(QtWidgets.QMainWindow):
     def value_unit(self) -> str:
         return "codes" if self.raw_codes else "mV"
 
+    @staticmethod
+    def adc_status_values(status: np.ndarray) -> np.ndarray:
+        return np.asarray(status, dtype=np.int64) & ~HELD_SAMPLE_STATUS
+
+    @staticmethod
+    def held_status_count(status: np.ndarray) -> int:
+        return int(np.count_nonzero(np.asarray(status, dtype=np.int64) & HELD_SAMPLE_STATUS))
+
     def save_stats_csv(self) -> None:
         frames, host_times, channels, status = self.ordered_data()
         active = self.active_channels()
@@ -808,7 +858,9 @@ class SerialScope(QtWidgets.QMainWindow):
             return
 
         sample_rate, frame_step, missed = self.timing_stats(frames)
-        status_max = int(np.max(status)) if len(status) else 0
+        adc_status = self.adc_status_values(status)
+        status_max = int(np.max(adc_status)) if len(adc_status) else 0
+        held_count = self.held_status_count(status)
         fieldnames = [
             "timestamp",
             "port",
@@ -818,7 +870,8 @@ class SerialScope(QtWidgets.QMainWindow):
             "sample_rate_hz",
             "frame_step",
             "missed_estimate",
-            "status_max_hex",
+            "adc_status_max_hex",
+            "held_samples_in_window",
             "channel",
             "gain_x",
             "samples",
@@ -847,7 +900,8 @@ class SerialScope(QtWidgets.QMainWindow):
                             "sample_rate_hz": sample_rate,
                             "frame_step": frame_step,
                             "missed_estimate": missed,
-                            "status_max_hex": f"0x{status_max:02X}",
+                            "adc_status_max_hex": f"0x{status_max:02X}",
+                            "held_samples_in_window": held_count,
                             "gain_x": self.channel_gains[int(row["channel"])],
                             **row,
                         }
@@ -937,6 +991,26 @@ class SerialScope(QtWidgets.QMainWindow):
         if hasattr(self, "fft_plot"):
             self.fft_plot.setXRange(0, self.fft_max_box.value(), padding=0.0)
 
+    def set_nominal_adc_rate(self, rate_hz: float) -> None:
+        rate_hz = max(float(ADC_RATE_MIN_HZ), min(float(ADC_RATE_MAX_HZ), float(rate_hz)))
+        self.args.adc_rate = rate_hz
+        self.args.sample_rate = rate_hz
+
+        max_window_s = max(1.0, self.args.buffer / max(rate_hz, 1.0))
+        self.window_box.setRange(1.0, max_window_s)
+        if self.window_box.value() > max_window_s:
+            self.window_box.setValue(max_window_s)
+        self.window_box.setToolTip(
+            f"Limited by the in-memory buffer: {self.args.buffer} samples at "
+            f"{rate_hz:g} samples/s."
+        )
+
+        nyquist = max(1.0, rate_hz / 2.0)
+        self.fft_max_box.setRange(1.0, nyquist)
+        if self.fft_max_box.value() > nyquist:
+            self.fft_max_box.setValue(nyquist)
+        self.update_fft_xrange()
+
     def connect(self) -> None:
         port = self.selected_port()
         if not port:
@@ -957,10 +1031,12 @@ class SerialScope(QtWidgets.QMainWindow):
         self.port_combo.setEnabled(False)
         self.refresh_ports_btn.setEnabled(False)
         self.baud_box.setEnabled(False)
+        self.adc_rate_btn.setEnabled(True)
         self.zero_btn.setEnabled(True)
         self.set_reset_btn.setEnabled(True)
         self.set_btn.setEnabled(True)
         self.reset_btn.setEnabled(True)
+        self.auto_polarity_btn.setEnabled(True)
         self.enable_9v.setEnabled(True)
         self.enable_neg5v.setEnabled(True)
         self.dac_enable.setEnabled(True)
@@ -977,6 +1053,7 @@ class SerialScope(QtWidgets.QMainWindow):
             combo.setEnabled(True)
         self.imu_test_start_btn.setEnabled(True)
         self.reader.write_command(b"9V 0\n")
+        self.sync_adc_rate_setting()
         self.append_control_log(f"Connected to {port} at {baud}.")
         if self.reader.write_command(b"MODE ADC\n"):
             self.append_control_log("> MODE ADC")
@@ -992,6 +1069,7 @@ class SerialScope(QtWidgets.QMainWindow):
     def disconnect(self) -> None:
         if self.imu_test_running:
             self.finish_imu_test(manual=True)
+        self.stop_auto_polarity()
         if self.reader:
             self.reader.stop()
             self.reader.join(timeout=1.0)
@@ -1000,10 +1078,12 @@ class SerialScope(QtWidgets.QMainWindow):
         self.port_combo.setEnabled(True)
         self.refresh_ports_btn.setEnabled(True)
         self.baud_box.setEnabled(True)
+        self.adc_rate_btn.setEnabled(False)
         self.zero_btn.setEnabled(False)
         self.set_reset_btn.setEnabled(False)
         self.set_btn.setEnabled(False)
         self.reset_btn.setEnabled(False)
+        self.auto_polarity_btn.setEnabled(False)
         self.enable_9v.setEnabled(False)
         self.enable_neg5v.setEnabled(False)
         self.dac_enable.setEnabled(False)
@@ -1364,6 +1444,27 @@ class SerialScope(QtWidgets.QMainWindow):
             self.clear_buffers()
             self.tabs.setCurrentWidget(self.control_tab)
 
+    def send_adc_rate_command(self) -> None:
+        rate = int(round(self.adc_rate_box.value()))
+        cmd = f"ADC ODR {rate}\n".encode("ascii")
+        if self.send_control_command(cmd, f"ADC ODR {rate} Hz"):
+            self.set_nominal_adc_rate(float(rate))
+            self.clear_buffers()
+            if self.reader:
+                self.reader.reset_average_sample_rate()
+            self.plot_hold_until = time.monotonic() + 0.5
+            self.info.setText(f"Requested ADC ODR {rate} Hz; scope timing updated.")
+
+    def sync_adc_rate_setting(self) -> None:
+        if not self.reader:
+            return
+        rate = int(round(self.adc_rate_box.value()))
+        self.set_nominal_adc_rate(float(rate))
+        cmd = f"ADC ODR {rate}\n".encode("ascii")
+        if self.reader.write_command(cmd):
+            self.reader.reset_average_sample_rate()
+            self.append_control_log(f"> ADC ODR {rate}")
+
     def send_adc_pin_command(self, sr_pin: int, name: str) -> None:
         if not self.reader:
             return
@@ -1440,6 +1541,49 @@ class SerialScope(QtWidgets.QMainWindow):
             self.info.setText("Sent RESET command.")
         else:
             self.info.setText("RESET command failed: serial port is not ready.")
+
+    def toggle_auto_polarity(self, enabled: bool) -> None:
+        self.auto_polarity_btn.setText("Stop Polarity" if enabled else "Auto Polarity")
+        if enabled:
+            if not self.reader:
+                self.info.setText("Connect before starting auto polarity.")
+                self.stop_auto_polarity()
+                return
+            self.auto_polarity_next_set = True
+            self.send_next_auto_polarity_command()
+            self.auto_polarity_timer.start()
+        else:
+            self.auto_polarity_timer.stop()
+            self.info.setText("Auto polarity stopped.")
+
+    def stop_auto_polarity(self) -> None:
+        self.auto_polarity_timer.stop()
+        self.auto_polarity_next_set = True
+        if self.auto_polarity_btn.isChecked():
+            self.auto_polarity_btn.blockSignals(True)
+            self.auto_polarity_btn.setChecked(False)
+            self.auto_polarity_btn.blockSignals(False)
+        self.auto_polarity_btn.setText("Auto Polarity")
+
+    def send_next_auto_polarity_command(self) -> None:
+        if not self.reader:
+            self.stop_auto_polarity()
+            self.info.setText("Auto polarity stopped: serial port is not connected.")
+            return
+
+        if self.auto_polarity_next_set:
+            command = b"SET\n"
+            description = "auto SET polarity pulse"
+        else:
+            command = b"RESET\n"
+            description = "auto RESET polarity pulse"
+
+        if self.send_control_command(command, description):
+            self.auto_polarity_next_set = not self.auto_polarity_next_set
+            next_pulse = "SET" if self.auto_polarity_next_set else "RESET"
+            self.info.setText(f"Auto polarity sent {command.decode('ascii').strip()}; next {next_pulse} in 1 s.")
+        else:
+            self.stop_auto_polarity()
 
     def send_9v_enable_command(self) -> None:
         if not self.reader:
@@ -1697,13 +1841,16 @@ class SerialScope(QtWidgets.QMainWindow):
             self.stats_label.setText(self.last_stats_text)
             self.next_stats_update_at = now + (1.0 / max(self.args.stats_refresh_hz, 0.1))
 
-        status_max = int(np.max(status)) if len(status) else 0
+        adc_status = self.adc_status_values(status)
+        status_max = int(np.max(adc_status)) if len(adc_status) else 0
+        held_count = self.held_status_count(status)
         scale_mode = "raw codes" if self.raw_codes else "input-ref mV" if self.input_referred else "ADC/PGA mV"
         self.info.setText(
             f"{self.reader.port} @ {self.reader.baud} | "
             f"scale {scale_mode} | "
             f"rx {self.reader.samples_seen} samples | "
-            f"held {self.held_samples_inserted} (+{held}, repl {self.held_samples_replaced}) | "
+            f"held total {self.held_samples_inserted} (+{held}, repl {self.held_samples_replaced}, "
+            f"window {held_count}) | "
             f"bin {self.reader.binary_packets} text {self.reader.text_packets} "
             f"sync {self.reader.sync_hits} badlen {self.reader.bad_lengths} "
             f"badcrc {self.reader.bad_checksums} | "
@@ -1715,7 +1862,7 @@ class SerialScope(QtWidgets.QMainWindow):
             f"missed~{missed} | "
             f"buffer {len(frames)}/{self.args.buffer} | "
             f"last drain {self.last_queue_drained} | "
-            f"status max 0x{status_max:02X}"
+            f"adc status max 0x{status_max:02X}"
         )
 
     def update_fft(self, channels: np.ndarray, active: list[int], sample_rate: float) -> None:
@@ -1752,7 +1899,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--baud", type=int, default=921600)
     p.add_argument("--sample-rate", type=float, default=1000.0, help="Nominal firmware output rate after decimation")
     p.add_argument("--adc-rate", type=float, default=1000.0, help="AD7779 frame rate used to timestamp frame_idx")
-    p.add_argument("--buffer", type=int, default=20000, help="Samples kept in memory")
+    p.add_argument("--buffer", type=int, default=0, help="Samples kept in memory; 0 keeps the full requested window")
     p.add_argument("--window-s", type=float, default=60.0, help="Visible rolling time window")
     p.add_argument("--queue", type=int, default=65536, help="Reader queue capacity")
     p.add_argument("--refresh-hz", type=float, default=30.0, help="UI redraw rate")
@@ -1764,7 +1911,11 @@ def parse_args() -> argparse.Namespace:
                    help="Do not synthesize repeated samples when serial packets pause")
     p.set_defaults(hold_samples=True)
     args = p.parse_args()
-    min_buffer = max(2, int(math.ceil(args.window_s * args.sample_rate)))
+    args.adc_rate = max(float(ADC_RATE_MIN_HZ), min(float(ADC_RATE_MAX_HZ), args.adc_rate))
+    args.sample_rate = max(float(ADC_RATE_MIN_HZ), min(float(ADC_RATE_MAX_HZ), args.sample_rate))
+    min_buffer = max(2, int(math.ceil(args.window_s * max(args.sample_rate, args.adc_rate))))
+    if args.buffer <= 0:
+        args.buffer = min_buffer
     if args.buffer < min_buffer:
         args.buffer = min_buffer
     return args

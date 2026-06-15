@@ -2442,7 +2442,7 @@
 		(instances
 			(project "geophys_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/772043ad-5698-4eec-9f80-f66e77d9ab7d"
-					(reference "#PWR018")
+					(reference "#PWR0223")
 					(unit 1)
 				)
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/e4ef580d-161a-4ed6-a9fa-ba1ec5666081"
@@ -3048,7 +3048,7 @@
 		(instances
 			(project "geophys_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/772043ad-5698-4eec-9f80-f66e77d9ab7d"
-					(reference "#PWR010")
+					(reference "#PWR0224")
 					(unit 1)
 				)
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/e4ef580d-161a-4ed6-a9fa-ba1ec5666081"

@@ -170,6 +170,7 @@ ad7779_status_t ad7779_set_channel_gain_writeonly(ad7779_t *dev, uint8_t ch,
 ad7779_status_t ad7779_set_channel_enable(ad7779_t *dev, uint8_t ch,
                                           bool enable);
 ad7779_status_t ad7779_set_odr(ad7779_t *dev, uint32_t odr_hz);
+ad7779_status_t ad7779_set_odr_writeonly(ad7779_t *dev, uint32_t odr_hz);
 ad7779_status_t ad7779_set_reference(ad7779_t *dev, ad7779_reference_t ref);
 
 /* ===========================================================

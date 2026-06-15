@@ -2591,7 +2591,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "32647da6-ed97-4695-af2a-9ee6785059fd")
-		(property "Reference" "#PWR04"
+		(property "Reference" "#PWR053"
 			(at 102.87 93.98 0)
 			(effects
 				(font
@@ -2641,7 +2641,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR04")
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)
@@ -2656,7 +2656,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3c0cc833-c357-480b-bc97-3e5b1c9055b1")
-		(property "Reference" "R1"
+		(property "Reference" "R25"
 			(at 184.658 73.66 0)
 			(effects
 				(font
@@ -2717,7 +2717,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "R1")
+					(reference "R25")
 					(unit 1)
 				)
 			)
@@ -2732,7 +2732,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "47659653-719b-49b8-9621-d1033969b4ce")
-		(property "Reference" "#PWR05"
+		(property "Reference" "#PWR049"
 			(at 128.27 83.82 0)
 			(effects
 				(font
@@ -2782,7 +2782,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR05")
+					(reference "#PWR049")
 					(unit 1)
 				)
 			)
@@ -2797,7 +2797,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "47e626c9-52db-4a4e-aaf8-23c8f8c74098")
-		(property "Reference" "#PWR08"
+		(property "Reference" "#PWR052"
 			(at 109.22 90.805 0)
 			(effects
 				(font
@@ -2847,7 +2847,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR08")
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -2863,7 +2863,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4881fedb-abac-4b00-a061-51eb9e91e044")
-		(property "Reference" "J2"
+		(property "Reference" "J1"
 			(at 149.86 67.31 0)
 			(effects
 				(font
@@ -3005,7 +3005,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "J2")
+					(reference "J1")
 					(unit 1)
 				)
 			)
@@ -3020,7 +3020,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "729a3239-ae8b-473d-b6f7-7e8ef7b26faa")
-		(property "Reference" "#PWR010"
+		(property "Reference" "#PWR056"
 			(at 148.59 124.46 0)
 			(effects
 				(font
@@ -3070,7 +3070,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR010")
+					(reference "#PWR056")
 					(unit 1)
 				)
 			)
@@ -3085,7 +3085,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7e96037f-c722-440e-93db-79f8fe948f46")
-		(property "Reference" "#PWR087"
+		(property "Reference" "#PWR054"
 			(at 96.52 96.52 0)
 			(effects
 				(font
@@ -3135,7 +3135,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR087")
+					(reference "#PWR054")
 					(unit 1)
 				)
 			)
@@ -3150,7 +3150,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "87266331-9418-4287-90a7-4316ff7c17d3")
-		(property "Reference" "#PWR06"
+		(property "Reference" "#PWR050"
 			(at 121.92 86.36 0)
 			(effects
 				(font
@@ -3200,7 +3200,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR06")
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -3215,7 +3215,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8af7a4ba-cd62-41be-9005-caf24766aba6")
-		(property "Reference" "#PWR09"
+		(property "Reference" "#PWR057"
 			(at 161.29 124.46 0)
 			(effects
 				(font
@@ -3265,7 +3265,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR09")
+					(reference "#PWR057")
 					(unit 1)
 				)
 			)
@@ -3280,7 +3280,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a5cee000-92b9-4caa-a376-8a9eb07fa2a0")
-		(property "Reference" "#PWR03"
+		(property "Reference" "#PWR048"
 			(at 134.62 81.28 0)
 			(effects
 				(font
@@ -3330,7 +3330,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR03")
+					(reference "#PWR048")
 					(unit 1)
 				)
 			)
@@ -3409,7 +3409,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "eaf0814a-0622-46f3-84b5-4d416d1f0afe")
-		(property "Reference" "#PWR07"
+		(property "Reference" "#PWR051"
 			(at 115.57 88.9 0)
 			(effects
 				(font
@@ -3459,7 +3459,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR07")
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -3474,7 +3474,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ec79923a-60ae-433d-b230-003349dc4e70")
-		(property "Reference" "#PWR01"
+		(property "Reference" "#PWR047"
 			(at 196.85 76.2 0)
 			(effects
 				(font
@@ -3524,7 +3524,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR01")
+					(reference "#PWR047")
 					(unit 1)
 				)
 			)
@@ -3539,7 +3539,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "fb377e0d-36df-44eb-a236-51ce20fa56ef")
-		(property "Reference" "#PWR088"
+		(property "Reference" "#PWR055"
 			(at 138.43 124.46 0)
 			(effects
 				(font
@@ -3589,7 +3589,7 @@
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
-					(reference "#PWR088")
+					(reference "#PWR055")
 					(unit 1)
 				)
 			)

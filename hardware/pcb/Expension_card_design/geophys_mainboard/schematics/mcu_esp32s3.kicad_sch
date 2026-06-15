@@ -1719,6 +1719,9 @@
 			(embedded_fonts no)
 		)
 	)
+	(bus_alias "GPS_UART"
+		(members "GPS_TX" "GPS_RX")
+	)
 	(bus_alias "SENSOR_CTRL_1"
 		(members "RESET_1" "SET_1" "SCL_1" "SDA_1" "DEVICE_DETECT_1")
 	)
@@ -2068,6 +2071,15 @@
 		(uuid "a7d6a178-3be3-4583-b0a3-922fa85d219f")
 	)
 	(bus_entry
+		(at 231.14 151.13)
+		(size -2.54 2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a9fdf00b-c057-4cd5-8554-1573ccf9192a")
+	)
+	(bus_entry
 		(at 149.86 158.75)
 		(size 2.54 2.54)
 		(stroke
@@ -2158,6 +2170,15 @@
 		(uuid "f4b1ef8f-df7a-42fd-816c-0ae025e0814f")
 	)
 	(bus_entry
+		(at 231.14 148.59)
+		(size -2.54 2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f6a73183-2918-4272-9398-4f9c3422386b")
+	)
+	(bus_entry
 		(at 149.86 156.21)
 		(size 2.54 2.54)
 		(stroke
@@ -2183,6 +2204,16 @@
 			(type default)
 		)
 		(uuid "ffcaf9c1-6cc1-49ab-8349-cbd0aaa36310")
+	)
+	(bus
+		(pts
+			(xy 231.14 148.59) (xy 232.41 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "02182fc9-68a3-4be8-a609-535f8f23a7aa")
 	)
 	(bus
 		(pts
@@ -2346,16 +2377,6 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 151.13) (xy 209.55 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "24e0ef85-17e9-4864-a338-d714e93a38fb")
-	)
-	(wire
-		(pts
 			(xy 83.82 144.78) (xy 83.82 147.32)
 		)
 		(stroke
@@ -2426,16 +2447,6 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 156.21) (xy 209.55 156.21)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3500529a-1548-4e8d-af30-c4f3f92eccd4")
-	)
-	(wire
-		(pts
 			(xy 93.98 167.64) (xy 106.68 167.64)
 		)
 		(stroke
@@ -2494,9 +2505,19 @@
 		)
 		(uuid "45324aa9-0ddb-4d81-866f-42d9b60f841e")
 	)
+	(bus
+		(pts
+			(xy 231.14 151.13) (xy 231.14 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4771d2f3-97d3-4e17-b8d2-f1446bf2e7d2")
+	)
 	(wire
 		(pts
-			(xy 224.79 158.75) (xy 209.55 158.75)
+			(xy 212.09 158.75) (xy 209.55 158.75)
 		)
 		(stroke
 			(width 0)
@@ -2546,6 +2567,16 @@
 	)
 	(wire
 		(pts
+			(xy 209.55 153.67) (xy 228.6 153.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4da8767f-0191-4856-803c-43afdf34b9b9")
+	)
+	(wire
+		(pts
 			(xy 161.29 148.59) (xy 184.15 148.59)
 		)
 		(stroke
@@ -2553,6 +2584,16 @@
 			(type default)
 		)
 		(uuid "4e831363-5a9f-4a44-a2ac-ef5ff2748b17")
+	)
+	(wire
+		(pts
+			(xy 209.55 151.13) (xy 228.6 151.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4f6a3f75-7c68-4dcb-96df-4c70e39cec15")
 	)
 	(wire
 		(pts
@@ -2586,7 +2627,7 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 163.83) (xy 209.55 163.83)
+			(xy 212.09 163.83) (xy 209.55 163.83)
 		)
 		(stroke
 			(width 0)
@@ -2656,7 +2697,7 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 161.29) (xy 209.55 161.29)
+			(xy 212.09 161.29) (xy 209.55 161.29)
 		)
 		(stroke
 			(width 0)
@@ -2776,16 +2817,6 @@
 	)
 	(wire
 		(pts
-			(xy 209.55 153.67) (xy 224.79 153.67)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9d765c34-d1db-4893-82d7-4e9aa47f307e")
-	)
-	(wire
-		(pts
 			(xy 54.61 157.48) (xy 73.66 157.48)
 		)
 		(stroke
@@ -2853,6 +2884,16 @@
 			(type default)
 		)
 		(uuid "aed5b46f-8cd5-4e3b-ab7a-721462759bf1")
+	)
+	(wire
+		(pts
+			(xy 209.55 156.21) (xy 212.09 156.21)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4bce2b9-4ca6-40ed-abc4-6812b84ff17c")
 	)
 	(bus
 		(pts
@@ -3194,16 +3235,6 @@
 		)
 		(uuid "0a766bb0-e204-40a1-a4af-303b870aafee")
 	)
-	(label "GPS_UART_TX"
-		(at 224.79 151.13 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "0d88a27a-7f52-4ae8-b4e6-5d787056d8ff")
-	)
 	(label "ESP_CS"
 		(at 181.61 156.21 180)
 		(effects
@@ -3264,6 +3295,16 @@
 		)
 		(uuid "227ebca7-c85d-4b7e-aaca-af778c4a2295")
 	)
+	(label "GPS_TX"
+		(at 212.09 151.13 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "33d2babd-99d5-4e80-a714-ebafe550f52c")
+	)
 	(label "SET_2"
 		(at 71.12 154.94 180)
 		(effects
@@ -3293,16 +3334,6 @@
 			(justify right bottom)
 		)
 		(uuid "4dad3701-4e5b-4824-a7ac-a4896c4b0b27")
-	)
-	(label "GPS_UART_RX"
-		(at 224.79 153.67 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "5495ebbc-50fb-4138-934b-6a7a736041fd")
 	)
 	(label "MISO"
 		(at 181.61 151.13 180)
@@ -3343,6 +3374,16 @@
 			(justify right bottom)
 		)
 		(uuid "7512cee3-1058-4268-86f1-0531894e6632")
+	)
+	(label "GPS_RX"
+		(at 212.09 153.67 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7f8f3002-80a4-42a1-9a2c-b82cf780e351")
 	)
 	(label "ADC_START"
 		(at 71.12 160.02 180)
@@ -3385,12 +3426,12 @@
 		(uuid "96b02782-14a5-462e-ac84-889c23529ac7")
 	)
 	(label "SR_OE_N"
-		(at 224.79 161.29 180)
+		(at 212.09 161.29 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "98209936-998c-48a5-8515-27dd524ccaee")
 	)
@@ -3415,12 +3456,12 @@
 		(uuid "9bab9bb2-965c-4cb6-aaee-0ca174cbe11c")
 	)
 	(label "SR_SHIFT_CLK"
-		(at 224.79 156.21 180)
+		(at 212.09 156.21 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "9c46e01e-c3d5-44b4-9209-294d230a43a5")
 	)
@@ -3445,12 +3486,12 @@
 		(uuid "a4ea7bc4-b083-4188-bf96-90da2fb54ec2")
 	)
 	(label "SR_DATA"
-		(at 224.79 163.83 180)
+		(at 212.09 163.83 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "a83ab0ac-4dbf-4b82-89b2-8d4cb5f7c409")
 	)
@@ -3585,12 +3626,12 @@
 		(uuid "e943d79a-d2aa-446e-9abb-89f053acfdbc")
 	)
 	(label "SR_LATCH"
-		(at 224.79 158.75 180)
+		(at 212.09 158.75 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify right bottom)
+			(justify left bottom)
 		)
 		(uuid "eb6980a8-7af4-440e-9b5c-a8288f56496c")
 	)
@@ -3679,6 +3720,17 @@
 			(justify right)
 		)
 		(uuid "75b2d8c7-8242-4c74-8db7-fbc8637bbb64")
+	)
+	(hierarchical_label "{GPS_UART}"
+		(shape input)
+		(at 232.41 148.59 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7cfc56c5-e929-4357-9487-8e72305f9da7")
 	)
 	(hierarchical_label "EN_BST_10V"
 		(shape output)
