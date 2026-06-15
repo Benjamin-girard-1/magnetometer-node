@@ -17,6 +17,7 @@
 *.log
 
 # Local calibration captures
+*.csv
 noise_weird_vbridge_behavior.csv
 tools/calibration_2_juin_2026/*.csv
 tools/calibration_2_juin_2026/*.svg
