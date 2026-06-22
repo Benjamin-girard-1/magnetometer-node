@@ -1,0 +1,20 @@
+* OPA1197_FUNC output swing and current limit
+.include ../OPA1197_functional.lib
+
+VCC vcc 0 18
+VEE vee 0 -18
+
+* Drive the follower into the positive rail.
+VIN inp 0 25
+RLOAD out 0 10k
+XU1 inp out vcc vee out OPA1197_FUNC
+
+.op
+.control
+run
+print v(out)
+print v(vcc)-v(out)
+print @rload[i]
+quit
+.endc
+.end

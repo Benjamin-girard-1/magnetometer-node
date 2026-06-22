@@ -1,0 +1,19 @@
+HMC1001 functional model - time-varying magnetic field
+.include ../HMC1001_functional.lib
+
+VBRIDGE VBP 0 5
+VFIELD FIELD 0 SIN(0 0.01 10)
+XHMC VBP OUTP OUTN 0 FIELD HMC1001_SPICE
++ params: SENS=3.2m OFFSET=0
+RLOAD OUTP OUTN 1G
+
+.control
+tran 100u 250m
+let vdiff=v(outp)-v(outn)
+meas tran vmax max vdiff from=100m to=250m
+meas tran vmin min vdiff from=100m to=250m
+let vpp=vmax-vmin
+print vmax vmin vpp
+quit
+.endc
+.end

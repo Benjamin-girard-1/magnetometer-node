@@ -1214,6 +1214,17 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "Filter 1: attenuate RF and high-frequency differential \nnoise before the INA851\nfc = 1 / (2*pi*(49.9 + 49.9)*1nF) ≈ 159 kHz"
+		(exclude_from_sim no)
+		(at 13.716 81.788 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "66ea314f-71bf-478e-a2f7-9220c7883042")
+	)
 	(junction
 		(at 81.28 85.09)
 		(diameter 0)
@@ -1251,12 +1262,6 @@
 		(uuid "4064f298-a897-4a15-869f-427be7870e5c")
 	)
 	(junction
-		(at 135.89 57.15)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "4c0b0bbd-3718-4d4f-ac23-47b07a11ec95")
-	)
-	(junction
 		(at 81.28 29.21)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1273,18 +1278,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5ebba80f-7369-410a-8f62-134114069281")
-	)
-	(junction
-		(at 135.89 144.78)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "60dc7973-4105-41dd-826f-8b608aa03ae9")
-	)
-	(junction
-		(at 135.89 67.31)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "72755242-562b-4792-a3d7-c9cafd96d1d9")
 	)
 	(junction
 		(at 72.39 85.09)
@@ -1311,12 +1304,6 @@
 		(uuid "83cb43cc-710f-48ec-8989-31e34766a76a")
 	)
 	(junction
-		(at 264.16 106.68)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "8a2d040b-8497-4733-967a-d617c00802fc")
-	)
-	(junction
 		(at 72.39 172.72)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1329,22 +1316,10 @@
 		(uuid "9b9a58b2-7483-41a3-8476-1e147149e8e2")
 	)
 	(junction
-		(at 264.16 96.52)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "a01808c4-5749-482c-ba90-e2948b9a54c7")
-	)
-	(junction
 		(at 205.74 68.58)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e82e12bf-0fa0-4d73-b0d6-66a9bd333ce0")
-	)
-	(junction
-		(at 135.89 154.94)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f6e02a08-014c-4e5b-ba26-3445e0e4f0a6")
 	)
 	(junction
 		(at 39.37 52.07)
@@ -1460,26 +1435,6 @@
 	)
 	(wire
 		(pts
-			(xy 233.68 100.33) (xy 251.46 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "06a24be1-4a15-4fb1-98b9-6963738afe49")
-	)
-	(wire
-		(pts
-			(xy 135.89 67.31) (xy 146.05 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0948c54f-a499-4934-a013-0e3bea56aa5e")
-	)
-	(wire
-		(pts
 			(xy 205.74 137.16) (xy 205.74 124.46)
 		)
 		(stroke
@@ -1527,16 +1482,6 @@
 			(type default)
 		)
 		(uuid "14a99eab-8f2b-4c60-b797-64c1bac9d7e6")
-	)
-	(wire
-		(pts
-			(xy 264.16 106.68) (xy 269.24 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "15713caf-daf1-41b0-a540-b62c17a3a297")
 	)
 	(wire
 		(pts
@@ -1590,26 +1535,6 @@
 	)
 	(wire
 		(pts
-			(xy 259.08 96.52) (xy 264.16 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2313d2ac-c648-42d6-b2ec-248071c0bf30")
-	)
-	(wire
-		(pts
-			(xy 130.81 67.31) (xy 135.89 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "25c74e03-15a1-49d6-9db4-6647772daa71")
-	)
-	(wire
-		(pts
 			(xy 60.96 118.11) (xy 60.96 116.84)
 		)
 		(stroke
@@ -1617,16 +1542,6 @@
 			(type default)
 		)
 		(uuid "26c4aa27-06f2-4e80-975c-4243b55c645e")
-	)
-	(wire
-		(pts
-			(xy 123.19 57.15) (xy 123.19 60.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "31f635ce-0b97-4fe6-a447-d16c7b5a5906")
 	)
 	(wire
 		(pts
@@ -1690,16 +1605,6 @@
 	)
 	(wire
 		(pts
-			(xy 109.22 63.5) (xy 123.19 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "43649fef-7d96-4e48-bb0f-c06c0a14c53b")
-	)
-	(wire
-		(pts
 			(xy 240.03 88.9) (xy 240.03 90.17)
 		)
 		(stroke
@@ -1727,16 +1632,6 @@
 			(type default)
 		)
 		(uuid "53d6b3a5-c78f-4a53-a4b6-969db31f5ddb")
-	)
-	(wire
-		(pts
-			(xy 109.22 151.13) (xy 123.19 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "543bc53a-e70e-4e59-99bd-368282c23f7c")
 	)
 	(wire
 		(pts
@@ -1820,16 +1715,6 @@
 	)
 	(wire
 		(pts
-			(xy 264.16 96.52) (xy 264.16 97.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "646c8b8f-34cd-4353-9fbd-b50a7acd1421")
-	)
-	(wire
-		(pts
 			(xy 58.42 144.78) (xy 63.5 144.78)
 		)
 		(stroke
@@ -1860,16 +1745,6 @@
 	)
 	(wire
 		(pts
-			(xy 135.89 66.04) (xy 135.89 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6c54c243-6a3f-43f7-9235-0557fbdac172")
-	)
-	(wire
-		(pts
 			(xy 60.96 30.48) (xy 60.96 29.21)
 		)
 		(stroke
@@ -1880,16 +1755,6 @@
 	)
 	(wire
 		(pts
-			(xy 130.81 144.78) (xy 135.89 144.78)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6d54b3bd-7811-41da-9aed-1514e1b1925a")
-	)
-	(wire
-		(pts
 			(xy 72.39 173.99) (xy 72.39 172.72)
 		)
 		(stroke
@@ -1897,16 +1762,6 @@
 			(type default)
 		)
 		(uuid "6ee61f07-62ad-4396-9261-668440aefcf7")
-	)
-	(wire
-		(pts
-			(xy 130.81 57.15) (xy 135.89 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "713f135a-496d-4aa6-99a4-2c7da99e24d2")
 	)
 	(wire
 		(pts
@@ -1950,16 +1805,6 @@
 	)
 	(wire
 		(pts
-			(xy 109.22 148.59) (xy 123.19 148.59)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7dade44e-bb5b-4ad0-a491-aaa671eca594")
-	)
-	(wire
-		(pts
 			(xy 205.74 68.58) (xy 205.74 83.82)
 		)
 		(stroke
@@ -1967,16 +1812,6 @@
 			(type default)
 		)
 		(uuid "7e312580-be7e-4a2b-9f5d-3aaadade9564")
-	)
-	(wire
-		(pts
-			(xy 135.89 57.15) (xy 135.89 58.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7f32c8ed-3af5-4d5b-9179-76ee18facd67")
 	)
 	(wire
 		(pts
@@ -2010,16 +1845,6 @@
 	)
 	(wire
 		(pts
-			(xy 135.89 153.67) (xy 135.89 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8f970a56-87f8-4f9b-8b08-44377007548d")
-	)
-	(wire
-		(pts
 			(xy 205.74 66.04) (xy 205.74 68.58)
 		)
 		(stroke
@@ -2037,16 +1862,6 @@
 			(type default)
 		)
 		(uuid "96cf69a4-3d07-47c1-ac32-d27b17a5d6f2")
-	)
-	(wire
-		(pts
-			(xy 130.81 154.94) (xy 135.89 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "98059b82-1ef1-4ef1-bf26-3d4cf34356df")
 	)
 	(wire
 		(pts
@@ -2070,16 +1885,6 @@
 	)
 	(wire
 		(pts
-			(xy 233.68 102.87) (xy 251.46 102.87)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9921d31d-5c0f-4762-9b08-b35cfdadeffe")
-	)
-	(wire
-		(pts
 			(xy 182.88 106.68) (xy 182.88 105.41)
 		)
 		(stroke
@@ -2100,16 +1905,6 @@
 	)
 	(wire
 		(pts
-			(xy 168.91 91.44) (xy 171.45 91.44)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9ce821e3-1cd9-4ea1-ab98-219f02da9982")
-	)
-	(wire
-		(pts
 			(xy 81.28 97.79) (xy 81.28 85.09)
 		)
 		(stroke
@@ -2120,23 +1915,13 @@
 	)
 	(wire
 		(pts
-			(xy 109.22 60.96) (xy 123.19 60.96)
+			(xy 168.91 91.44) (xy 171.45 91.44)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a3edb03e-7370-498f-83ea-92477b354d80")
-	)
-	(wire
-		(pts
-			(xy 135.89 144.78) (xy 142.24 144.78)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a5075760-1578-4d12-be50-16d814db65b9")
+		(uuid "a2caa127-67e0-4261-9c4a-6b5fe6e11105")
 	)
 	(wire
 		(pts
@@ -2150,26 +1935,6 @@
 	)
 	(wire
 		(pts
-			(xy 264.16 96.52) (xy 269.24 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a9782ea7-3b5d-4357-9f0b-9128a2f9474b")
-	)
-	(wire
-		(pts
-			(xy 135.89 57.15) (xy 146.05 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "aa7a5a54-bcb2-4a3a-a756-0a230bf7af1f")
-	)
-	(wire
-		(pts
 			(xy 205.74 68.58) (xy 196.85 68.58)
 		)
 		(stroke
@@ -2177,16 +1942,6 @@
 			(type default)
 		)
 		(uuid "ab657288-ddf4-41e9-93ae-ceb202a15344")
-	)
-	(wire
-		(pts
-			(xy 123.19 63.5) (xy 123.19 67.31)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "af849d49-e545-4f4e-ac24-b437e5ec2895")
 	)
 	(wire
 		(pts
@@ -2210,16 +1965,6 @@
 	)
 	(wire
 		(pts
-			(xy 135.89 154.94) (xy 142.24 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b267957e-b7d2-42c4-ac50-aa842f304c9c")
-	)
-	(wire
-		(pts
 			(xy 171.45 111.76) (xy 187.96 111.76)
 		)
 		(stroke
@@ -2227,16 +1972,6 @@
 			(type default)
 		)
 		(uuid "b9a03c2b-6f2c-4d40-989f-caf87c883b41")
-	)
-	(wire
-		(pts
-			(xy 135.89 144.78) (xy 135.89 146.05)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bbb15116-44af-464a-8ea0-faeebaaaaf16")
 	)
 	(wire
 		(pts
@@ -2307,26 +2042,6 @@
 			(type default)
 		)
 		(uuid "c9f95f46-5ab5-4aec-9506-343acb32d287")
-	)
-	(wire
-		(pts
-			(xy 251.46 96.52) (xy 251.46 100.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cae78d9a-1522-4e07-9263-3931c185b9cf")
-	)
-	(wire
-		(pts
-			(xy 123.19 144.78) (xy 123.19 148.59)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cb81243d-ceee-4fb1-ae13-d995ad23e145")
 	)
 	(wire
 		(pts
@@ -2480,16 +2195,6 @@
 	)
 	(wire
 		(pts
-			(xy 264.16 105.41) (xy 264.16 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f0bd6f99-b49e-4e01-8d14-6af144195df2")
-	)
-	(wire
-		(pts
 			(xy 20.32 52.07) (xy 29.21 52.07)
 		)
 		(stroke
@@ -2497,16 +2202,6 @@
 			(type default)
 		)
 		(uuid "f0ea1459-b34a-4701-9f17-1e27539603a7")
-	)
-	(wire
-		(pts
-			(xy 123.19 151.13) (xy 123.19 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f8772beb-d7b3-4074-ae6d-1f4684240dad")
 	)
 	(wire
 		(pts
@@ -2520,16 +2215,6 @@
 	)
 	(wire
 		(pts
-			(xy 251.46 102.87) (xy 251.46 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "faeb9dde-0d7d-426e-8d96-7373a8d3809b")
-	)
-	(wire
-		(pts
 			(xy 196.85 68.58) (xy 196.85 69.85)
 		)
 		(stroke
@@ -2537,16 +2222,6 @@
 			(type default)
 		)
 		(uuid "fc5bbe59-4428-4942-9ff2-db3e14b586ea")
-	)
-	(wire
-		(pts
-			(xy 259.08 106.68) (xy 264.16 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fda9490b-63d2-46bd-943b-8a17358b1aac")
 	)
 	(wire
 		(pts
@@ -2588,16 +2263,6 @@
 		)
 		(uuid "3ee0e4f8-62ed-46dc-bfb8-f1a07a3e6c66")
 	)
-	(label "Z_INA_OUT+"
-		(at 234.95 100.33 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "4d833bde-e59e-41d1-88d1-7c5471438ae2")
-	)
 	(label "X_RG-"
 		(at 59.69 67.31 0)
 		(effects
@@ -2607,16 +2272,6 @@
 			(justify left bottom)
 		)
 		(uuid "57239c63-6aa2-4b0e-bb41-b68591e51786")
-	)
-	(label "X_INA_OUT+"
-		(at 110.49 60.96 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "58d7e89d-d03e-4742-9540-02831263fe36")
 	)
 	(label "BR_FTL_X-"
 		(at 50.8 160.02 0)
@@ -2668,26 +2323,6 @@
 		)
 		(uuid "963dfb41-385f-4690-8707-381540132357")
 	)
-	(label "Z_INA_OUT-"
-		(at 234.95 102.87 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a0060138-86a4-47de-915b-c68cdc779aad")
-	)
-	(label "Y_INA_OUT-"
-		(at 110.49 151.13 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a345f18f-44f8-4e2f-8466-814ae9406e4e")
-	)
 	(label "BR_FTL_X-"
 		(at 173.99 111.76 0)
 		(effects
@@ -2697,16 +2332,6 @@
 			(justify left bottom)
 		)
 		(uuid "aa6faa61-d0b8-47d3-9c89-01387d12a803")
-	)
-	(label "X_INA_OUT-"
-		(at 110.49 63.5 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "d445ec2d-6d17-4fa8-bfab-34a6bb010e31")
 	)
 	(label "Y_RG+"
 		(at 59.69 144.78 0)
@@ -2728,19 +2353,9 @@
 		)
 		(uuid "dcd7feb3-2970-471b-b3a6-9f3b57048322")
 	)
-	(label "Y_INA_OUT+"
-		(at 110.49 148.59 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "e127d59d-09df-4469-b979-cf3f03dab1f7")
-	)
-	(hierarchical_label "Z_INA_OUT_F-"
+	(hierarchical_label "Z_INA_OUT-"
 		(shape output)
-		(at 269.24 106.68 0)
+		(at 233.68 102.87 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2771,9 +2386,9 @@
 		)
 		(uuid "66462fb7-7af9-44e0-9357-3fc6b1c03776")
 	)
-	(hierarchical_label "Y_INA_OUT_F+"
+	(hierarchical_label "Y_INA_OUT+"
 		(shape output)
-		(at 142.24 144.78 0)
+		(at 109.22 148.59 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2782,9 +2397,9 @@
 		)
 		(uuid "83b75952-4516-475c-aa4c-b63577afebf0")
 	)
-	(hierarchical_label "X_INA_OUT_F-"
+	(hierarchical_label "X_INA_OUT-"
 		(shape output)
-		(at 146.05 67.31 0)
+		(at 109.22 63.5 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2815,9 +2430,9 @@
 		)
 		(uuid "a9053de5-8399-4f47-a4de-ee2ad37b6468")
 	)
-	(hierarchical_label "Z_INA_OUT_F+"
+	(hierarchical_label "Z_INA_OUT+"
 		(shape output)
-		(at 269.24 96.52 0)
+		(at 233.68 100.33 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2837,9 +2452,9 @@
 		)
 		(uuid "b7172774-4d7e-4427-9ff5-8ed6eb4ff1ea")
 	)
-	(hierarchical_label "Y_INA_OUT_F-"
+	(hierarchical_label "Y_INA_OUT-"
 		(shape output)
-		(at 142.24 154.94 0)
+		(at 109.22 151.13 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2859,9 +2474,9 @@
 		)
 		(uuid "ea97c49e-2a4d-4f76-ad8d-ab8bc4cc3c6d")
 	)
-	(hierarchical_label "X_INA_OUT_F+"
+	(hierarchical_label "X_INA_OUT+"
 		(shape output)
-		(at 146.05 57.15 0)
+		(at 109.22 60.96 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3197,91 +2812,13 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 165.1 91.44 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "12592728-7e5d-4d48-927c-c71458203e1a")
-		(property "Reference" "R31"
-			(at 166.878 89.154 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "48,7"
-			(at 167.132 93.98 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 165.1 93.218 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 165.1 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 165.1 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2692820"
-			(at 165.1 91.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "e3d0c34c-875b-4a57-885d-a40a93938476")
-		)
-		(pin "1"
-			(uuid "9f45d68d-a61c-4b45-b439-a23864c195f2")
-		)
-		(instances
-			(project "magnetic_expension"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R31")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
 		(at 165.1 111.76 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "12a4bcac-8194-4ed6-9e70-edab0d9694db")
+		(uuid "21b7c5de-36f8-4323-af4f-b36fec0811a5")
 		(property "Reference" "R35"
 			(at 166.878 109.474 90)
 			(effects
@@ -3291,7 +2828,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "48,7"
+		(property "Value" "49.9"
 			(at 167.132 114.3 90)
 			(effects
 				(font
@@ -3327,7 +2864,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2692820"
+		(property "LCSC" ""
 			(at 165.1 111.76 0)
 			(effects
 				(font
@@ -3337,81 +2874,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "72aac51a-e0e2-4b1b-bf8f-ddbe1769aa9e")
+			(uuid "8119eb32-8262-4ae8-97a3-562d4a37e101")
 		)
 		(pin "1"
-			(uuid "7d586c5f-3a79-41d7-9eda-6ab59dde8629")
+			(uuid "016315a2-79ff-45f5-9ed8-0110a3f63fb2")
 		)
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
 					(reference "R35")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5VA")
-		(at 205.74 66.04 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "16b04469-eb51-4c77-8ae3-f9786d980963")
-		(property "Reference" "#PWR063"
-			(at 205.74 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5VA"
-			(at 205.74 60.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 205.74 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 205.74 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5VA\""
-			(at 205.74 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "5f3b559d-5510-4844-922b-ea5d065804fc")
-		)
-		(instances
-			(project "magnetometer_node_mainboard"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "#PWR063")
 					(unit 1)
 				)
 			)
@@ -3545,6 +3016,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 72.39 177.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "1e14576c-af42-4306-b353-da664bd21a1a")
 		)
@@ -3626,6 +3106,73 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 58.42 149.86 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "2cf706cc-d335-4d2e-974e-d29234219dee")
+		(property "Reference" "R38"
+			(at 61.722 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100"
+			(at 61.722 150.622 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 60.198 149.86 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 58.42 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 58.42 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "112ec390-1b74-4e1e-9858-4ec5d348dea8")
+		)
+		(pin "2"
+			(uuid "4bc1d7bf-9da8-4541-8aad-659959eabddd")
+		)
+		(instances
+			(project "magnetic_expension"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
+					(reference "R38")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 185.42 77.47 0)
 		(unit 1)
@@ -3685,73 +3232,6 @@
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
 					(reference "#PWR065")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 255.27 96.52 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "3a28f90c-554d-45de-8f3c-a02cf5e7e1d3")
-		(property "Reference" "R32"
-			(at 255.27 94.234 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100"
-			(at 255.27 99.06 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 255.27 98.298 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 255.27 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 255.27 96.52 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "44769645-6b79-4d1a-9d00-61cf731a953a")
-		)
-		(pin "2"
-			(uuid "03732c99-abde-42aa-bb24-05f4c4928c84")
-		)
-		(instances
-			(project "magnetic_expension"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R32")
 					(unit 1)
 				)
 			)
@@ -3889,148 +3369,15 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 255.27 106.68 90)
+		(at 33.02 72.39 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "3d9bb3b2-6864-4a97-9039-7128ea50b084")
-		(property "Reference" "R34"
-			(at 255.27 104.394 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100"
-			(at 255.27 109.22 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 255.27 108.458 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 255.27 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 255.27 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c8fdc49b-714d-401c-a4d0-8210a0ecc174")
-		)
-		(pin "2"
-			(uuid "e35357f1-0be3-4abc-8e1e-e8a2af64da61")
-		)
-		(instances
-			(project "magnetic_expension"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R34")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+5VA")
-		(at 81.28 114.3 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3e856aac-b786-434d-adf4-018b6ad5dd2b")
-		(property "Reference" "#PWR073"
-			(at 81.28 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+5VA"
-			(at 81.28 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 81.28 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 81.28 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5VA\""
-			(at 81.28 114.3 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1179a3d9-92cf-4e17-b914-c878c0966714")
-		)
-		(instances
-			(project "magnetometer_node_mainboard"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "#PWR073")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 58.42 62.23 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "47a5de2c-3086-47c4-8327-448c4cff5b1c")
-		(property "Reference" "R28"
-			(at 59.944 60.96 0)
+		(uuid "4083346e-8191-4cfa-9bb6-fe181612e215")
+		(property "Reference" "R30"
+			(at 34.798 70.104 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4038,8 +3385,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "48,7"
-			(at 59.944 63.5 0)
+		(property "Value" "49.9"
+			(at 35.052 74.93 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4048,7 +3395,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 56.642 62.23 90)
+			(at 33.02 74.168 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4057,7 +3404,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 58.42 62.23 0)
+			(at 33.02 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4066,7 +3413,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 58.42 62.23 0)
+			(at 33.02 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4074,8 +3421,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2692820"
-			(at 58.42 62.23 0)
+		(property "LCSC" ""
+			(at 33.02 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4084,15 +3431,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "4bddd0f2-4f9a-4618-98f2-3ae01aeef4e8")
+			(uuid "07bb8884-c60b-49f9-974e-c55bf4df288f")
 		)
 		(pin "1"
-			(uuid "be252ebf-47d5-4570-a2a9-e5c8eff39295")
+			(uuid "7c6c3662-9bcc-479e-95d2-bc5550e23627")
 		)
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R28")
+					(reference "R30")
 					(unit 1)
 				)
 			)
@@ -4226,6 +3573,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 185.42 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "0a4e4481-72c2-45c6-bcbb-83bcccc4a5cb")
 		)
@@ -4301,82 +3657,6 @@
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
 					(reference "#PWR080")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 135.89 62.23 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "4ddaa98b-1269-47a0-b51b-8bcab5010027")
-		(property "Reference" "C38"
-			(at 140.716 60.96 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1n"
-			(at 140.208 63.246 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 134.9248 58.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 135.89 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 135.89 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C1588"
-			(at 135.89 62.23 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2af0d92e-e7d9-4027-b20e-6588e163f51b")
-		)
-		(pin "2"
-			(uuid "eb6698f8-1d70-449c-b4ef-1d7dbe7621b2")
-		)
-		(instances
-			(project "magnetic_expension"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "C38")
 					(unit 1)
 				)
 			)
@@ -4465,7 +3745,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "48,7"
+		(property "Value" "49.9"
 			(at 35.052 54.61 90)
 			(effects
 				(font
@@ -4501,8 +3781,17 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2692820"
+		(property "LCSC" ""
 			(at 33.02 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
+			(at 33.02 52.07 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4588,6 +3877,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 86.36 149.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "a130be66-1a22-4f9a-9ffb-2eebdcc43e31")
 		)
@@ -4649,32 +3947,32 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 135.89 149.86 180)
+		(lib_id "Device:R")
+		(at 182.88 101.6 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "5c8c4a4b-b5bb-44f6-b409-a184b90a0bc1")
-		(property "Reference" "C35"
-			(at 140.716 148.59 0)
+		(uuid "5cf175c3-53fc-4e86-a5d8-f7bac3fea79b")
+		(property "Reference" "R33"
+			(at 186.182 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "1n"
-			(at 140.208 150.876 0)
+		(property "Value" "100"
+			(at 186.182 102.362 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 134.9248 146.05 0)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 184.658 101.6 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4683,7 +3981,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 135.89 149.86 0)
+			(at 182.88 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4691,17 +3989,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
-			(at 135.89 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C1588"
-			(at 135.89 149.86 90)
+		(property "Description" "Resistor"
+			(at 182.88 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4710,15 +3999,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "25f7adfd-4c2d-460e-a2f6-2480e879181d")
+			(uuid "eb7ac9aa-6eb2-453a-a6ef-8e57d3937ba7")
 		)
 		(pin "2"
-			(uuid "ead2849a-5ce9-451c-985b-25bca30318c8")
+			(uuid "49bbb990-8987-4e82-95b3-c3a1b2cbf983")
 		)
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "C35")
+					(reference "R33")
 					(unit 1)
 				)
 			)
@@ -4791,73 +4080,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 127 144.78 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "607feb89-e100-433f-9247-13ff807c3ffd")
-		(property "Reference" "R37"
-			(at 127 142.494 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100"
-			(at 127 147.32 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 127 146.558 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 127 144.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 127 144.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "436abae2-c0e0-49cc-8242-3b7fdaf77481")
-		)
-		(pin "2"
-			(uuid "c0ccf368-1fd8-48e9-82ed-6d4711fbb785")
-		)
-		(instances
-			(project "magnetic_expension"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R37")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 60.96 90.17 0)
 		(unit 1)
@@ -4920,6 +4142,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 60.96 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "9d494446-8012-4062-b5d2-029b5a92bf05")
 		)
@@ -4943,7 +4174,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "6e80460f-6752-4783-bb30-dfa897097015")
+		(uuid "637afe99-0f58-4eb1-be8f-f9897f0c6018")
 		(property "Reference" "C28"
 			(at 174.244 100.33 0)
 			(effects
@@ -4953,7 +4184,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "10n"
 			(at 174.244 102.87 0)
 			(effects
 				(font
@@ -4989,7 +4220,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" ""
 			(at 171.45 101.6 0)
 			(effects
 				(font
@@ -4999,10 +4230,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "4c251e05-0e06-4490-a231-2db5acef80c9")
+			(uuid "9868b3ef-833b-4055-a8eb-f44e5af6d0d1")
 		)
 		(pin "2"
-			(uuid "bcfa57d8-f01c-4938-8b33-79ccc4eb7d8c")
+			(uuid "f1faccb1-8413-4b70-b8b0-2fda9505d039")
 		)
 		(instances
 			(project "magnetic_expension"
@@ -5021,7 +4252,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "7282079f-0312-4130-acfc-bbd26d0ce1f2")
+		(uuid "65883410-2dd7-440f-9597-fef5f16eee87")
 		(property "Reference" "C34"
 			(at 51.054 148.59 0)
 			(effects
@@ -5031,7 +4262,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "10n"
 			(at 51.054 151.13 0)
 			(effects
 				(font
@@ -5067,7 +4298,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" ""
 			(at 48.26 149.86 0)
 			(effects
 				(font
@@ -5077,10 +4308,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "b7b01ca2-dbd4-46b7-a651-595146a45af4")
+			(uuid "deb3012a-4316-4292-b084-1a1a82ce0095")
 		)
 		(pin "2"
-			(uuid "9db69526-22e4-46bb-9289-764ed5f01801")
+			(uuid "cbb5f538-e3af-42e4-a43a-a94ec1fad903")
 		)
 		(instances
 			(project "magnetic_expension"
@@ -5146,6 +4377,15 @@
 			)
 		)
 		(property "LCSC" "C29823"
+			(at 60.96 177.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 60.96 177.8 0)
 			(effects
 				(font
@@ -5232,6 +4472,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 185.42 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "c84a4e84-54db-4040-bea4-7d36fe1a989b")
 		)
@@ -5310,6 +4559,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 60.96 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "68b686e6-eebf-4707-9e03-7dee3c39e3a7")
 		)
@@ -5327,33 +4585,31 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 41.91 139.7 90)
+		(at 58.42 62.23 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "7ac34770-190a-44f2-a31b-69b1e048a125")
-		(property "Reference" "R36"
-			(at 43.688 137.414 90)
+		(uuid "79ff6320-75df-46a1-8a71-9e5e6c8decaa")
+		(property "Reference" "R28"
+			(at 61.722 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
-		(property "Value" "48,7"
-			(at 43.942 142.24 90)
+		(property "Value" "100"
+			(at 61.722 62.992 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 41.91 141.478 90)
+			(at 60.198 62.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5361,8 +4617,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
-			(at 41.91 139.7 0)
+		(property "Datasheet" "~"
+			(at 58.42 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5371,33 +4627,90 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 41.91 139.7 0)
+			(at 58.42 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(hide yes)
 			)
-		)
-		(property "LCSC" "C2692820"
-			(at 41.91 139.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "829400ce-51b8-4994-9479-6f4a9c1cb218")
 		)
 		(pin "1"
-			(uuid "dcc3da68-d1a0-4f09-94c6-36a1b0d440b0")
+			(uuid "d9bd6383-826f-4ee5-8605-a6d6217d65fd")
+		)
+		(pin "2"
+			(uuid "40ce5045-5ce0-4b57-85ab-d872e7c4d0a6")
 		)
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R36")
+					(reference "R28")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5VA")
+		(at 205.74 66.04 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7aa2df6f-1a32-4345-b6ac-0d958b8aface")
+		(property "Reference" "#PWR063"
+			(at 205.74 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+9V_INA"
+			(at 205.74 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 205.74 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 205.74 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5VA\""
+			(at 205.74 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fb909361-d42f-4a48-a92e-6d94fbef6eb9")
+		)
+		(instances
+			(project "magnetic_expension"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
+					(reference "#PWR063")
 					(unit 1)
 				)
 			)
@@ -5466,6 +4779,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 60.96 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ab7c0208-ba05-4872-bf83-ead3baa8865a")
 		)
@@ -5476,240 +4798,6 @@
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
 					(reference "C20")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 58.42 149.86 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "8142df4c-e945-42df-87f9-461add96a556")
-		(property "Reference" "R38"
-			(at 59.944 148.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "48,7"
-			(at 59.944 151.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 56.642 149.86 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/panasonic-electronic-components/ERA-8AEB48R7V/3071056"
-			(at 58.42 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 58.42 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2692820"
-			(at 58.42 149.86 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "51f3457b-2a9a-4181-9319-6c7fa61e869f")
-		)
-		(pin "1"
-			(uuid "49083d73-3fa3-4ff7-a3fb-77b7df6042f7")
-		)
-		(instances
-			(project "magnetometer_node_mainboard"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R38")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 33.02 72.39 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "8227435c-9b93-46e4-8bf5-358959a1e399")
-		(property "Reference" "R30"
-			(at 34.798 70.104 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "48,7"
-			(at 35.052 74.93 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 33.02 74.168 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 33.02 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 33.02 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2692820"
-			(at 33.02 72.39 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "65978b64-75bb-4314-ad3f-150529a0ce33")
-		)
-		(pin "1"
-			(uuid "13a5ce30-8d2a-4677-bb0c-c00a3fc17e22")
-		)
-		(instances
-			(project "magnetic_expension"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R30")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 41.91 160.02 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "86381217-8972-4102-a525-6f5cbbae399f")
-		(property "Reference" "R40"
-			(at 43.688 157.734 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "48,7"
-			(at 43.942 162.56 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 41.91 161.798 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 41.91 160.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 41.91 160.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2692820"
-			(at 41.91 160.02 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "b24e8191-4ab5-451a-a5b5-93adba541b59")
-		)
-		(pin "1"
-			(uuid "e9655c07-6992-4b2c-b1c1-41e14635a5c5")
-		)
-		(instances
-			(project "magnetic_expension"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R40")
 					(unit 1)
 				)
 			)
@@ -5864,7 +4952,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+5VA"
+		(property "Value" "+9V_INA"
 			(at 81.28 21.59 0)
 			(effects
 				(font
@@ -5974,6 +5062,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 72.39 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "387892b7-a6a3-47c9-bcee-fe9a54e5374f")
 		)
@@ -5991,31 +5088,33 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 127 67.31 90)
+		(at 165.1 91.44 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "9fe65a6b-98e6-441c-98d1-5f6241485480")
-		(property "Reference" "R42"
-			(at 127 65.024 90)
+		(uuid "9cf0fc70-edc7-4484-b4ad-567e634db388")
+		(property "Reference" "R31"
+			(at 166.878 89.154 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Value" "100"
-			(at 127 69.85 90)
+		(property "Value" "49.9"
+			(at 167.132 93.98 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 127 69.088 90)
+			(at 165.1 93.218 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6023,8 +5122,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 127 67.31 0)
+		(property "Datasheet" ""
+			(at 165.1 91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6033,7 +5132,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 127 67.31 0)
+			(at 165.1 91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6041,16 +5140,25 @@
 				(hide yes)
 			)
 		)
-		(pin "1"
-			(uuid "13c7ea65-a9eb-4715-b32b-fddf6835a1b3")
+		(property "LCSC" ""
+			(at 165.1 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
 		(pin "2"
-			(uuid "445c8a68-6365-4348-a695-baf8a7d02d9b")
+			(uuid "51fa8c79-0d13-4f57-b8c3-f4c6c2bd43fb")
+		)
+		(pin "1"
+			(uuid "535a1737-e033-4845-ae97-151b987a6f01")
 		)
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R42")
+					(reference "R31")
 					(unit 1)
 				)
 			)
@@ -6116,73 +5224,6 @@
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
 					(reference "#PWR074")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 127 57.15 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "a4d4895b-0a7b-4585-9f53-35523c68f30f")
-		(property "Reference" "R41"
-			(at 127 54.864 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100"
-			(at 127 59.69 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 127 58.928 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 127 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 127 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "abf6237f-3c04-4e28-8b0a-aaaeaccd6697")
-		)
-		(pin "2"
-			(uuid "ffefb17d-f443-4b31-8d0a-9f550757f309")
-		)
-		(instances
-			(project "magnetic_expension"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R41")
 					(unit 1)
 				)
 			)
@@ -6316,6 +5357,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 210.82 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ea570bb4-b41e-48db-bd42-b078011a61a0")
 		)
@@ -6378,15 +5428,15 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 182.88 101.6 0)
+		(at 41.91 160.02 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b02fb003-b1ac-48fd-b34f-a753ec507a74")
-		(property "Reference" "R33"
-			(at 184.404 100.33 0)
+		(uuid "b67e5363-e9c9-4f6c-9ee3-b658ea820143")
+		(property "Reference" "R40"
+			(at 43.688 157.734 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6394,8 +5444,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "48,7"
-			(at 184.404 102.87 0)
+		(property "Value" "49.9"
+			(at 43.942 162.56 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6404,7 +5454,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 181.102 101.6 90)
+			(at 41.91 161.798 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6412,8 +5462,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.digikey.ca/en/products/detail/panasonic-electronic-components/ERA-8AEB48R7V/3071056"
-			(at 182.88 101.6 0)
+		(property "Datasheet" ""
+			(at 41.91 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6422,7 +5472,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 182.88 101.6 0)
+			(at 41.91 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6430,8 +5480,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2692820"
-			(at 182.88 101.6 0)
+		(property "LCSC" ""
+			(at 41.91 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6440,15 +5490,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "0268c3b9-6e4e-4261-b093-eae07862ff93")
+			(uuid "1b39becd-417f-4a06-adc2-9137019524ae")
 		)
 		(pin "1"
-			(uuid "57ee3a85-fcf8-433e-ada9-487ac2e11ec7")
+			(uuid "9f2a5e0b-3f4d-461d-b793-4a34afb1fd5a")
 		)
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R33")
+					(reference "R40")
 					(unit 1)
 				)
 			)
@@ -6509,6 +5559,15 @@
 			)
 		)
 		(property "LCSC" "C14663"
+			(at 72.39 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 72.39 90.17 0)
 			(effects
 				(font
@@ -6730,32 +5789,17 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 264.16 101.6 180)
+		(lib_id "power:+5VA")
+		(at 81.28 114.3 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "ce16d203-fdd5-4cf4-9d81-1e0ed02910c6")
-		(property "Reference" "C29"
-			(at 268.986 100.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1n"
-			(at 268.478 102.616 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 263.1948 97.79 0)
+		(fields_autoplaced yes)
+		(uuid "d11b1850-2171-44b6-8400-4b3c2436a925")
+		(property "Reference" "#PWR073"
+			(at 81.28 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6763,8 +5807,16 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 264.16 101.6 0)
+		(property "Value" "+9V_INA"
+			(at 81.28 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 81.28 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6772,8 +5824,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Unpolarized capacitor"
-			(at 264.16 101.6 0)
+		(property "Datasheet" ""
+			(at 81.28 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6781,8 +5833,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C1588"
-			(at 264.16 101.6 90)
+		(property "Description" "Power symbol creates a global label with name \"+5VA\""
+			(at 81.28 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6791,15 +5843,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "3fde01da-fed9-44d3-957c-192390f434bb")
-		)
-		(pin "2"
-			(uuid "fdb3663c-b88a-46b6-9bc3-bcf466af6b33")
+			(uuid "ceb78d24-c33d-4542-8b3b-2ba6cfd1fbca")
 		)
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "C29")
+					(reference "#PWR073")
 					(unit 1)
 				)
 			)
@@ -6860,6 +5909,15 @@
 			)
 		)
 		(property "LCSC" "C5371575"
+			(at 86.36 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 86.36 62.23 0)
 			(effects
 				(font
@@ -6983,6 +6041,15 @@
 			)
 		)
 		(property "LCSC" "C14663"
+			(at 196.85 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 196.85 73.66 0)
 			(effects
 				(font
@@ -7219,7 +6286,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100n"
+		(property "Value" "10n"
 			(at 42.164 63.5 0)
 			(effects
 				(font
@@ -7255,7 +6322,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" ""
+			(at 39.37 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 39.37 62.23 0)
 			(effects
 				(font
@@ -7407,6 +6483,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 72.39 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "33543092-6148-4e2c-9022-06abd1bfebf4")
 		)
@@ -7485,6 +6570,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 196.85 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "0feb788e-8324-4dd2-9769-d7658ffd9625")
 		)
@@ -7495,6 +6589,84 @@
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
 					(reference "C33")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 41.91 139.7 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f66feef4-805b-48e5-9999-cb0c149c1572")
+		(property "Reference" "R36"
+			(at 43.688 137.414 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "49.9"
+			(at 43.942 142.24 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+			(at 41.91 141.478 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 41.91 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 41.91 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" ""
+			(at 41.91 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "ec2825d5-4b88-4aa1-aef6-8f3e20a54492")
+		)
+		(pin "1"
+			(uuid "8ffaee06-07ec-43ea-b76b-ad4f0185a52e")
+		)
+		(instances
+			(project "magnetic_expension"
+				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
+					(reference "R36")
 					(unit 1)
 				)
 			)
@@ -7560,73 +6732,6 @@
 			(project "magnetometer_node_mainboard"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
 					(reference "#PWR077")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 127 154.94 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "fdfd9b5b-2fbf-4377-b906-3ce79b5dbbc2")
-		(property "Reference" "R39"
-			(at 127 152.654 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "100"
-			(at 127 157.48 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 127 156.718 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 127 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 127 154.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "caa5e8b9-df49-423b-8d43-b15fb18cdf66")
-		)
-		(pin "2"
-			(uuid "667be4c8-e9ab-414b-a148-0ec1329e48cb")
-		)
-		(instances
-			(project "magnetic_expension"
-				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/d3fc52d2-d258-4ba8-8f35-aa02ded3eaf3"
-					(reference "R39")
 					(unit 1)
 				)
 			)

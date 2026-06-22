@@ -1,0 +1,22 @@
+INA851 functional model - transient and slew-rate test, G=1
+.include ../INA851_functional.lib
+
+VSP VSP 0 15
+VSN 0 VSN 15
+VOCM VOCM 0 0
+VINN INN 0 0
+VDIFF INP INN PULSE(-10 10 2u 1n 1n 10u 20u)
+RG RGP RGN 1T
+XU1 INP INN RGP RGN VSP VSN OUTP OUTN VOCM FDAIP FDAIN G02P G02N VSP VSN INA851_FUNC
+RL OUTP OUTN 10k
+CL OUTP OUTN 100p
+
+.control
+tran 2n 8u
+let voutdiff = v(outp)-v(outn)
+meas tran t_rise trig voutdiff val=-8 rise=1 targ voutdiff val=8 rise=1
+let slew_16v=16/t_rise
+print t_rise slew_16v
+quit
+.endc
+.end

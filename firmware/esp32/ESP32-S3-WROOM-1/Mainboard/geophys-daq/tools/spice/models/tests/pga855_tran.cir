@@ -1,0 +1,29 @@
+PGA855 functional model - slew rate at G=1
+.include ../PGA855_functional.lib
+
+VSP VSP 0 15
+VSN 0 VSN 15
+VLP VLP 0 15
+VLN 0 VLN 15
+VDG DGND 0 0
+VOC VOCM 0 0
+VINN INN 0 0
+VDIFF INP INN PULSE(-5 5 2u 1n 1n 10u 20u)
+VH HIGH 0 3.3
+VL LOW 0 0
+
+* A2:A0 = 011 => gain 1.
+XU LOW INP INN HIGH HIGH VSP VLP FDAN OUTP OUTN FDAP VOCM VLN VSN DGND PGA855_FUNC
+RL OUTP OUTN 10k
+CL OUTP OUTN 50p
+
+.control
+tran 2n 8u
+let voutdiff=v(outp)-v(outn)
+meas tran t_rise trig voutdiff val=-4 rise=1 targ voutdiff val=4 rise=1
+let slew_8v=8/t_rise
+print t_rise slew_8v
+quit
+.endc
+.end
+

@@ -1,0 +1,89 @@
+* INA851 functional ngspice model
+* --------------------------------
+* Purpose:
+*   Stable system-level simulation of the INA851 in ngspice/KiCad.
+*   This is NOT a transistor-level conversion of the TI PSpice model.
+*
+* Modelled:
+*   - GIN = 1 + 6 kOhm / RG (external resistor between RG+ and RG-)
+*   - Fully differential outputs centered on VOCM
+*   - Gain-dependent single-pole bandwidth (datasheet typical values)
+*   - 37 V/us differential slew-rate limit
+*   - Output swing and VCLAMP limiting
+*   - 0.9 Ohm output impedance
+*   - 10 uV typical input offset
+*   - 5 nA input bias current
+*   - 6 mA typical quiescent supply current
+*   - Approximate input impedance
+*
+* Not modelled:
+*   - GOUT = 0.2 mode selected with G02 pins (model assumes GOUT = 1)
+*   - Detailed noise spectrum, CMRR/PSRR versus frequency
+*   - Input overvoltage protection, output short-circuit behavior
+*   - Temperature drift and production tolerances
+*
+* Pin order is identical to the TI model:
+* IN+ IN- RG+ RG- VS+ VS- OUT+ OUT- VOCM
+* FDA_IN+ FDA_IN- G02+ G02- VCLAMP+ VCLAMP-
+
+.subckt INA851_FUNC IN+ IN- RG+ RG- VS+ VS- OUT+ OUT- VOCM
++ FDA_IN+ FDA_IN- G02+ G02- VCLAMP+ VCLAMP-
+
+* Typical input offset and input loading.
+.param VOS=10u CSTATE=1n SR=37e6
+RINCM_P IN+ 0 14G
+RINCM_N IN- 0 14G
+CINCM_P IN+ 0 50p
+CINCM_N IN- 0 50p
+RINDIFF IN+ IN- 1G
+CINDIFF IN+ IN- 100p
+IBP IN+ VS- 5n
+IBN IN- VS- 5n
+
+* RG sensing.
+* The imposed voltage across RG equals the input differential voltage plus
+* the typical input offset.  Therefore I(BRGP) = -(VIN_DIFF + VOS) / RG.
+* VTARGET = (VIN_DIFF + VOS) - 6k*I(BRGP)
+*         = (VIN_DIFF + VOS) * (1 + 6k/RG).
+BRGP RG+ 0 V={0.5*(V(IN+,IN-)+VOS)}
+BRGN RG- 0 V={-0.5*(V(IN+,IN-)+VOS)}
+BVTARGET VTARGET 0 V={V(IN+,IN-)+VOS-6000*I(BRGP)}
+
+* One-pole response. BW=15 MHz matches the datasheet at G=1 and is a close
+* approximation for the low gains used by the target Wheatstone bridge.
+* At high gains the real device bandwidth falls (11 MHz at G=10, 5 MHz at
+* G=100, and 0.8 MHz at G=1000); this simplified model does not vary BW.
+BFILTER 0 VDIFF I={
++ MIN(MAX((V(VTARGET)-V(VDIFF))*2*pi*CSTATE*15e6,
++ -SR*CSTATE),SR*CSTATE)}
+CVDIFF VDIFF 0 {CSTATE}
+RVDLEAK VDIFF 0 1T
+
+* Output limits. With clamps tied to the rails these reduce to VS-+1.4 V
+* and VS+-1.4 V. Inboard clamp voltages limit the outputs near VCLAMP.
+BOUTHIGH OUTHIGH 0 V={MIN(V(VS+)-1.4,V(VCLAMP+)+0.1)}
+BOUTLOW  OUTLOW  0 V={MAX(V(VS-)+1.4,V(VCLAMP-)-0.1)}
+
+* Differential limit imposed by both output pins around VOCM.
+BVDLIM VDLIM 0 V={
++ MIN(MAX(V(VDIFF),
++ MAX(2*(V(OUTLOW)-V(VOCM)),2*(V(VOCM)-V(OUTHIGH)))),
++ MIN(2*(V(OUTHIGH)-V(VOCM)),2*(V(VOCM)-V(OUTLOW))))}
+
+* Fully differential output stage and typical closed-loop output impedance.
+BOP_INT OP_INT 0 V={V(VOCM)+0.5*V(VDLIM)}
+BON_INT ON_INT 0 V={V(VOCM)-0.5*V(VDLIM)}
+ROP OP_INT OUT+ 0.9
+RON ON_INT OUT- 0.9
+
+* Auxiliary pins are retained for pin compatibility.
+* High-value resistors prevent floating-node singularities.
+RAUX1 FDA_IN+ 0 1T
+RAUX2 FDA_IN- 0 1T
+RAUX3 G02+ 0 1T
+RAUX4 G02- 0 1T
+
+* Typical quiescent current.
+IQ VS+ VS- 6m
+
+.ends INA851_FUNC

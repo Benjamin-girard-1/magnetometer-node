@@ -101,17 +101,20 @@ static int prepare_boost_for_sequence(void)
         delay_ms(s_cfg.bridge_restore_ms);
     }
 
-    err = write_masked(0U, HMC100X_BOOST_18V);
-    if (err != 0) {
-        return err;
+    if (!sr_get_pin(SR_EN_BST_18V)) {
+        err = write_masked(0U, HMC100X_BOOST_18V);
+        if (err != 0) {
+            return err;
+        }
+        delay_ms(s_cfg.boost_settle_ms);
     }
-    delay_ms(s_cfg.boost_settle_ms);
+
     return 0;
 }
 
 static void finish_boost_sequence(bool restore_bridge)
 {
-    (void)write_masked((uint16_t)(HMC100X_STRAP_MASK | HMC100X_BOOST_18V), 0U);
+    (void)force_straps_idle();
 
     if (s_cfg.disable_bridge_during_sequence && restore_bridge) {
         (void)write_masked(0U, HMC100X_BRIDGE_9VA);
@@ -154,10 +157,14 @@ int hmc100x_init(const hmc100x_config_t *cfg)
     }
     s_cfg.active_slot_mask &= (HMC100X_SLOT_1_MASK | HMC100X_SLOT_2_MASK);
 
-    int err = write_masked((uint16_t)(HMC100X_STRAP_MASK | HMC100X_BOOST_18V), 0U);
+    const bool boost_was_on = sr_get_pin(SR_EN_BST_18V);
+    int err = write_masked(HMC100X_STRAP_MASK, HMC100X_BOOST_18V);
     if (err != 0) {
-        ESP_LOGE(TAG, "failed to idle set/reset straps");
+        ESP_LOGE(TAG, "failed to idle set/reset straps and enable 18V boost");
         return err;
+    }
+    if (!boost_was_on) {
+        delay_ms(s_cfg.boost_settle_ms);
     }
 
     ESP_LOGI(TAG, "set/reset driver ready: pulse=%lu us period=%lu ms slots=0x%lx bridge_off=%u",

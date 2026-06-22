@@ -1,0 +1,28 @@
+INA851 functional model - single supply swing, VOCM and clamp test
+.include ../INA851_functional.lib
+
+VSP VSP 0 9
+VSN VSN 0 0
+VOCM VOCM 0 4.5
+VINN INN 0 0
+VDIFF INP INN 10
+RG RGP RGN 1T
+
+* Unclamped: clamp pins tied to supply rails.
+XFREE INP INN RGP RGN VSP VSN FREEP FREEN VOCM A1 A2 A3 A4 VSP VSN INA851_FUNC
+RLF FREEP FREEN 10k
+
+* Clamped near 6.5 V and 2.5 V.
+VCH VCH 0 6.5
+VCL VCL 0 2.5
+XCLAMP INP INN RGP2 RGN2 VSP VSN CLAMPP CLAMPN VOCM B1 B2 B3 B4 VCH VCL INA851_FUNC
+RGC RGP2 RGN2 1T
+RLC CLAMPP CLAMPN 10k
+
+.control
+op
+print v(freep) v(freen) v(freep,freen) v(clampp) v(clampn) v(clampp,clampn)
+quit
+.endc
+.end
+

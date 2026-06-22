@@ -1,0 +1,25 @@
+PGA855 functional model - white input voltage noise at G=16
+.include ../PGA855_functional.lib
+
+VSP VSP 0 15
+VSN 0 VSN 15
+VLP VLP 0 15
+VLN 0 VLN 15
+VDG DGND 0 0
+VOC VOCM 0 0
+VINN INN 0 0
+VDIFF INP INN DC 0 AC 1
+VH HIGH 0 3.3
+
+XU HIGH INP INN HIGH HIGH VSP VLP FDAN OUTP OUTN FDAP VOCM VLN VSN DGND PGA855_FUNC
+RL OUTP OUTN 10k
+
+.control
+noise v(outp,outn) VDIFF dec 20 100 10k 1
+setplot noise1
+let onoise_1k=onoise_spectrum[20]
+let enoise_rti=onoise_1k/16
+print frequency[20] onoise_1k enoise_rti
+quit
+.endc
+.end

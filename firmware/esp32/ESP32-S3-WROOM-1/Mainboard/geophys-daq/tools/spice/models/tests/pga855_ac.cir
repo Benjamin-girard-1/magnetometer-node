@@ -1,0 +1,28 @@
+PGA855 functional model - AC bandwidth at G=16
+.include ../PGA855_functional.lib
+
+VSP VSP 0 15
+VSN 0 VSN 15
+VLP VLP 0 15
+VLN 0 VLN 15
+VDG DGND 0 0
+VOC VOCM 0 0
+VINN INN 0 0
+VDIFF INP INN DC 0 AC 1
+VH HIGH 0 3.3
+
+XU HIGH INP INN HIGH HIGH VSP VLP FDAN OUTP OUTN FDAP VOCM VLN VSN DGND PGA855_FUNC
+RL OUTP OUTN 10k
+CL OUTP OUTN 50p
+
+.control
+ac dec 100 10 100Meg
+let voutdiff=v(outp)-v(outn)
+let gain_db=db(voutdiff)
+meas ac gain_dc find gain_db at=10
+meas ac f3db when gain_db=gain_dc-3
+print gain_dc f3db
+quit
+.endc
+.end
+

@@ -1,0 +1,30 @@
+INA851 functional model - 850 Ohm Wheatstone bridge, +/-10 Ohm at 10 Hz
+.include ../INA851_functional.lib
+
+VSP VSP 0 9
+VSN VSN 0 0
+VOCM VOCM 0 4.5
+
+* Wheatstone bridge.
+VBRIDGE TOP 0 9
+RVAR TOP INN R={850+10*sin(2*pi*10*time)}
+RLOWN INN 0 850
+RTOPP TOP INP 850
+RLOWP INP 0 850
+
+RG RGP RGN 6k
+XU1 INP INN RGP RGN VSP VSN OUTP OUTN VOCM FDAIP FDAIN G02P G02N VSP VSN INA851_FUNC
+RL OUTP OUTN 10k
+CL OUTP OUTN 100p
+
+.control
+tran 50u 250m
+let voutdiff = v(outp)-v(outn)
+meas tran out_max max voutdiff from=100m to=250m
+meas tran out_min min voutdiff from=100m to=250m
+let out_pp=out_max-out_min
+print out_max out_min out_pp
+quit
+.endc
+.end
+

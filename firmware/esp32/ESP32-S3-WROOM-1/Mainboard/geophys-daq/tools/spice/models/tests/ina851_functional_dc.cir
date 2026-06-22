@@ -1,0 +1,18 @@
+INA851 functional model - DC gain test
+.include ../INA851_functional.lib
+
+VSP VSP 0 15
+VSN 0 VSN 15
+VOCM VOCM 0 0
+VINN INN 0 0
+VDIFF INP INN 1m
+RG RGP RGN 6k
+XU1 INP INN RGP RGN VSP VSN OUTP OUTN VOCM FDAIP FDAIN G02P G02N VSP VSN INA851_FUNC
+RL OUTP OUTN 10k
+
+.control
+op
+print v(inp,inn) v(xu1.vtarget) v(xu1.vdiff) v(outp,outn) v(outp) v(outn)
+quit
+.endc
+.end

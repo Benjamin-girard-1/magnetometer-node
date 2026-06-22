@@ -1,0 +1,23 @@
+* OPA1197_FUNC slew-rate check
+.include ../OPA1197_functional.lib
+
+VCC vcc 0 15
+VEE vee 0 -15
+VIN inp 0 PULSE(-5 5 2u 1n 1n 10u 25u)
+
+XU1 inp out vcc vee out OPA1197_FUNC
+
+.tran 20n 8u
+.control
+run
+meas tran out_min MIN v(out) FROM=2u TO=8u
+meas tran out_max MAX v(out) FROM=2u TO=8u
+meas tran in_min MIN v(inp) FROM=2u TO=8u
+meas tran in_max MAX v(inp) FROM=2u TO=8u
+meas tran t_lo WHEN v(out)=-4 RISE=1 FROM=2u
+meas tran t_hi WHEN v(out)=4 RISE=1 FROM=2u
+let slew=(8)/(t_hi-t_lo)
+print in_min in_max out_min out_max slew
+quit
+.endc
+.end

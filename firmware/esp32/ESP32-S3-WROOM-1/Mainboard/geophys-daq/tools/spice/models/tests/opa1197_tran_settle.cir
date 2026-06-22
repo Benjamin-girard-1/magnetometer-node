@@ -1,0 +1,16 @@
+* OPA1197_FUNC transient settling from DC input
+.include ../OPA1197_functional.lib
+
+VCC vcc 0 15
+VEE vee 0 -15
+VIN inp 0 1
+XU1 inp out vcc vee out OPA1197_FUNC
+
+.tran 1u 100u
+.control
+run
+print v(out)[length(v(out))-1]
+print v(xu1.err)[length(v(out))-1]
+quit
+.endc
+.end

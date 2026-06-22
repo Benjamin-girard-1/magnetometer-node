@@ -1,0 +1,15 @@
+HMC1001 functional model - physical bridge offset
+.include ../HMC1001_functional.lib
+
+VBRIDGE VBP 0 9
+VFIELD FIELD 0 0
+XHMC VBP OUTP OUTN 0 FIELD HMC1001_SPICE
++ params: SENS=3.2m OFFSET=10m VCAL=8
+RLOAD OUTP OUTN 1G
+
+.control
+op
+print v(xhmc.xcore.delta) v(outp,outn) v(outp) v(outn)
+quit
+.endc
+.end

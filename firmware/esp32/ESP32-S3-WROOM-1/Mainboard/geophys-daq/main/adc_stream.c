@@ -283,6 +283,7 @@ esp_err_t adc_stream_start(void)
     return ESP_OK;
 }
 
+
 bool adc_streaming(void)
 {
     return s_adc_streaming;

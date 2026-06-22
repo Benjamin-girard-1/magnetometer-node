@@ -2771,6 +2771,16 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "DAC M for Magnetic offset calibration (ambient)"
+		(exclude_from_sim no)
+		(at 96.774 35.306 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "4d4d825c-b573-4757-bb02-ddcb7c028da4")
+	)
 	(junction
 		(at 210.82 129.54)
 		(diameter 0)
@@ -3431,7 +3441,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 93.98) (xy 114.3 93.98)
+			(xy 106.68 93.98) (xy 121.92 93.98)
 		)
 		(stroke
 			(width 0)
@@ -3491,7 +3501,7 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 86.36) (xy 106.68 86.36)
+			(xy 121.92 86.36) (xy 106.68 86.36)
 		)
 		(stroke
 			(width 0)
@@ -3561,7 +3571,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 88.9) (xy 114.3 88.9)
+			(xy 106.68 88.9) (xy 121.92 88.9)
 		)
 		(stroke
 			(width 0)
@@ -3711,7 +3721,7 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 83.82) (xy 106.68 83.82)
+			(xy 121.92 83.82) (xy 106.68 83.82)
 		)
 		(stroke
 			(width 0)
@@ -4411,7 +4421,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 96.52) (xy 114.3 96.52)
+			(xy 106.68 96.52) (xy 121.92 96.52)
 		)
 		(stroke
 			(width 0)
@@ -4631,7 +4641,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 91.44) (xy 114.3 91.44)
+			(xy 106.68 91.44) (xy 121.92 91.44)
 		)
 		(stroke
 			(width 0)
@@ -4749,8 +4759,8 @@
 		)
 		(uuid "17300361-f0ea-432f-bd75-4ef76663ec35")
 	)
-	(label "VOUTA"
-		(at 114.3 83.82 180)
+	(label "DAC_M_OUTA"
+		(at 121.92 83.82 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4859,8 +4869,8 @@
 		)
 		(uuid "86d7f520-1245-450f-a96c-06fc82373f46")
 	)
-	(label "VOUTB"
-		(at 114.3 86.36 180)
+	(label "DAC_M_OUTB"
+		(at 121.92 86.36 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4879,8 +4889,8 @@
 		)
 		(uuid "8b5a6145-3bce-4711-acb8-c9a051ea9430")
 	)
-	(label "VOUTE"
-		(at 114.3 93.98 180)
+	(label "DAC_M_OUTE"
+		(at 121.92 93.98 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4889,8 +4899,8 @@
 		)
 		(uuid "8fe6b077-3496-49a5-ab05-d791c63bf8e3")
 	)
-	(label "VOUTF"
-		(at 114.3 96.52 180)
+	(label "DAC_M_OUTF"
+		(at 121.92 96.52 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4899,8 +4909,8 @@
 		)
 		(uuid "924497dd-ee89-4ad9-90df-e3911223eb5a")
 	)
-	(label "VOUTD"
-		(at 114.3 91.44 180)
+	(label "DAC_M_OUTD"
+		(at 121.92 91.44 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4929,8 +4939,8 @@
 		)
 		(uuid "b119b9b3-8386-4390-940d-1981a025045b")
 	)
-	(label "VOUTC"
-		(at 114.3 88.9 180)
+	(label "DAC_M_OUTC"
+		(at 121.92 88.9 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5202,6 +5212,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 252.73 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "bb53bae0-37a8-4cac-b475-4131de641167")
 		)
@@ -5284,6 +5303,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 252.73 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "a58cf398-9bc8-444a-8435-2f680baeeed3")
 		)
@@ -5347,6 +5375,15 @@
 			)
 		)
 		(property "Description" "Quad 36V, Precision, Rail-to-Rail Input/Output, Low Offset Voltage, Operational Amplifier, TSSOP-14"
+			(at 219.71 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 219.71 125.73 0)
 			(effects
 				(font
@@ -5453,6 +5490,15 @@
 			)
 		)
 		(property "Description" "Quad 36V, Precision, Rail-to-Rail Input/Output, Low Offset Voltage, Operational Amplifier, TSSOP-14"
+			(at 85.09 156.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 85.09 156.21 0)
 			(effects
 				(font
@@ -5575,6 +5621,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 107.95 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "9f39993a-e629-43e8-b476-7b92a893703e")
 		)
@@ -5653,6 +5708,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 190.5 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "47eb6e60-d63f-47fa-9b56-03829dfdfb73")
 		)
@@ -5713,6 +5777,15 @@
 		)
 		(property "Description" "Resistor"
 			(at 233.68 207.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
+			(at 233.68 207.01 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5787,6 +5860,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 245.11 59.69 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "335a17c8-097a-4743-9c12-d8d6a0dc701e")
 		)
@@ -5854,6 +5936,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 245.11 52.07 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "54036468-1c2e-4b73-8299-fec4a0363db7")
 		)
@@ -5894,7 +5985,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 184.15 52.07 0)
 			(effects
 				(font
@@ -5921,7 +6012,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 184.15 52.07 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 184.15 52.07 90)
 			(effects
 				(font
@@ -6156,6 +6256,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 99.06 200.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "6af0d887-a44f-453c-9d6c-ff0802d53340")
 		)
@@ -6196,7 +6305,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 229.87 27.94 0)
 			(effects
 				(font
@@ -6223,7 +6332,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 229.87 27.94 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 229.87 27.94 90)
 			(effects
 				(font
@@ -6310,6 +6428,15 @@
 		)
 		(property "Description" "Resistor"
 			(at 233.68 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
+			(at 233.68 184.15 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6452,6 +6579,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 71.12 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "9b8be998-4760-4050-98ec-0ad903b06d38")
 		)
@@ -6530,6 +6666,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 201.93 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "cc9e1fff-5843-4010-a04e-d8c4d1710b15")
 		)
@@ -6590,6 +6735,15 @@
 			)
 		)
 		(property "Description" "Quad 36V, Precision, Rail-to-Rail Input/Output, Low Offset Voltage, Operational Amplifier, TSSOP-14"
+			(at 219.71 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 219.71 55.88 0)
 			(effects
 				(font
@@ -6780,6 +6934,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 252.73 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "0f36f319-8399-4a77-b1ab-bd4fdd30e25b")
 		)
@@ -6845,6 +7008,15 @@
 			)
 		)
 		(property "Description" "PNP SOT-23 transistor, 150V, 500mA, 225mW, Alternate KiCAD Library"
+			(at 162.56 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 162.56 92.71 0)
 			(effects
 				(font
@@ -6927,6 +7099,15 @@
 			)
 		)
 		(property "LCSC" "C870537"
+			(at 262.89 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 262.89 204.47 0)
 			(effects
 				(font
@@ -7078,6 +7259,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 119.38 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "444ea04a-e43a-437a-805f-5f9af4e65a76")
 		)
@@ -7146,6 +7336,15 @@
 			)
 		)
 		(property "LCSC" "C4184"
+			(at 74.93 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 74.93 80.01 0)
 			(effects
 				(font
@@ -7286,6 +7485,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 245.11 191.77 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "1c3ea4c7-2a42-47af-b891-99720017e9ce")
 		)
@@ -7419,6 +7627,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 233.68 137.16 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "893cc257-7228-4d8c-ba0c-fb38c7b1a4f4")
 		)
@@ -7481,6 +7698,15 @@
 			)
 		)
 		(property "Description" ""
+			(at 93.98 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 93.98 97.79 0)
 			(effects
 				(font
@@ -7571,7 +7797,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 229.87 97.79 0)
 			(effects
 				(font
@@ -7598,7 +7824,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 229.87 97.79 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 229.87 97.79 90)
 			(effects
 				(font
@@ -7769,6 +8004,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 190.5 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "a0d5bcae-def3-43f4-916f-257f3fbce740")
 		)
@@ -7874,7 +8118,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 184.15 59.69 0)
 			(effects
 				(font
@@ -7901,7 +8145,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 184.15 59.69 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 184.15 59.69 90)
 			(effects
 				(font
@@ -8071,6 +8324,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 201.93 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "e563575d-d346-42f4-a645-5e269c286955")
 		)
@@ -8133,6 +8395,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 93.98 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 93.98 53.34 0)
 			(effects
 				(font
@@ -8338,6 +8609,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 233.68 67.31 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "51f2cbcb-4d05-4d85-a6b8-36899f1da017")
 		)
@@ -8483,6 +8763,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 252.73 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "32bf0416-18b8-4b30-9683-5a1583ba6627")
 		)
@@ -8546,6 +8835,15 @@
 			)
 		)
 		(property "Description" "Quad 36V, Precision, Rail-to-Rail Input/Output, Low Offset Voltage, Operational Amplifier, TSSOP-14"
+			(at 219.71 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 219.71 195.58 0)
 			(effects
 				(font
@@ -8695,7 +8993,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 229.87 151.13 0)
 			(effects
 				(font
@@ -8722,7 +9020,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 229.87 151.13 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 229.87 151.13 90)
 			(effects
 				(font
@@ -8819,6 +9126,15 @@
 			)
 		)
 		(property "LCSC" "C29823"
+			(at 190.5 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 190.5 134.62 0)
 			(effects
 				(font
@@ -8932,7 +9248,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 184.15 199.39 0)
 			(effects
 				(font
@@ -8959,7 +9275,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 184.15 199.39 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 184.15 199.39 90)
 			(effects
 				(font
@@ -9026,7 +9351,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 229.87 220.98 0)
 			(effects
 				(font
@@ -9053,7 +9378,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 229.87 220.98 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 229.87 220.98 90)
 			(effects
 				(font
@@ -9151,6 +9485,15 @@
 			)
 		)
 		(property "LCSC" "C9634"
+			(at 252.73 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 252.73 114.3 0)
 			(effects
 				(font
@@ -9362,6 +9705,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 162.56 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "842b2936-7dbd-4034-a3c8-32f83123901b")
 		)
@@ -9405,7 +9757,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 184.15 191.77 0)
 			(effects
 				(font
@@ -9432,7 +9784,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 184.15 191.77 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 184.15 191.77 90)
 			(effects
 				(font
@@ -9519,6 +9880,15 @@
 			)
 		)
 		(property "Description" "Quad 36V, Precision, Rail-to-Rail Input/Output, Low Offset Voltage, Operational Amplifier, TSSOP-14"
+			(at 80.01 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 80.01 196.85 0)
 			(effects
 				(font
@@ -9668,7 +10038,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 229.87 167.64 0)
 			(effects
 				(font
@@ -9695,7 +10065,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 229.87 167.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 229.87 167.64 90)
 			(effects
 				(font
@@ -9793,6 +10172,15 @@
 		)
 		(property "LCSC" "C17955"
 			(at 92.71 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
+			(at 92.71 196.85 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9906,7 +10294,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 184.15 129.54 0)
 			(effects
 				(font
@@ -9933,7 +10321,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 184.15 129.54 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 184.15 129.54 90)
 			(effects
 				(font
@@ -10104,6 +10501,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 262.89 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "53aff5ad-ba31-4f91-9db2-0d2822a47122")
 		)
@@ -10171,6 +10577,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 233.68 44.45 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "75060ceb-9d30-472f-8f6f-136c93925cb2")
 		)
@@ -10231,6 +10646,15 @@
 		)
 		(property "Description" "Resistor"
 			(at 245.11 121.92 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
+			(at 245.11 121.92 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10381,6 +10805,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 201.93 204.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "0e02c115-8710-417a-abb3-9962a2e9961c")
 		)
@@ -10459,6 +10892,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 111.76 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "790df98d-c8b0-4d73-806a-8b8b237f105b")
 		)
@@ -10520,6 +10962,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 63.5 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 63.5 97.79 0)
 			(effects
 				(font
@@ -10633,7 +11084,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 184.15 121.92 0)
 			(effects
 				(font
@@ -10660,7 +11111,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 184.15 121.92 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 184.15 121.92 90)
 			(effects
 				(font
@@ -10754,6 +11214,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 245.11 129.54 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "0038a3e6-f79a-4c8f-a4ef-07a6433b9662")
 		)
@@ -10833,6 +11302,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 262.89 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "85e4a822-22d8-4012-bd46-bbba7d610f92")
 		)
@@ -10903,6 +11381,15 @@
 			)
 		)
 		(property "LCSC" "C14663"
+			(at 99.06 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 99.06 63.5 0)
 			(effects
 				(font
@@ -11036,6 +11523,15 @@
 		)
 		(property "Description" "Resistor"
 			(at 233.68 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
+			(at 233.68 114.3 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11240,6 +11736,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 245.11 199.39 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "727f9764-c7a0-435e-92d3-9dd53ec62c75")
 		)
@@ -11345,7 +11850,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0612"
+		(property "Footprint" "Resistor_SMD:R_Array_Convex_4x0603"
 			(at 229.87 81.28 0)
 			(effects
 				(font
@@ -11372,7 +11877,16 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C29718"
+		(property "LCSC" "C454436"
+			(at 229.87 81.28 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 229.87 81.28 90)
 			(effects
 				(font
@@ -11471,6 +11985,15 @@
 			)
 		)
 		(property "LCSC" "C24278"
+			(at 252.73 207.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 252.73 207.01 0)
 			(effects
 				(font

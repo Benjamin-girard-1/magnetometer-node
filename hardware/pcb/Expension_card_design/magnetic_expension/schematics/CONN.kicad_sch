@@ -2366,6 +2366,28 @@
 		)
 		(uuid "2899813b-32f6-4cda-b35b-3cca606d6320")
 	)
+	(hierarchical_label "X_CONN-"
+		(shape output)
+		(at 167.64 100.33 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "3101f364-424f-46f6-b560-fe47d5c41867")
+	)
+	(hierarchical_label "Y_CONN-"
+		(shape output)
+		(at 167.64 92.71 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "61baab87-d904-4981-8d97-87374c737299")
+	)
 	(hierarchical_label "I2C{SDA SCL}"
 		(shape output)
 		(at 118.11 102.87 180)
@@ -2377,30 +2399,8 @@
 		)
 		(uuid "6cbecb96-fde9-403d-a4bc-a0540d8efecd")
 	)
-	(hierarchical_label "Z_INA_OUT-"
-		(shape input)
-		(at 167.64 85.09 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "70fc9300-9bb5-48fb-9868-80b7eaf0a432")
-	)
-	(hierarchical_label "Y_INA_OUT+"
-		(shape input)
-		(at 167.64 90.17 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "95c29a88-2d69-4677-b1d1-815f0ffbf078")
-	)
-	(hierarchical_label "X_INA_OUT+"
-		(shape input)
+	(hierarchical_label "X_CONN+"
+		(shape output)
 		(at 167.64 97.79 0)
 		(effects
 			(font
@@ -2408,21 +2408,32 @@
 			)
 			(justify left)
 		)
-		(uuid "a010f846-01db-4209-a77d-0e7eabd126d4")
+		(uuid "843cce76-4d04-4e33-8d04-176eaecea758")
 	)
-	(hierarchical_label "Y_INA_OUT-"
-		(shape input)
-		(at 167.64 92.71 0)
+	(hierarchical_label "Z_CONN-"
+		(shape output)
+		(at 167.64 85.09 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left)
 		)
-		(uuid "c76824de-d003-477e-8997-8b915c7666b8")
+		(uuid "89273320-186d-4054-aec2-c3887187b8aa")
 	)
-	(hierarchical_label "Z_INA_OUT+"
-		(shape input)
+	(hierarchical_label "Y_CONN+"
+		(shape output)
+		(at 167.64 90.17 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "dc8fc424-8af8-4032-b269-250a4a1607ac")
+	)
+	(hierarchical_label "Z_CONN+"
+		(shape output)
 		(at 167.64 82.55 0)
 		(effects
 			(font
@@ -2430,18 +2441,7 @@
 			)
 			(justify left)
 		)
-		(uuid "cc7afc1f-bf14-4ea8-bdbf-15da33faaa83")
-	)
-	(hierarchical_label "X_INA_OUT-"
-		(shape input)
-		(at 167.64 100.33 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "dca9ee4a-4c41-439c-b086-42b6072edcdb")
+		(uuid "e2760e6d-815d-434f-9f18-a6a772ce3102")
 	)
 	(hierarchical_label "SENSOR_SET_CTRL"
 		(shape output)
@@ -2509,6 +2509,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 209.55 90.17 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
@@ -2565,6 +2574,15 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
+			(at 209.55 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 209.55 95.25 0)
 			(effects
 				(font
@@ -2700,6 +2718,15 @@
 			)
 		)
 		(property "LCSC" "C4184"
+			(at 187.96 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 187.96 73.66 0)
 			(effects
 				(font
@@ -2898,6 +2925,15 @@
 			)
 		)
 		(property "Description" ""
+			(at 149.86 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 149.86 92.71 0)
 			(effects
 				(font
@@ -3391,6 +3427,15 @@
 				(hide yes)
 			)
 		)
+		(property "Sim.Enable" ""
+			(at 209.55 105.41 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(instances
 			(project "magnetic_expension"
 				(path "/b5f9ef85-43f0-43d8-a1fd-ed489b1654c1/0a13a391-065e-4b36-b802-09a3f1325672"
@@ -3642,6 +3687,15 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
+			(at 209.55 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Enable" ""
 			(at 209.55 100.33 0)
 			(effects
 				(font

@@ -1,0 +1,126 @@
+* HMC1001 functional ngspice model
+* --------------------------------
+* Unofficial system-level model based on the HMC1001/HMC1002 AMR sensor
+* documentation and the supplied noise-characteristics curve.
+*
+* This version models the sensor as a real Wheatstone bridge whose four
+* resistors are slightly unbalanced by offset and magnetic field.
+*
+* HMC1001_SPICE:
+*   Simplified five-pin model matching the custom KiCad symbol:
+*   Vb OUT+ OUT- GND FIELD
+*   V(FIELD,GND) is the magnetic field in gauss.
+*
+* HMC1001_CTRL:
+*   Simulation-oriented model with a BFIELD control pin.
+*   V(BFIELD) is the magnetic field in gauss.
+*
+* HMC1001_FUNC:
+*   Eight-pin package-compatible wrapper.  Magnetic field is set with the
+*   FIELD instance parameter.  This is convenient for DC operating points;
+*   use HMC1001_CTRL for time-varying magnetic fields.
+*
+* Parameters:
+*   RBRIDGE = 850       nominal value of each bridge resistor in ohms
+*   SENS    = 3.2m      sensitivity in V/V/gauss
+*   OFFSET  = 0         bridge DC offset in volts differential at VCAL
+*   VCAL    = 8         bridge voltage at which OFFSET is specified
+*   FIELD   = 0         static magnetic field in gauss (FUNC wrapper only)
+*   POL     = 1         response polarity, use -1 after a reset operation
+*
+* Important:
+*   OFFSET=10m means 10 mV differential bridge output at Vbridge=VCAL.
+*   With the default VCAL=8 V, the equivalent resistance mismatch is:
+*       delta_offset = 10m/8 = 0.00125
+*   At Vbridge=9 V, the same physical mismatch produces about 11.25 mV.
+*
+* Noise model:
+*   White floor = Johnson noise of the bridge resistors, approximately
+*                 3.75 nV/sqrt(Hz) for the nominal 850-ohm bridge.
+*   1/f term    = 30 nV/sqrt(Hz) at 1 Hz
+*   Total ASD   = sqrt((3.8 nV)^2 + (30 nV)^2/f)
+*
+* HMC1001_CTRL pin order:
+* SR+ OFFSET+ SR- VBRIDGE- OUT+ OFFSET- VBRIDGE+ OUT- BFIELD
+*
+* HMC1001_FUNC pin order (physical package):
+* SR+ OFFSET+ SR- VBRIDGE- OUT+ OFFSET- VBRIDGE+ OUT-
+*
+* HMC1001_SPICE pin order:
+* Vb OUT+ OUT- GND FIELD
+
+.subckt HMC1001_CORE SR+ OFFSET+ SR- VBRIDGE- OUT+ OFFSET- VBRIDGE+ OUT- BFIELD
++ params: RBRIDGE=850 SENS=3.2m OFFSET=0 VCAL=8 POL=1
+
+* Relative bridge imbalance.  For small delta:
+*   V(OUT+,OUT-) ~= V(VBRIDGE+,VBRIDGE-) * delta
+* where:
+*   delta = OFFSET/VCAL + POL*SENS*BFIELD
+*
+* This is deliberately implemented by changing the four bridge resistors,
+* rather than by forcing the output voltage with dependent voltage sources.
+BDELTA DELTA 0 V={OFFSET/VCAL+POL*SENS*V(BFIELD)}
+
+* Physical-ish AMR bridge.
+*
+* Left divider:
+*   OUT+ rises when delta is positive.
+* Right divider:
+*   OUT- falls when delta is positive.
+*
+* Branch sums remain approximately 2*RBRIDGE, so total bridge resistance
+* remains close to RBRIDGE.
+RBP_TOP VBRIDGE+ BP0 {RBRIDGE*(1-V(DELTA))}
+RBP_BOT BP0 VBRIDGE- {RBRIDGE*(1+V(DELTA))}
+RBN_TOP VBRIDGE+ BN0 {RBRIDGE*(1+V(DELTA))}
+RBN_BOT BN0 VBRIDGE- {RBRIDGE*(1-V(DELTA))}
+
+* Explicit bridge noise injection.
+*
+* The voltage-dependent bridge resistors above are used to model physical
+* imbalance and field response.  Some ngspice versions do not include their
+* thermal noise in .noise, so we inject the equivalent bridge white floor here
+* explicitly, along with the AMR 1/f term.
+*
+* RWHITE gives approximately sqrt(4*k*T*850) = 3.75 nV/sqrt(Hz) at 27 C.
+RWHITE NWHITE 0 850
+
+* Additional AMR 1/f noise.
+* AF=0 makes the resistor flicker-noise density independent of bias current.
+RFLICKER NFL_OUT 0 HMC1001_FLICKER 1m
+EFLICKER_P NF_P BP0 NFL_OUT 0 0.5
+EFLICKER_N NF_N BN0 NFL_OUT 0 -0.5
+.model HMC1001_FLICKER R R=1 KF=9e-10 AF=0 EF=1
+
+EWHITE_P OUT+ NF_P NWHITE 0 0.5
+EWHITE_N OUT- NF_N NWHITE 0 -0.5
+
+* Strap impedances.  Their magnetic action and set/reset pulse dynamics are
+* outside this functional bridge model.
+RSR SR+ SR- 1.5
+ROFFSET OFFSET+ OFFSET- 50
+RSTRAP_REF1 SR+ VBRIDGE- 1T
+RSTRAP_REF2 SR- VBRIDGE- 1T
+RSTRAP_REF3 OFFSET+ VBRIDGE- 1T
+RSTRAP_REF4 OFFSET- VBRIDGE- 1T
+
+.ends HMC1001_CORE
+
+.subckt HMC1001_SPICE Vb OUT+ OUT- GND FIELD
++ params: RBRIDGE=850 SENS=3.2m OFFSET=0 VCAL=8 POL=1
+XCORE DUMMY_SR+ DUMMY_OFFSET+ DUMMY_SR- GND OUT+ DUMMY_OFFSET- Vb OUT- FIELD
++ HMC1001_CORE params: RBRIDGE={RBRIDGE} SENS={SENS} OFFSET={OFFSET} VCAL={VCAL} POL={POL}
+.ends HMC1001_SPICE
+
+.subckt HMC1001_CTRL SR+ OFFSET+ SR- VBRIDGE- OUT+ OFFSET- VBRIDGE+ OUT- BFIELD
++ params: RBRIDGE=850 SENS=3.2m OFFSET=0 VCAL=8 POL=1
+XCORE SR+ OFFSET+ SR- VBRIDGE- OUT+ OFFSET- VBRIDGE+ OUT- BFIELD
++ HMC1001_CORE params: RBRIDGE={RBRIDGE} SENS={SENS} OFFSET={OFFSET} VCAL={VCAL} POL={POL}
+.ends HMC1001_CTRL
+
+.subckt HMC1001_FUNC SR+ OFFSET+ SR- VBRIDGE- OUT+ OFFSET- VBRIDGE+ OUT-
++ params: RBRIDGE=850 SENS=3.2m OFFSET=0 VCAL=8 FIELD=0 POL=1
+BFIELD BFIELD 0 V={FIELD}
+XCORE SR+ OFFSET+ SR- VBRIDGE- OUT+ OFFSET- VBRIDGE+ OUT- BFIELD
++ HMC1001_CORE params: RBRIDGE={RBRIDGE} SENS={SENS} OFFSET={OFFSET} VCAL={VCAL} POL={POL}
+.ends HMC1001_FUNC

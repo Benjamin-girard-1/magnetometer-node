@@ -1,0 +1,22 @@
+* OPA1197_FUNC non-inverting gain and bandwidth
+.include ../OPA1197_functional.lib
+
+VCC vcc 0 15
+VEE vee 0 -15
+VIN inp 0 DC 0 AC 1
+
+* Non-inverting gain = 1 + RF/RG = 10 V/V
+RG inv 0 1k
+RF out inv 9k
+XU1 inp inv vcc vee out OPA1197_FUNC
+
+.ac dec 60 10 100Meg
+.control
+run
+meas ac gain_10hz FIND vdb(out) AT=10
+meas ac gain_1mhz FIND vdb(out) AT=1Meg
+meas ac gain_10mhz FIND vdb(out) AT=10Meg
+print gain_10hz gain_1mhz gain_10mhz
+quit
+.endc
+.end

@@ -1,0 +1,26 @@
+PGA855 functional model - independent output supply and VOCM
+.include ../PGA855_functional.lib
+
+* Input stage is +/-15 V; output stage is 0 to 5 V.
+VSP VSP 0 15
+VSN 0 VSN 15
+VLP VLP 0 5
+VLN VLN 0 0
+VDG DGND 0 0
+VOC VOCM 0 2.5
+VINN INN 0 0
+VDIFF INP INN 10
+VH HIGH 0 3.3
+VL LOW 0 0
+
+* A2:A0 = 011 => gain 1.
+XU LOW INP INN HIGH HIGH VSP VLP FDAN OUTP OUTN FDAP VOCM VLN VSN DGND PGA855_FUNC
+RL OUTP OUTN 10k
+
+.control
+op
+print v(outp) v(outn) v(outp,outn)
+quit
+.endc
+.end
+

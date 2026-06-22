@@ -6,4 +6,4 @@ idf_component_register(
         "include"
     REQUIRES
         driver
-)
+)]

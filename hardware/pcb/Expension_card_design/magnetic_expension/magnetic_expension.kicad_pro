@@ -618,7 +618,7 @@
           "show": false
         }
       ],
-      "filter_string": "r",
+      "filter_string": "c",
       "group_symbols": false,
       "include_excluded_from_bom": false,
       "name": "",
@@ -692,7 +692,7 @@
     ],
     [
       "040d9538-e897-4d2d-a074-74773357e15f",
-      "BRIDGE_DC_OFFSET"
+      "BRIDGE_OFFSET"
     ]
   ],
   "text_variables": {}

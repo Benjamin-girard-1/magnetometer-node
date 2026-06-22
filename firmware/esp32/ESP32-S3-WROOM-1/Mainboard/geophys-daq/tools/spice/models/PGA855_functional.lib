@@ -1,0 +1,133 @@
+* PGA855 functional ngspice model
+* --------------------------------
+* System-level model derived from TI datasheet SBOSAE0B.
+* This is not an official TI model and is not transistor-level.
+*
+* Modelled:
+*   - Eight digital gains selected by A2:A0:
+*       000=.125, 001=.25, 010=.5, 011=1,
+*       100=2,    101=4,   110=8, 111=16
+*   - 10 MHz differential bandwidth at all gains
+*   - 35 V/us differential slew rate
+*   - Fully differential outputs centered on VOCM
+*   - Independent input and output-stage supplies
+*   - Typical output swing versus output-stage supply span
+*   - Typical 70 uV input-referred offset
+*   - Typical input bias current and impedance
+*   - Typical quiescent currents
+*   - Gain-dependent white voltage-noise density at 1 kHz
+*   - 0.3 pA/sqrt(Hz) input current-noise density
+*   - Approximate 2 us gain-switch settling
+*
+* Not modelled:
+*   - Detailed 1/f noise and 0.1-Hz to 10-Hz noise waveform
+*   - CMRR/PSRR versus frequency
+*   - Input overvoltage protection
+*   - Short-circuit current limiting and nonlinear distortion
+*   - FDA_IN+/- external noise-shaping network behavior
+*   - Temperature drift and production distributions
+*
+* Pin order follows the physical package order with NC pin 8 omitted:
+* A2 IN+ IN- A0 A1 VS+ LVDD FDA_IN- OUT+ OUT- FDA_IN+
+* VOCM LVSS VS- DGND
+
+.subckt PGA855_FUNC A2 IN+ IN- A0 A1 VS+ LVDD FDA_IN- OUT+ OUT-
++ FDA_IN+ VOCM LVSS VS- DGND
+
+.param VOS=70u CSTATE=1n SR=35e6
+
+* Digital gain decode. Logic threshold is centered between the 0.8-V VIL
+* maximum and 1.8-V VIH minimum.
+BA0 BIT0 0 V={U(V(A0,DGND)-1.3)}
+BA1 BIT1 0 V={U(V(A1,DGND)-1.3)}
+BA2 BIT2 0 V={U(V(A2,DGND)-1.3)}
+BGAIN_CMD GAIN_CMD 0 V={0.125*(1+V(BIT0))*(1+3*V(BIT1))*(1+15*V(BIT2))}
+
+* Gain changes settle in approximately 2 us.  The 0.3-us time constant
+* reaches within about 0.1% of the final gain in roughly 2 us.
+RGAIN GAIN_CMD GAIN_STATE 1k
+CGAIN GAIN_STATE 0 300p
+
+* Input loading and typical bias current.
+RINCM_P IN+ VS- 100G
+RINCM_N IN- VS- 100G
+CINCM_P IN+ VS- 7p
+CINCM_N IN- VS- 7p
+RINDIFF IN+ IN- 100G
+CINDIFF IN+ IN- 1p
+IBP IN+ VS- 0.5n
+IBN IN- VS- 0.5n
+
+* Voltage-noise source.  A 1-kOhm resistor produces approximately
+* 4.071 nV/sqrt(Hz) at 27 C.  NSCALE converts this to the datasheet's
+* gain-dependent output-referred white noise:
+* gain:  .125 .25 .5  1   2    4    8    16
+* eNI:   168  84  42 21.6 12.6 8.6  8.0  7.8 nV/sqrt(Hz), RTI
+RNV N_VNOISE 0 1k
+BNSCALE NSCALE 0 V={
++ 5.15844*(1-V(BIT2))*(1-V(BIT1))*(1-V(BIT0))
++ +5.15844*(1-V(BIT2))*(1-V(BIT1))*V(BIT0)
++ +5.15844*(1-V(BIT2))*V(BIT1)*(1-V(BIT0))
++ +5.30582*(1-V(BIT2))*V(BIT1)*V(BIT0)
++ +6.18988*V(BIT2)*(1-V(BIT1))*(1-V(BIT0))
++ +8.44928*V(BIT2)*(1-V(BIT1))*V(BIT0)
++ +15.72095*V(BIT2)*V(BIT1)*(1-V(BIT0))
++ +30.65586*V(BIT2)*V(BIT1)*V(BIT0)}
+
+* Input-current noise sources.  The scale converts the same 1-kOhm
+* resistor voltage noise into 0.3 pA/sqrt(Hz) at each input.
+RNIP N_INOISE_P 0 1k
+RNIN N_INOISE_N 0 1k
+BIP_NOISE IN+ VS- I={73.692e-6*V(N_INOISE_P)}
+BIN_NOISE IN- VS- I={73.692e-6*V(N_INOISE_N)}
+
+* Offset is input-referred for gains >= 1.  For attenuating gains the
+* datasheet specifies VOS as 70 uV/G, giving about 70 uV output offset.
+BVTARGET VTARGET 0 V={
++ V(GAIN_STATE)*V(IN+,IN-)
++ +VOS*MAX(V(GAIN_STATE),1)
++ +V(NSCALE)*V(N_VNOISE)}
+
+* 10-MHz one-pole differential response with 35-V/us slew-rate limiting.
+BFILTER 0 VDIFF I={
++ MIN(MAX((V(VTARGET)-V(VDIFF))*2*pi*CSTATE*10e6,
++ -SR*CSTATE),SR*CSTATE)}
+CVDIFF VDIFF 0 {CSTATE}
+RVDLEAK VDIFF 0 1T
+
+* VOCM input: the 500k/500k divider gives output mid-supply if VOCM floats
+* and presents 250 kOhm to a driven VOCM source.
+RVOCM_H LVDD VOCM 500k
+RVOCM_L VOCM LVSS 500k
+CVOCM VOCM LVSS 1p
+
+* Typical loaded output margin interpolated from datasheet values:
+* 0.2 V at 4.5-V output supply, 0.4 V at 36-V output supply.
+BMARGIN MARGIN 0 V={
++ MIN(MAX(0.171429+0.00634921*V(LVDD,LVSS),0.2),0.4)}
+BOUTHIGH OUTHIGH 0 V={V(LVDD)-V(MARGIN)}
+BOUTLOW OUTLOW 0 V={V(LVSS)+V(MARGIN)}
+
+* Limit the differential output symmetrically around VOCM.
+BVDLIM VDLIM 0 V={
++ MIN(MAX(V(VDIFF),
++ MAX(2*(V(OUTLOW)-V(VOCM)),2*(V(VOCM)-V(OUTHIGH)))),
++ MIN(2*(V(OUTHIGH)-V(VOCM)),2*(V(VOCM)-V(OUTLOW))))}
+
+BOP_INT OP_INT 0 V={V(VOCM)+0.5*V(VDLIM)}
+BON_INT ON_INT 0 V={V(VOCM)-0.5*V(VDLIM)}
+ROP OP_INT OUT+ 0.9
+RON ON_INT OUT- 0.9
+
+* Auxiliary pins retained for package compatibility.
+RAUXP FDA_IN+ 0 1T
+RAUXN FDA_IN- 0 1T
+
+* Typical digital input currents and quiescent supply currents.
+IA0 A0 DGND 1.5u
+IA1 A1 DGND 1.5u
+IA2 A2 DGND 1.5u
+IQ_INPUT VS+ VS- 3m
+IQ_OUTPUT LVDD LVSS 2.3m
+
+.ends PGA855_FUNC

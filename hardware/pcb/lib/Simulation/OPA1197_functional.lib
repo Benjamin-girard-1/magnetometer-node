@@ -1,0 +1,117 @@
+* OPA1197 functional ngspice macro-model for KiCad
+* --------------------------------------------------
+* Purpose:
+*   Stable, portable ngspice model that emulates the main OPAx197/OPA1197
+*   datasheet values.  It is not a transistor-level or official TI model.
+*
+* Pin order:
+*   IN+ IN- VCC VEE OUT
+*
+* Main modeled behavior:
+*   - 10 MHz unity-gain bandwidth
+*   - large DC open-loop gain
+*   - slew-rate limiting
+*   - rail-to-rail output swing with approximate load droop
+*   - output current limiting
+*   - input offset voltage, drift, bias current
+*   - input impedance/capacitance
+*   - input-referred voltage and current noise for .noise analysis
+*
+* Typical usage:
+*   XU1 noninv inv vplus vminus out OPA1197_FUNC
+
+.subckt OPA1197_FUNC IN+ IN- VCC VEE OUT PARAMS:
++ AOL=5e6
++ GBW=10e6
++ SR=20e6
++ VOS=5u
++ VOS_DRIFT=0.5u
++ TEMP_C=27
++ IBIAS=5p
++ IQ=1m
++ VHEAD=25m
++ ROUT=55
++ ISC=65m
++ RDIFF=100Meg
++ CDIFF=1.6p
++ RCM=1e13
++ CCM=6.4p
++ CMRR_GAIN=1e-6
++ PSRR_GAIN=1e-6
++ VSNOM=36
++ COUT=1p
+
+.param PI=3.141592653589793
+.param C_OL_VAL=1u
+.param R_OL_VAL={AOL/(2*PI*GBW*C_OL_VAL)}
+.param G_OL={AOL/R_OL_VAL}
+.param I_OL_LIM={SR*C_OL_VAL}
+
+* Floating internal mid-supply reference.
+B_MID MID 0 V={(V(VCC)+V(VEE))/2}
+
+* Input impedance, capacitance, and typical bias current.
+R_DIFF IN+ IN- {RDIFF}
+C_DIFF IN+ IN- {CDIFF}
+R_CM_P IN+ MID {RCM}
+R_CM_N IN- MID {RCM}
+C_CM_P IN+ MID {CCM}
+C_CM_N IN- MID {CCM}
+B_IB_P IN+ MID I={IBIAS}
+B_IB_N IN- MID I={IBIAS}
+
+* Datasheet-like input voltage noise source.
+* TI's official PSpice model uses a similar diode/resistor noise construction.
+X_VN VN MID OPA1197_VNSE PARAMS: FLW=0.1 GLF=0.1352 RNV=35.8
+
+* Input-referred error voltage.
+* Includes differential input, offset, drift, approximate CMRR and PSRR terms.
+B_ERR ERR MID V={
++ V(IN+,IN-)
++ + V(VN,MID)
++ + VOS + VOS_DRIFT*(TEMP_C-27)
++ + CMRR_GAIN*(((V(IN+)+V(IN-))/2)-V(MID))
++ + PSRR_GAIN*(V(VCC,VEE)-VSNOM)
++ }
+R_ERR ERR MID 1G
+
+* Dominant pole open-loop amplifier with internal slew-rate current limit.
+* Small signal: DC gain AOL and unity-gain bandwidth GBW.
+* Large signal: the OL capacitor current is limited to C*dV/dt = C*SR.
+B_OL MID OL I={I_OL_LIM*tanh((G_OL*V(ERR,MID))/I_OL_LIM)}
+R_OL OL MID {R_OL_VAL}
+C_OLCAP OL MID {C_OL_VAL}
+
+* Output drive with approximate ROUT and short-circuit current limit.
+B_DRV DRV 0 V={V(MID)+min(max(V(OL,MID), V(VEE)+VHEAD-V(MID)), V(VCC)-VHEAD-V(MID))}
+R_DRV DRV 0 1G
+B_OUT MID OUT I={ISC*tanh((V(DRV)-V(OUT))/(ROUT*ISC))}
+C_OUT OUT MID {COUT}
+R_OUT_LEAK OUT MID 1G
+
+* Quiescent current per amplifier. Output load current is not fully reflected
+* into the supplies; this is a functional signal-path model.
+B_IQ VCC VEE I={IQ}
+
+.ends OPA1197_FUNC
+
+
+* Input voltage noise helper for .noise analysis.
+* Output pins: 1 2.  The generated voltage is input-referred.
+.subckt OPA1197_VNSE 1 2 PARAMS: FLW=0.1 GLF=0.1352 RNV=35.8
+.model D_VN D KF={PWR(FLW,0.5)/1E11} IS=1.0E-16
+I1 0 7 10m
+I2 0 8 10m
+D1 7 0 D_VN
+D2 8 0 D_VN
+E1 3 6 7 8 {GLF}
+R1 3 0 1G
+R2 3 0 1G
+R3 3 6 1G
+E2 6 4 5 0 10
+R4 5 0 {RNV}
+R5 5 0 {RNV}
+R6 3 4 1G
+R7 4 0 1G
+E3 1 2 3 4 1
+.ends OPA1197_VNSE

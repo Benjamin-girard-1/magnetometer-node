@@ -1,0 +1,19 @@
+* OPA1197_FUNC DC closed-loop sanity checks
+.include ../OPA1197_functional.lib
+
+VCC vcc 0 15
+VEE vee 0 -15
+VIN inp 0 1
+
+* Unity-gain follower.
+XU1 inp out vcc vee out OPA1197_FUNC
+
+.op
+.control
+run
+print v(out)
+print v(out)-v(inp)
+print v(xu1.err) v(xu1.ol) v(xu1.drv)
+quit
+.endc
+.end

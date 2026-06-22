@@ -1,0 +1,20 @@
+HMC1001 functional model - bridge noise density
+.include ../HMC1001_functional.lib
+
+VBRIDGE VBP 0 5
+VFIELD FIELD 0 DC 0 AC 1
+XHMC VBP OUTP OUTN 0 FIELD HMC1001_SPICE
+RLOAD OUTP OUTN 1G
+
+.control
+noise v(outp,outn) VFIELD dec 20 0.1 10k 1
+setplot noise1
+let n_01hz=onoise_spectrum[0]
+let n_1hz=onoise_spectrum[20]
+let n_10hz=onoise_spectrum[40]
+let n_100hz=onoise_spectrum[60]
+let n_1khz=onoise_spectrum[80]
+print n_01hz n_1hz n_10hz n_100hz n_1khz
+quit
+.endc
+.end

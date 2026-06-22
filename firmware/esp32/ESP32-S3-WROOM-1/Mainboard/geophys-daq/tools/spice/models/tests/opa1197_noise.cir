@@ -1,0 +1,20 @@
+* OPA1197_FUNC input-referred-ish noise in unity gain
+.include ../OPA1197_functional.lib
+
+VCC vcc 0 15
+VEE vee 0 -15
+VIN inp 0 DC 0 AC 1
+
+XU1 inp out vcc vee out OPA1197_FUNC
+
+.noise v(out) VIN dec 20 1 100k
+.control
+run
+setplot noise1
+let n_100hz=onoise_spectrum[40]
+let n_1khz=onoise_spectrum[60]
+let n_10khz=onoise_spectrum[80]
+print n_100hz n_1khz n_10khz
+quit
+.endc
+.end

@@ -19,7 +19,7 @@ esp_err_t board_outputs_init(uint32_t magnetic_slots)
     sr_set_pin(SR_EN_BST_10V, MAG_ENABLE_BRIDGE_9V != 0);
     vTaskDelay(pdMS_TO_TICKS(20));
     sr_set_pin(SR_EN_INV_NEG5V, MAG_ENABLE_NEG5V != 0);
-    sr_set_pin(SR_EN_BST_18V, false);
+    sr_set_pin(SR_EN_BST_18V, true);
     sr_set_pin(SR_SET_1, false);
     sr_set_pin(SR_RESET_1, false);
     sr_set_pin(SR_SET_2, false);

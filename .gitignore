@@ -1,4 +1,41 @@
 .DS_Store
+
+# Archive files
+*.zip
+
+# Build artifacts and directories
+**/build/
+*.o
+*.obj
+*.a
+*.elf
+*.bin
+*.map
+*.exe
+compile_commands.json
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+build.ninja
+.ninja_*
+
+# ESP-IDF generated/local files
+flasher_args.json
+sdkconfig
+sdkconfig.old
+managed_components/
+**/components/.idf/
+.espressif/
+
+# Python/cache artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.mplconfig/
+tempCodeRunnerFile.py
+
 # LaTeX build artifacts
 *.aux
 *.log
