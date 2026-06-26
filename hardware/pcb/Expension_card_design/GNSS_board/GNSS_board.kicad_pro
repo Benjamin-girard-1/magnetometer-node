@@ -39,9 +39,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 4.3,
-          "height": 4.3,
-          "width": 4.3
+          "drill": 0.8,
+          "height": 1.27,
+          "width": 2.54
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -60,22 +60,16 @@
           "hatch_smoothing_level": 0,
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
-          "min_clearance": 0.2,
+          "min_clearance": 0.5,
           "min_island_area": 10.0,
-          "min_thickness": 0.27,
-          "pad_connection": 2,
+          "min_thickness": 0.25,
+          "pad_connection": 1,
           "remove_islands": 0,
           "thermal_relief_gap": 0.5,
           "thermal_relief_spoke_width": 0.5
         }
       },
-      "diff_pair_dimensions": [
-        {
-          "gap": 0.0,
-          "via_gap": 0.0,
-          "width": 0.0
-        }
-      ],
+      "diff_pair_dimensions": [],
       "drc_exclusions": [],
       "meta": {
         "version": 2
@@ -116,9 +110,9 @@
         "missing_tuning_profile": "warning",
         "net_conflict": "warning",
         "nonmirrored_text_on_back_layer": "warning",
-        "npth_inside_courtyard": "ignore",
+        "npth_inside_courtyard": "error",
         "padstack": "warning",
-        "pth_inside_courtyard": "ignore",
+        "pth_inside_courtyard": "error",
         "shorting_items": "error",
         "silk_edge_clearance": "warning",
         "silk_over_copper": "warning",
@@ -146,8 +140,8 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.15,
-        "min_connection": 0.15,
+        "min_clearance": 0.0,
+        "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
         "min_hole_clearance": 0.25,
@@ -159,10 +153,10 @@
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.3,
-        "min_track_width": 0.15,
+        "min_track_width": 0.2,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
-        "solder_mask_to_copper_clearance": 0.005,
+        "solder_mask_to_copper_clearance": 0.0,
         "use_height_for_length_calcs": true
       },
       "teardrop_options": [
@@ -209,17 +203,7 @@
           "td_width_to_size_filter_ratio": 0.9
         }
       ],
-      "track_widths": [
-        0.0,
-        0.2,
-        0.25,
-        0.3,
-        0.4,
-        0.5,
-        0.6,
-        0.7,
-        1.0
-      ],
+      "track_widths": [],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
           "corner_radius_percentage": 80,
@@ -246,12 +230,7 @@
           "spacing": 0.6
         }
       },
-      "via_dimensions": [
-        {
-          "diameter": 0.0,
-          "drill": 0.0
-        }
-      ],
+      "via_dimensions": [],
       "zones_allow_external_fillets": false
     },
     "ipc2581": {
@@ -470,7 +449,6 @@
       "footprint_filter": "ignore",
       "footprint_link_issues": "warning",
       "four_way_junction": "ignore",
-      "global_label_dangling": "warning",
       "ground_pin_not_ground": "warning",
       "hier_label_mismatch": "error",
       "isolated_pin_label": "warning",
@@ -510,14 +488,14 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "magnetic_expension_v2.kicad_pro",
+    "filename": "GNSS_board.kicad_pro",
     "version": 3
   },
   "net_settings": {
     "classes": [
       {
         "bus_width": 12,
-        "clearance": 0.15,
+        "clearance": 0.2,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
@@ -544,14 +522,10 @@
   },
   "pcbnew": {
     "last_paths": {
-      "gencad": "",
       "idf": "",
       "netlist": "",
       "plot": "",
-      "pos_files": "",
       "specctra_dsn": "",
-      "step": "../../../../../../../Documents/pcb_step/Exp_mag_2.step",
-      "svg": "",
       "vrml": ""
     },
     "page_layout_descr_file": ""
@@ -605,13 +579,13 @@
           "group_by": true,
           "label": "Exclude from BOM",
           "name": "${EXCLUDE_FROM_BOM}",
-          "show": false
+          "show": true
         },
         {
           "group_by": true,
           "label": "Exclude from Board",
           "name": "${EXCLUDE_FROM_BOARD}",
-          "show": false
+          "show": true
         },
         {
           "group_by": true,
@@ -623,68 +597,17 @@
           "group_by": false,
           "label": "Datasheet",
           "name": "Datasheet",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Sim.Pins",
-          "name": "Sim.Pins",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Sim.Device",
-          "name": "Sim.Device",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Description",
-          "name": "Description",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "#",
-          "name": "${ITEM_NUMBER}",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "LCSC",
-          "name": "LCSC",
           "show": true
-        },
-        {
-          "group_by": false,
-          "label": "Sim.Enable",
-          "name": "Sim.Enable",
-          "show": false
         }
       ],
       "filter_string": "",
-      "group_symbols": false,
-      "include_excluded_from_bom": false,
-      "name": "",
+      "group_symbols": true,
+      "include_excluded_from_bom": true,
+      "name": "Default Editing",
       "sort_asc": true,
-      "sort_field": "Value"
+      "sort_field": "Référence"
     },
-    "bus_aliases": {
-      "ADC_SPI": [
-        "SPI.CS",
-        "SPI.SCLK",
-        "SPI.SDO",
-        "SPI.SDI"
-      ],
-      "ESP32_SDMMC": [
-        "CLK",
-        "CMD",
-        "D0",
-        "D1",
-        "D2",
-        "D3"
-      ]
-    },
+    "bus_aliases": {},
     "connection_grid_size": 50.0,
     "drawing": {
       "dashed_lines_dash_length_ratio": 12.0,
@@ -713,65 +636,25 @@
     "meta": {
       "version": 1
     },
-    "net_format_name": "",
     "page_layout_descr_file": "",
     "plot_directory": "",
     "reuse_designators": true,
-    "space_save_all_events": true,
-    "spice_current_sheet_as_root": false,
-    "spice_external_command": "spice \"%I\"",
-    "spice_model_current_sheet_as_root": true,
-    "spice_save_all_currents": false,
-    "spice_save_all_dissipations": false,
-    "spice_save_all_voltages": false,
     "subpart_first_id": 65,
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "magnetic_expension_v2.kicad_sch",
-        "name": "magnetic_expension_v2",
-        "uuid": "b5f9ef85-43f0-43d8-a1fd-ed489b1654c1"
+        "filename": "GNSS_board.kicad_sch",
+        "name": "Racine",
+        "uuid": "3701afef-76aa-4fb2-aea7-13f377a71aca"
       }
     ],
-    "used_designators": "",
+    "used_designators": "C1-2,#PWR1-6,J1,H1-4,U1-2",
     "variants": []
   },
   "sheets": [
     [
-      "b5f9ef85-43f0-43d8-a1fd-ed489b1654c1",
-      "magnetic_expension_v2"
-    ],
-    [
-      "95fd4708-3510-44cf-9b01-8535361ee411",
-      "SENSOR_3AXIS_HMC100X"
-    ],
-    [
-      "209adda1-10e4-4d62-92d8-b16a998ad2d8",
-      "SENSOR_SET_RESET_DRIVER"
-    ],
-    [
-      "29e64148-4746-4643-871d-373ba0c98650",
-      "VOLTAGE_REF"
-    ],
-    [
-      "0a13a391-065e-4b36-b802-09a3f1325672",
-      "CONNECTOR"
-    ],
-    [
-      "2f72c18a-a65d-4f68-838f-842cfa15a9ad",
-      "X_BALANCING"
-    ],
-    [
-      "4f533156-88b9-4bfe-82f0-c47a5b2aac8d",
-      "Y_BALANCING"
-    ],
-    [
-      "ea9d6db9-74f1-4097-998a-baf1e5ad252c",
-      "Z_BALANCING"
-    ],
-    [
-      "f7e02cce-8a51-4faa-9c15-48c14ee6ed55",
-      "THERMISTOR"
+      "3701afef-76aa-4fb2-aea7-13f377a71aca",
+      "Racine"
     ]
   ],
   "text_variables": {},

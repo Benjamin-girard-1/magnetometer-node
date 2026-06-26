@@ -31,7 +31,7 @@
     {
       "analysis": "TRAN",
       "commands": [
-        ".tran 1m 30 0 1m uic",
+        ".tran 1m 120 0 1m uic",
         ".kicad adjustpaths",
         ".save all",
         ".probe alli",
@@ -50,6 +50,11 @@
         {
           "color": "rgb(77, 175, 74)",
           "signal": "V(/ADC)",
+          "trace_type": 257
+        },
+        {
+          "color": "rgb(228, 26, 28)",
+          "signal": "V(/FIELD)",
           "trace_type": 257
         }
       ]
@@ -105,18 +110,8 @@
       "showGrid": true,
       "traces": [
         {
-          "color": "rgb(228, 26, 28)",
-          "signal": "V(/ADC)",
-          "trace_type": 257
-        },
-        {
-          "color": "rgb(152, 78, 163)",
-          "signal": "V(/Vint+)",
-          "trace_type": 257
-        },
-        {
-          "color": "rgb(255, 255, 51)",
-          "signal": "V(/Vint-)",
+          "color": "rgb(55, 126, 184)",
+          "signal": "V(/TP)",
           "trace_type": 257
         }
       ]
@@ -124,7 +119,7 @@
     {
       "analysis": "NOISE",
       "commands": [
-        ".noise v(/ADC) V1 dec 200 100m 1k 1",
+        ".noise v(/ADC) V5 dec 200 100m 350 1",
         ".kicad adjustpaths",
         ".save all",
         ".probe alli",
